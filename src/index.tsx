@@ -12,19 +12,52 @@ Coded by www.creative-tim.com
 
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
-
-import { createRoot } from "react-dom/client";
+import React from "react";
+import ReactDOM from "react-dom/client";
+//import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import App from "App";
 
+// Sisense
+import { SisenseContextProvider } from "@sisense/sdk-ui";
+
+const sisenseContextProviderArgs = () => {
+  const baseOptions = {
+    url: process.env.REACT_APP_SISENSE_URL,
+    defaultDataSource: "Sample ECommerce",
+  };
+  const username = process.env.REACT_APP_SISENSE_USERNAME;
+  const password = process.env.REACT_APP_SISENSE_PASSWORD;
+  const wat = process.env.REACT_APP_SISENSE_WAT;
+  const token = process.env.REACT_APP_SISENSE_API_TOKEN;
+  const ssoEnabled = process.env.REACT_APP_SISENSE_SSO_ENABLED;
+
+  console.log(baseOptions.url);
+  console.log(token);
+
+  if (ssoEnabled) {
+    return { ...baseOptions, ssoEnabled: ssoEnabled?.toLowerCase() === "true" };
+  } else if (wat) {
+    return { ...baseOptions, wat };
+  } else if (token) {
+    return { ...baseOptions, token };
+  } else if (username && password) {
+    return { ...baseOptions, username, password };
+  } else {
+    return baseOptions;
+  }
+};
+
 // Material Dashboard 2 PRO React TS Context Provider
 import { MaterialUIControllerProvider } from "context";
-const root = createRoot(document.getElementById("root"));
+const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 
 root.render(
-  <BrowserRouter>
-    <MaterialUIControllerProvider>
-      <App />
-    </MaterialUIControllerProvider>
-  </BrowserRouter>
+  <SisenseContextProvider {...sisenseContextProviderArgs()}>
+    <BrowserRouter>
+      <MaterialUIControllerProvider>
+        <App />
+      </MaterialUIControllerProvider>
+    </BrowserRouter>
+  </SisenseContextProvider>
 );
