@@ -65,6 +65,8 @@ import SignInIllustration from "layouts/authentication/sign-in/illustration";
 import SignUpCover from "layouts/authentication/sign-up/cover";
 import ResetCover from "layouts/authentication/reset-password/cover";
 
+import SisenseCharts from "layouts/pages-sisense/charts";
+
 // Material Dashboard 2 PRO React TS components
 import MDAvatar from "components/MDAvatar";
 
@@ -347,6 +349,20 @@ const routes = [
             component: <ResetCover />,
           },
         ],
+      },
+    ],
+  },
+  {
+    type: "collapse",
+    name: "Sisense",
+    key: "sisense",
+    icon: <Icon fontSize="medium">apps</Icon>,
+    collapse: [
+      {
+        name: "Charts",
+        key: "charts",
+        route: "/sisense/charts",
+        component: <SisenseCharts />,
       },
     ],
   },
