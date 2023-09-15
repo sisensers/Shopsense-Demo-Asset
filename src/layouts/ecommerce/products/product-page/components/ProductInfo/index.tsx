@@ -30,7 +30,7 @@ function ProductInfo(): JSX.Element {
     <MDBox>
       <MDBox mb={1}>
         <MDTypography variant="h3" fontWeight="bold">
-          Minimal Bar Stool
+          Nike Shoes
         </MDTypography>
       </MDBox>
       <MDTypography variant="h4" color="text">
@@ -47,7 +47,7 @@ function ProductInfo(): JSX.Element {
       </MDBox>
       <MDBox mb={1}>
         <MDTypography variant="h5" fontWeight="medium">
-          $1,419
+          $100
         </MDTypography>
       </MDBox>
       <MDBadge variant="contained" color="success" badgeContent="in stock" container />
@@ -59,22 +59,23 @@ function ProductInfo(): JSX.Element {
       <MDBox component="ul" m={0} pl={4} mb={2}>
         <MDBox component="li" color="text" fontSize="1.25rem" lineHeight={1}>
           <MDTypography variant="body2" color="text" fontWeight="regular" verticalAlign="middle">
-            The most beautiful curves of this swivel stool adds an elegant touch to any environment
+            Foam midsole and foam outsole with rubber outsole pods provide lightweight comfort and
+            durability
           </MDTypography>
         </MDBox>
         <MDBox component="li" color="text" fontSize="1.25rem" lineHeight={1}>
           <MDTypography variant="body2" color="text" fontWeight="regular" verticalAlign="middle">
-            Memory swivel seat returns to original seat position
+            Visible Air unit is visible through 3 windows for an updated look
           </MDTypography>
         </MDBox>
         <MDBox component="li" color="text" fontSize="1.25rem" lineHeight={1}>
           <MDTypography variant="body2" color="text" fontWeight="regular" verticalAlign="middle">
-            Comfortable integrated layered chair seat cushion design
+            Padded collar and tongue for added comfort
           </MDTypography>
         </MDBox>
         <MDBox component="li" color="text" fontSize="1.25rem" lineHeight={1}>
           <MDTypography variant="body2" color="text" fontWeight="regular" verticalAlign="middle">
-            Fully assembled! No assembly required
+            Elongated design lines honor the Air Max 90 while modernizing it in a provocative way
           </MDTypography>
         </MDBox>
       </MDBox>
@@ -83,12 +84,12 @@ function ProductInfo(): JSX.Element {
           <Grid item xs={12} lg={5}>
             <MDBox mb={1.5} lineHeight={0} display="inline-block">
               <MDTypography component="label" variant="button" color="text" fontWeight="regular">
-                Frame Material
+                Size
               </MDTypography>
             </MDBox>
             <Autocomplete
-              defaultValue="Steel"
-              options={["Aluminium", "Carbon", "Steel", "Wood"]}
+              defaultValue="6"
+              options={["7", "8", "9", "10"]}
               renderInput={(params) => <MDInput {...params} variant="standard" />}
             />
           </Grid>
