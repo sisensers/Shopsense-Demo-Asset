@@ -28,7 +28,7 @@ import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 
 // DefaultLineChart configurations
-import configs from "sisense/Charts/LineCharts/DefaultLineChartSisense/configs";
+import configs from "sisense/Charts/LineCharts/DefaultLineChart/configs";
 
 // Material Dashboard 2 PRO React TS Base Styles
 import colors from "assets/theme/base/colors";
@@ -53,7 +53,7 @@ interface Props {
   [key: string]: any;
 }
 
-function DefaultLineChartSisense({ icon, title, description, height, chart }: Props): JSX.Element {
+function DefaultLineChart({ icon, title, description, height, chart }: Props): JSX.Element {
   const chartDatasets = chart.datasets
     ? chart.datasets.map((dataset) => ({
         ...dataset,
@@ -121,11 +121,11 @@ function DefaultLineChartSisense({ icon, title, description, height, chart }: Pr
 }
 
 // Declaring default props DefaultLineChart
-DefaultLineChartSisense.defaultProps = {
+DefaultLineChart.defaultProps = {
   icon: { color: "info", component: "" },
   title: "",
   description: "",
   height: "19.125rem",
 };
 
-export default DefaultLineChartSisense;
+export default DefaultLineChart;

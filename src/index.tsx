@@ -50,9 +50,7 @@ const sisenseContextProviderArgs = () => {
 
 // Material Dashboard 2 PRO React TS Context Provider
 import { MaterialUIControllerProvider } from "context";
-const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
-
-root.render(
+ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <SisenseContextProvider {...sisenseContextProviderArgs()}>
     <BrowserRouter>
       <MaterialUIControllerProvider>

@@ -24,7 +24,7 @@ import MDTypography from "components/MDTypography";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
-import DefaultLineChartSisense from "sisense/Charts/LineCharts/DefaultLineChartSisense";
+import DefaultLineChart from "sisense/Charts/LineCharts/DefaultLineChart";
 import GradientLineChart from "sisense/Charts/LineCharts/GradientLineChart";
 import VerticalBarChart from "sisense/Charts/BarCharts/VerticalBarChart";
 import HorizontalBarChart from "sisense/Charts/BarCharts/HorizontalBarChart";
@@ -36,7 +36,7 @@ import RadarChart from "sisense/Charts/RadarChart";
 import PolarChart from "sisense/Charts/PolarChart";
 
 // Data
-import defaultLineChartDataSisense from "sisense/ChartData/defaultLineChartDataSisense";
+import defaultLineChartData from "sisense/ChartData/defaultLineChartData";
 import gradientLineChartData from "sisense/ChartData/gradientLineChartData";
 import verticalBarChartData from "sisense/ChartData/verticalBarChartData";
 import horizontalBarChartData from "sisense/ChartData/horizontalBarChartData";
@@ -66,11 +66,11 @@ function SisenseCharts(): JSX.Element {
         <MDBox mb={6}>
           <Grid container spacing={3}>
             <Grid item xs={12} md={6}>
-              <DefaultLineChartSisense
+              <DefaultLineChart
                 icon={{ component: "insights" }}
                 title="Line chart"
                 description="Product insights"
-                chart={defaultLineChartDataSisense()}
+                chart={defaultLineChartData}
               />
             </Grid>
             <Grid item xs={12} md={6}>
