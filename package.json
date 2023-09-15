@@ -2,7 +2,7 @@
   "name": "material-dashboard-2-pro-react-ts",
   "version": "1.0.2",
   "private": true,
-  "description": "React + TypeScript version of Material Dashboard 2 PRO by Creative Tim",
+  "description": "ECommerce platform to showcase COmpose SDK by Sisense",
   "dependencies": {
     "@asseinfo/react-kanban": "2.2.0",
     "@emotion/cache": "11.11.0",
