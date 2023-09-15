@@ -13,6 +13,8 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
+import { useState } from "react";
+
 // @mui material components
 import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
@@ -20,6 +22,8 @@ import Grid from "@mui/material/Grid";
 // Material Dashboard 2 PRO React TS components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
+import MDSnackbar from "components/MDSnackbar";
+import MDButton from "components/MDButton";
 
 // Material Dashboard 2 PRO React TS examples components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
@@ -38,6 +42,22 @@ import dataTableData from "layouts/pages-sisense/product-page/data/dataTableData
 import ExecuteQueryChart from "sisense/Charts/ExecuteQueryChart";
 
 function SisenseProductPage(): JSX.Element {
+  const [infoSB, setInfoSB] = useState<boolean>(false);
+
+  const openInfoSB = () => setInfoSB(true);
+  const closeInfoSB = () => setInfoSB(false);
+
+  const renderInfoSB = (
+    <MDSnackbar
+      icon="notifications"
+      title="Material Dashboard"
+      content="Hello, world! This is a notification message"
+      dateTime="11 mins ago"
+      open={infoSB}
+      onClose={closeInfoSB}
+      close={closeInfoSB}
+    />
+  );
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -60,6 +80,11 @@ function SisenseProductPage(): JSX.Element {
             </Grid>
 
             <ExecuteQueryChart />
+
+            <MDButton variant="gradient" color="info" onClick={openInfoSB} fullWidth>
+              Tell me more
+            </MDButton>
+            {renderInfoSB}
 
             <MDBox mt={8} mb={2}>
               <MDBox mb={1} ml={2}>
