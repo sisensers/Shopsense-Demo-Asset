@@ -47,7 +47,13 @@ import pieChartData from "sisense/ChartData/pieChartData";
 import radarChartData from "sisense/ChartData/radarChartData";
 import polarChartData from "sisense/ChartData/polarChartData";
 
+// Sisense
+import { ExecuteQuery } from "@sisense/sdk-ui";
+import * as DM from "../../../sisense/Schemas/old-ecommerce";
+import { Data, measures } from "@sisense/sdk-data";
+
 function SisenseCharts(): JSX.Element {
+  console.log(defaultLineChartData);
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -66,20 +72,52 @@ function SisenseCharts(): JSX.Element {
         <MDBox mb={6}>
           <Grid container spacing={3}>
             <Grid item xs={12} md={6}>
-              <DefaultLineChart
-                icon={{ component: "insights" }}
-                title="Line chart"
-                description="Product insights"
-                chart={defaultLineChartData}
-              />
+              <ExecuteQuery
+                dataSource={DM.DataSource}
+                dimensions={[DM.Commerce.Date.Months, DM.Commerce.Gender]}
+                measures={[
+                  measures.sum(DM.Commerce.Revenue, "Total Revenue"),
+                  measures.sum(DM.Commerce.Cost, "Total Cost"),
+                ]}
+                filters={[]}
+              >
+                {(data: Data) => {
+                  console.log(data);
+                  const translatedData = TranslateSisenseDataToChartJS(data);
+                  return (
+                    <DefaultLineChart
+                      icon={{ component: "insights" }}
+                      title="Line chart"
+                      description="Product insights"
+                      chart={translatedData}
+                    />
+                  );
+                }}
+              </ExecuteQuery>
             </Grid>
             <Grid item xs={12} md={6}>
-              <GradientLineChart
-                icon={{ component: "show_chart" }}
-                title="Line chart with gradient"
-                description="Visits from devices"
-                chart={gradientLineChartData}
-              />
+              <ExecuteQuery
+                dataSource={DM.DataSource}
+                dimensions={[DM.Commerce.Date.Months, DM.Commerce.Gender]}
+                measures={[
+                  measures.sum(DM.Commerce.Revenue, "Total Revenue"),
+                  measures.sum(DM.Commerce.Cost, "Total Cost"),
+                ]}
+                filters={[]}
+              >
+                {(data: Data) => {
+                  console.log(data);
+                  const translatedGradientData = TranslateSisenseDataToChartJS(data);
+                  return (
+                    <GradientLineChart
+                      icon={{ component: "show_chart" }}
+                      title="Line chart with gradient"
+                      description="Visits from devices"
+                      chart={translatedGradientData}
+                    />
+                  );
+                }}
+              </ExecuteQuery>
             </Grid>
           </Grid>
         </MDBox>
@@ -168,6 +206,64 @@ function SisenseCharts(): JSX.Element {
       <Footer />
     </DashboardLayout>
   );
+}
+
+// types
+interface Types {
+  labels: any;
+  datasets: any;
+}
+interface Dataset {
+  label: any;
+  color: any;
+  data: any;
+}
+interface Row {
+  [key: string]: any;
+}
+
+const colorList = ["info", "dark", "primary", "secondary", "success", "error", "light"];
+
+function TranslateSisenseDataToChartJS(data: Data) {
+  const lineNames: Array<string> = [];
+  const xAxisLabels: Array<string> = [];
+  const labels: Array<string> = [];
+  const datasets: Array<Dataset> = [];
+  //gets a color from predefined options set in colors ts
+  var colorPos = 0;
+  data.rows.forEach((row: Row) => {
+    //If empty add first element with Id
+    if (lineNames.length === 0 || !lineNames.includes(row[1].text)) {
+      const dataset: Dataset = {
+        label: row[1].text,
+        color: colorList[colorPos],
+        data: [row[2].text],
+      };
+      //get color from list and update breakby checker
+      colorPos++;
+      lineNames.push(row[1].text);
+      datasets.push(dataset);
+      //update x axis label tracker
+      if (xAxisLabels.length === 0 || !xAxisLabels.includes(row[0].text)) {
+        xAxisLabels.push(row[0].text);
+      }
+    } else {
+      //if id for breakby already exists then add to that list
+      const pos = lineNames.indexOf(row[1].text);
+      datasets[pos].data.push(row[2].text);
+      if (xAxisLabels.length === 0 || !xAxisLabels.includes(row[0].text)) {
+        xAxisLabels.push(row[0].text);
+      }
+    }
+  });
+
+  const translatedData: Types = {
+    labels: xAxisLabels,
+    datasets: datasets,
+  };
+  console.log("Translated Data");
+  console.log(translatedData);
+  return translatedData;
 }
 
 export default SisenseCharts;
