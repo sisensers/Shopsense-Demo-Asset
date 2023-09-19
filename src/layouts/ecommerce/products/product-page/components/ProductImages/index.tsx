@@ -25,11 +25,11 @@ import Stack from "@mui/material/Stack";
 import MDBox from "components/MDBox";
 
 // Images
-import image1 from "assets/images/products/NikeShoes1.png";
-import image2 from "assets/images/products/NikeShoes2.png";
-import image3 from "assets/images/products/NikeShoes3.png";
-import image4 from "assets/images/products/NikeShoes4.jpeg";
-import image5 from "assets/images/products/NikeShoes5.png";
+import image1 from "assets/images/products/NikeAirForce1Sneakers.png";
+import image2 from "assets/images/products/NikeFreeRNFlyknitRunningShoes.png";
+import image3 from "assets/images/products/NikeFreeRNFlyknitRunningShoes.png";
+import image4 from "assets/images/products/NikeRosheRunSneakers.png";
+import image5 from "assets/images/products/NikeAirMax270RunningShoes.png";
 
 function ProductImages(): JSX.Element {
   const [currentImage, setCurrentImage] = useState<string>(image1);

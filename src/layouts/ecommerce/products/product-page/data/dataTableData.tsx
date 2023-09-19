@@ -23,8 +23,8 @@ import ReviewCell from "layouts/ecommerce/products/product-page/components/Revie
 import DefaultCell from "layouts/ecommerce/products/product-page/components/DefaultCell";
 
 // Images
-import blackChair from "assets/images/ecommerce/ColumbiaShoes.png";
-import chairPink from "assets/images/ecommerce/VersaceShoes.png";
+import blackChair from "assets/images/ecommerce/AdidasUltraboostRunningShoes.png";
+import chairPink from "assets/images/ecommerce/VersaceMedusaHeadHighTopSneakers.png";
 import chairSteel from "assets/images/ecommerce/adidas-hoodie.jpeg";
 import chairWood from "assets/images/ecommerce/Adidas.png";
 
