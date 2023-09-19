@@ -41,7 +41,7 @@ import salesTableData from "layouts/dashboards/analytics/components/SalesByCount
 
 // Sisense
 import { ExecuteQuery } from "@sisense/sdk-ui";
-import * as DM from "sisense/Schemas/old-ecommerce";
+import * as DM from "sisense/Schemas/ecommerce-master";
 import { Data, measures, filters } from "@sisense/sdk-data";
 
 function SalesByCountry(): JSX.Element {
@@ -75,14 +75,14 @@ function SalesByCountry(): JSX.Element {
           <Grid item xs={12} md={7} lg={6}>
             <ExecuteQuery
               dataSource={DM.DataSource}
-              dimensions={[DM.Country.Country]}
+              dimensions={[DM.Commerce.Country]}
               measures={[
-                measures.count(DM.Commerce.Quantity, "Total Quantity"),
-                measures.sum(DM.Commerce.Revenue, "Total Revenue"),
+                measures.count(DM.Commerce.Transaction_ID, "Total Quantity"),
+                measures.sum(DM.Commerce.Amount, "Total Revenue"),
                 measures.sum(DM.Commerce.Cost, "Total Cost"),
               ]}
               filters={[
-                filters.members(DM.Country.Country, [
+                filters.members(DM.Commerce.Country, [
                   "United States",
                   "Germany",
                   "United Kingdom",

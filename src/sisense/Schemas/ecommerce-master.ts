@@ -7,68 +7,74 @@ import {
   createDimension,
 } from "@sisense/sdk-data";
 
-export const DataSource = "Ecommerce Data [MASTER]";
+export const DataSource = "Ecommerce Demo [MASTER]";
 
 interface BrandDimension extends Dimension {
-  ID: Attribute;
-  Name: Attribute;
+  BrandName: Attribute;
+  Brand_Id: Attribute;
 }
 export const Brand = createDimension({
   name: "Brand",
-  ID: createAttribute({
-    name: "ID",
-    type: "numeric-attribute",
-    expression: "[Brand.ID]",
-  }),
-  Name: createAttribute({
-    name: "Name",
+  BrandName: createAttribute({
+    name: "BrandName",
     type: "text-attribute",
-    expression: "[Brand.Name]",
+    expression: "[Brand.Brand Name]",
+  }),
+  Brand_Id: createAttribute({
+    name: "Brand_Id",
+    type: "numeric-attribute",
+    expression: "[Brand.Brand_Id]",
   }),
 }) as BrandDimension;
 
 interface CategoryDimension extends Dimension {
-  ID: Attribute;
-  Name: Attribute;
+  CategoryName: Attribute;
+  Category_Id: Attribute;
 }
 export const Category = createDimension({
   name: "Category",
-  ID: createAttribute({
-    name: "ID",
-    type: "numeric-attribute",
-    expression: "[Category.ID]",
-  }),
-  Name: createAttribute({
-    name: "Name",
+  CategoryName: createAttribute({
+    name: "CategoryName",
     type: "text-attribute",
-    expression: "[Category.Name]",
+    expression: "[Category.Category Name]",
+  }),
+  Category_Id: createAttribute({
+    name: "Category_Id",
+    type: "numeric-attribute",
+    expression: "[Category.Category_Id]",
   }),
 }) as CategoryDimension;
 
 interface CommerceDimension extends Dimension {
-  BrandID: Attribute;
-  CategoryID: Attribute;
+  Amount: Attribute;
+  Brand_ID: Attribute;
+  Category_ID: Attribute;
   Cost: Attribute;
   Country: Attribute;
   CustomerName: Attribute;
+  DayinDate: Attribute;
   Gender: Attribute;
-  ProductID: Attribute;
+  Product_ID: Attribute;
   Status: Attribute;
-  TransactionAmount: Attribute;
-  TransactionID: Attribute;
-  Date: DateDimension;
+  Transaction_ID: Attribute;
+  Transaction_Date: DateDimension;
 }
 export const Commerce = createDimension({
   name: "Commerce",
-  BrandID: createAttribute({
-    name: "BrandID",
+  Amount: createAttribute({
+    name: "Amount",
     type: "numeric-attribute",
-    expression: "[Commerce.Brand ID]",
+    expression: "[Commerce.Amount]",
   }),
-  CategoryID: createAttribute({
-    name: "CategoryID",
+  Brand_ID: createAttribute({
+    name: "Brand_ID",
     type: "numeric-attribute",
-    expression: "[Commerce.Category ID]",
+    expression: "[Commerce.Brand_ID]",
+  }),
+  Category_ID: createAttribute({
+    name: "Category_ID",
+    type: "numeric-attribute",
+    expression: "[Commerce.Category_ID]",
   }),
   Cost: createAttribute({
     name: "Cost",
@@ -85,59 +91,136 @@ export const Commerce = createDimension({
     type: "text-attribute",
     expression: "[Commerce.Customer Name]",
   }),
+  DayinDate: createAttribute({
+    name: "DayinDate",
+    type: "text-attribute",
+    expression: "[Commerce.Day in Date]",
+  }),
   Gender: createAttribute({
     name: "Gender",
     type: "text-attribute",
     expression: "[Commerce.Gender]",
   }),
-  ProductID: createAttribute({
-    name: "ProductID",
+  Product_ID: createAttribute({
+    name: "Product_ID",
     type: "numeric-attribute",
-    expression: "[Commerce.Product ID]",
+    expression: "[Commerce.Product_ID]",
   }),
   Status: createAttribute({
     name: "Status",
     type: "text-attribute",
     expression: "[Commerce.Status]",
   }),
-  TransactionAmount: createAttribute({
-    name: "TransactionAmount",
+  Transaction_ID: createAttribute({
+    name: "Transaction_ID",
     type: "numeric-attribute",
-    expression: "[Commerce.Transaction Amount]",
+    expression: "[Commerce.Transaction_ID]",
   }),
-  TransactionID: createAttribute({
-    name: "TransactionID",
-    type: "numeric-attribute",
-    expression: "[Commerce.Transaction ID]",
-  }),
-  Date: createDateDimension({
-    name: "Date",
-    expression: "[Commerce.Date (Calendar)]",
+  Transaction_Date: createDateDimension({
+    name: "Transaction_Date",
+    expression: "[Commerce.Transaction_Date (Calendar)]",
   }),
 }) as CommerceDimension;
 
+interface CommerceTableUpdatedcsvDimension extends Dimension {
+  Brand_ID: Attribute;
+  Category_ID: Attribute;
+  Cost: Attribute;
+  Country: Attribute;
+  Customer_Gender: Attribute;
+  Customer_ID: Attribute;
+  Customer_Name: Attribute;
+  Product_ID: Attribute;
+  Transaction_Amount: Attribute;
+  Transaction_ID: Attribute;
+  Transaction_Status: Attribute;
+  Transaction_Date: DateDimension;
+}
+export const CommerceTableUpdatedcsv = createDimension({
+  name: "CommerceTableUpdated.csv",
+  Brand_ID: createAttribute({
+    name: "Brand_ID",
+    type: "numeric-attribute",
+    expression: "[CommerceTableUpdated.csv.Brand_ID]",
+  }),
+  Category_ID: createAttribute({
+    name: "Category_ID",
+    type: "numeric-attribute",
+    expression: "[CommerceTableUpdated.csv.Category_ID]",
+  }),
+  Cost: createAttribute({
+    name: "Cost",
+    type: "numeric-attribute",
+    expression: "[CommerceTableUpdated.csv.Cost]",
+  }),
+  Country: createAttribute({
+    name: "Country",
+    type: "text-attribute",
+    expression: "[CommerceTableUpdated.csv.Country]",
+  }),
+  Customer_Gender: createAttribute({
+    name: "Customer_Gender",
+    type: "text-attribute",
+    expression: "[CommerceTableUpdated.csv.Customer_Gender]",
+  }),
+  Customer_ID: createAttribute({
+    name: "Customer_ID",
+    type: "numeric-attribute",
+    expression: "[CommerceTableUpdated.csv.Customer_ID]",
+  }),
+  Customer_Name: createAttribute({
+    name: "Customer_Name",
+    type: "text-attribute",
+    expression: "[CommerceTableUpdated.csv.Customer_Name]",
+  }),
+  Product_ID: createAttribute({
+    name: "Product_ID",
+    type: "numeric-attribute",
+    expression: "[CommerceTableUpdated.csv.Product_ID]",
+  }),
+  Transaction_Amount: createAttribute({
+    name: "Transaction_Amount",
+    type: "numeric-attribute",
+    expression: "[CommerceTableUpdated.csv.Transaction_Amount]",
+  }),
+  Transaction_ID: createAttribute({
+    name: "Transaction_ID",
+    type: "numeric-attribute",
+    expression: "[CommerceTableUpdated.csv.Transaction_ID]",
+  }),
+  Transaction_Status: createAttribute({
+    name: "Transaction_Status",
+    type: "text-attribute",
+    expression: "[CommerceTableUpdated.csv.Transaction_Status]",
+  }),
+  Transaction_Date: createDateDimension({
+    name: "Transaction_Date",
+    expression: "[CommerceTableUpdated.csv.Transaction_Date (Calendar)]",
+  }),
+}) as CommerceTableUpdatedcsvDimension;
+
 interface ProductDimension extends Dimension {
-  BrandID: Attribute;
-  ID: Attribute;
-  Name: Attribute;
+  Brand_ID: Attribute;
+  ProductName: Attribute;
+  Product_ID: Attribute;
   Product_Image: Attribute;
 }
 export const Product = createDimension({
   name: "Product",
-  BrandID: createAttribute({
-    name: "BrandID",
+  Brand_ID: createAttribute({
+    name: "Brand_ID",
     type: "numeric-attribute",
-    expression: "[Product.Brand ID]",
+    expression: "[Product.Brand_ID]",
   }),
-  ID: createAttribute({
-    name: "ID",
-    type: "numeric-attribute",
-    expression: "[Product.ID]",
-  }),
-  Name: createAttribute({
-    name: "Name",
+  ProductName: createAttribute({
+    name: "ProductName",
     type: "text-attribute",
-    expression: "[Product.Name]",
+    expression: "[Product.Product Name]",
+  }),
+  Product_ID: createAttribute({
+    name: "Product_ID",
+    type: "numeric-attribute",
+    expression: "[Product.Product_ID]",
   }),
   Product_Image: createAttribute({
     name: "Product_Image",
@@ -145,3 +228,38 @@ export const Product = createDimension({
     expression: "[Product.Product_Image]",
   }),
 }) as ProductDimension;
+
+interface TransactionsDimension extends Dimension {
+  Product_ID: Attribute;
+  transaction_amount: Attribute;
+  Transaction_ID: Attribute;
+  transaction_status: Attribute;
+  Transaction_Date: DateDimension;
+}
+export const Transactions = createDimension({
+  name: "Transactions",
+  Product_ID: createAttribute({
+    name: "Product_ID",
+    type: "numeric-attribute",
+    expression: "[Transactions.Product_ID]",
+  }),
+  transaction_amount: createAttribute({
+    name: "transaction_amount",
+    type: "numeric-attribute",
+    expression: "[Transactions.transaction_amount]",
+  }),
+  Transaction_ID: createAttribute({
+    name: "Transaction_ID",
+    type: "numeric-attribute",
+    expression: "[Transactions.Transaction_ID]",
+  }),
+  transaction_status: createAttribute({
+    name: "transaction_status",
+    type: "text-attribute",
+    expression: "[Transactions.transaction_status]",
+  }),
+  Transaction_Date: createDateDimension({
+    name: "Transaction_Date",
+    expression: "[Transactions.Transaction_Date (Calendar)]",
+  }),
+}) as TransactionsDimension;

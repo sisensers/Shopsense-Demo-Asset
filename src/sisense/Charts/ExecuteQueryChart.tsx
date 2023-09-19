@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import { ButtonGroup } from "../../components/ButtonGroup";
 import { BarChart, ExecuteQuery } from "@sisense/sdk-ui";
-import * as DM from "../Schemas/old-ecommerce";
+import * as DM from "../Schemas/ecommerce-master";
 import CodeHighlight from "../../components/CodeHighlight";
 import CodeBlock from "../../components/CodeBlock";
 import SubTitle from "../../components/SubTitle";
@@ -30,8 +30,8 @@ export default function ExecuteQueryChart(): JSX.Element {
         {view === "Preview" && (
           <ExecuteQuery
             dataSource={DM.DataSource}
-            dimensions={[DM.Commerce.Date.Years]}
-            measures={[measures.sum(DM.Commerce.Quantity, "Total Quantity")]}
+            dimensions={[DM.Commerce.Transaction_Date.Years]}
+            measures={[measures.sum(DM.Commerce.Amount, "Revenue")]}
             filters={[]}
           >
             {(data: Data) => {
@@ -40,7 +40,7 @@ export default function ExecuteQueryChart(): JSX.Element {
                   dataSet={data}
                   dataOptions={{
                     category: [{ name: "Years", type: "datetime" }],
-                    value: [{ name: "Total Quantity" }],
+                    value: [{ name: "Revenue" }],
                     breakBy: [],
                   }}
                 />
