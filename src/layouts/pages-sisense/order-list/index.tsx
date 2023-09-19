@@ -36,6 +36,11 @@ import DataTable from "examples/Tables/DataTable";
 // Data
 import dataTableData from "layouts/ecommerce/orders/order-list/data/dataTableData";
 
+// Sisense
+import { ExecuteQuery } from "@sisense/sdk-ui";
+import * as DM from "sisense/Schemas/ecommerce-master";
+import { Data, measures, filters } from "@sisense/sdk-data";
+
 function SisenseOrderList(): JSX.Element {
   const [menu, setMenu] = useState(null);
 
@@ -79,6 +84,12 @@ function SisenseOrderList(): JSX.Element {
             {renderMenu}
             <MDBox ml={1}>
               <MDButton variant="outlined" color="dark">
+                <Icon>block</Icon>
+                &nbsp;Clear Filters
+              </MDButton>
+            </MDBox>
+            <MDBox ml={1}>
+              <MDButton variant="outlined" color="dark">
                 <Icon>description</Icon>
                 &nbsp;export csv
               </MDButton>
@@ -86,12 +97,77 @@ function SisenseOrderList(): JSX.Element {
           </MDBox>
         </MDBox>
         <Card>
-          <DataTable table={dataTableData} entriesPerPage={false} canSearch />
+          <ExecuteQuery
+            dataSource={DM.DataSource}
+            dimensions={[
+              DM.Commerce.Transaction_ID,
+              DM.Commerce.Transaction_Date.Days,
+              DM.Commerce.Status,
+              DM.Commerce.CustomerName,
+              DM.Product.ProductName,
+            ]}
+            measures={[measures.sum(DM.Commerce.Revenue, "Total Revenue")]}
+            filters={[
+              filters.members(DM.Commerce.Country, [
+                "United States",
+                "Germany",
+                "United Kingdom",
+                "Brazil",
+              ]),
+              //filters.members(DM.Commerce.CustomerName, ["Angela Perez"]),
+            ]}
+          >
+            {(data: Data) => {
+              console.log("Order Table Query Data From Sisense");
+              console.log(data);
+              const sisenseTableData = TranslateSisenseDataToTable(data);
+              //get column inforamation from dataTableData and replace rows with sisense data
+              dataTableData.rows = sisenseTableData;
+              return <DataTable table={dataTableData} entriesPerPage={false} canSearch />;
+            }}
+          </ExecuteQuery>
         </Card>
       </MDBox>
       <Footer />
     </DashboardLayout>
   );
+}
+
+interface Row {
+  [key: string]: any;
+}
+interface TranslatedRow {
+  id: string;
+  date: string;
+  status: string;
+  customer: (
+    | string
+    | {
+        image: any;
+      }
+  )[];
+  product: string;
+  revenue: string;
+}
+
+function TranslateSisenseDataToTable(data: Data) {
+  const translatedRows: Array<TranslatedRow> = [];
+  data.rows.forEach((row: Row) => {
+    //Create image with first letter of name
+    var nameWithProfilePic = [row[3].text, { image: row[3].text.charAt(0) }];
+    const translatedRow: TranslatedRow = {
+      id: "#".concat(row[0].text),
+      date: row[1].text,
+      status: row[2].text.toLowerCase(),
+      customer: nameWithProfilePic,
+      product: row[4].text,
+      revenue: "$".concat(row[5].data.toLocaleString("en-US", { maximumFractionDigits: 2 })),
+    };
+    translatedRows.push(translatedRow);
+  });
+  console.log("Order List Table");
+  console.log(translatedRows);
+  return translatedRows;
 }
 
 export default SisenseOrderList;

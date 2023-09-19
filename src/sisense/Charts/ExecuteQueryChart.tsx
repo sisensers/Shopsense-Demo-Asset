@@ -31,7 +31,7 @@ export default function ExecuteQueryChart(): JSX.Element {
           <ExecuteQuery
             dataSource={DM.DataSource}
             dimensions={[DM.Commerce.Transaction_Date.Years]}
-            measures={[measures.sum(DM.Commerce.Amount, "Revenue")]}
+            measures={[measures.sum(DM.Commerce.Revenue, "Revenue")]}
             filters={[]}
           >
             {(data: Data) => {

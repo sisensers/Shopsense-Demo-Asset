@@ -78,7 +78,7 @@ function SalesByCountry(): JSX.Element {
               dimensions={[DM.Commerce.Country]}
               measures={[
                 measures.count(DM.Commerce.Transaction_ID, "Total Quantity"),
-                measures.sum(DM.Commerce.Amount, "Total Revenue"),
+                measures.sum(DM.Commerce.Revenue, "Total Revenue"),
                 measures.sum(DM.Commerce.Cost, "Total Cost"),
               ]}
               filters={[

@@ -41,7 +41,6 @@ const dataTableData = {
       accessor: "status",
       Cell: ({ value }: any) => {
         let status;
-
         if (value === "paid") {
           status = <StatusCell icon="done" color="success" status="Paid" />;
         } else if (value === "refunded") {
