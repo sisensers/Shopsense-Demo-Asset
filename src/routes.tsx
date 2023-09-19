@@ -65,6 +65,10 @@ import SignInIllustration from "layouts/authentication/sign-in/illustration";
 import SignUpCover from "layouts/authentication/sign-up/cover";
 import ResetCover from "layouts/authentication/reset-password/cover";
 
+import SisenseCharts from "layouts/pages-sisense/charts";
+import SisenseOrderList from "layouts/pages-sisense/order-list";
+import SisenseProductPage from "layouts/pages-sisense/product-page";
+
 // Material Dashboard 2 PRO React TS components
 import MDAvatar from "components/MDAvatar";
 
@@ -347,6 +351,32 @@ const routes = [
             component: <ResetCover />,
           },
         ],
+      },
+    ],
+  },
+  {
+    type: "collapse",
+    name: "Sisense",
+    key: "sisense",
+    icon: <Icon fontSize="medium">apps</Icon>,
+    collapse: [
+      {
+        name: "Charts",
+        key: "charts",
+        route: "/sisense/charts",
+        component: <SisenseCharts />,
+      },
+      {
+        name: "Order List",
+        key: "order-list",
+        route: "/sisense/order-list",
+        component: <SisenseOrderList />,
+      },
+      {
+        name: "Product Page",
+        key: "product-page",
+        route: "/sisense/product-page",
+        component: <SisenseProductPage />,
       },
     ],
   },

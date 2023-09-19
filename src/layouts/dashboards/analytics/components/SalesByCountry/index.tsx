@@ -29,8 +29,20 @@ import MDTypography from "components/MDTypography";
 // Material Dashboard 2 PRO React TS examples components
 import SalesTable from "examples/Tables/SalesTable";
 
+// Assets
+// Countries flags
+import US from "assets/images/icons/flags/US.png";
+import DE from "assets/images/icons/flags/DE.png";
+import GB from "assets/images/icons/flags/GB.png";
+import BR from "assets/images/icons/flags/BR.png";
+
 // Data
 import salesTableData from "layouts/dashboards/analytics/components/SalesByCountry/data/salesTableData";
+
+// Sisense
+import { ExecuteQuery } from "@sisense/sdk-ui";
+import * as DM from "sisense/Schemas/ecommerce-master";
+import { Data, measures, filters } from "@sisense/sdk-data";
 
 function SalesByCountry(): JSX.Element {
   return (
@@ -61,7 +73,29 @@ function SalesByCountry(): JSX.Element {
       <MDBox p={2}>
         <Grid container>
           <Grid item xs={12} md={7} lg={6}>
-            <SalesTable rows={salesTableData} shadow={false} />
+            <ExecuteQuery
+              dataSource={DM.DataSource}
+              dimensions={[DM.Commerce.Country]}
+              measures={[
+                measures.count(DM.Commerce.Transaction_ID, "Total Quantity"),
+                measures.sum(DM.Commerce.Amount, "Total Revenue"),
+                measures.sum(DM.Commerce.Cost, "Total Cost"),
+              ]}
+              filters={[
+                filters.members(DM.Commerce.Country, [
+                  "United States",
+                  "Germany",
+                  "United Kingdom",
+                  "Brazil",
+                ]),
+              ]}
+            >
+              {(data: Data) => {
+                console.log(data);
+                const sisenseTableData = TranslateSisenseDataToTable(data);
+                return <SalesTable rows={sisenseTableData} shadow={false} />;
+              }}
+            </ExecuteQuery>
           </Grid>
           <Grid item xs={12} md={5} lg={6} sx={{ mt: { xs: 5, lg: 0 } }}>
             <VectorMap
@@ -70,6 +104,10 @@ function SalesByCountry(): JSX.Element {
               zoomButtons={false}
               markersSelectable
               backgroundColor="transparent"
+              containerStyle={{
+                height: "100px",
+              }}
+              containerClassName="map"
               selectedMarkers={["1", "3"]}
               markers={[
                 {
@@ -134,6 +172,43 @@ function SalesByCountry(): JSX.Element {
       </MDBox>
     </Card>
   );
+}
+
+interface Row {
+  [key: string]: any;
+}
+interface Column {
+  [key: string]: any;
+}
+interface TableRow {
+  [key: string]: string | number | (string | number)[];
+}
+
+function TranslateSisenseDataToTable(data: Data) {
+  const salesTable: Array<TableRow> = [];
+  data.rows.forEach((row: Row) => {
+    var countryWithFlag;
+    if (row[0].text === "Brazil") {
+      countryWithFlag = [BR, "brazil"];
+    } else if (row[0].text === "Germany") {
+      countryWithFlag = [DE, "germany"];
+    } else if (row[0].text === "United Kingdom") {
+      countryWithFlag = [GB, "great britain"];
+    } else if (row[0].text === "United States") {
+      countryWithFlag = [US, "united states"];
+    } else {
+      console.log("Error: Data not retrieved or flag values werent changed");
+    }
+    const tableRow: TableRow = {
+      country: countryWithFlag,
+      sales: Math.floor(row[1].data),
+      value: "$".concat(row[2].data.toLocaleString("en-US", { maximumFractionDigits: 2 })),
+      cost: "$".concat(row[3].data.toLocaleString("en-US", { maximumFractionDigits: 2 })),
+    };
+    salesTable.push(tableRow);
+  });
+  console.log(salesTable);
+  return salesTable;
 }
 
 export default SalesByCountry;
