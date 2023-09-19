@@ -3,6 +3,10 @@ import Popover from "@mui/material/Popover";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 
+// Sisense
+import ExecuteQueryChart from "sisense/Charts/ExecuteQueryChart";
+import MDButton from "components/MDButton";
+
 export default function BasicPopover() {
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
 
@@ -19,9 +23,15 @@ export default function BasicPopover() {
 
   return (
     <div>
-      <Button aria-describedby={id} variant="contained" onClick={handleClick}>
+      <MDButton
+        variant="gradient"
+        color="info"
+        fullWidth
+        aria-describedby={id}
+        onClick={handleClick}
+      >
         Open Popover
-      </Button>
+      </MDButton>
       <Popover
         id={id}
         open={open}
@@ -33,6 +43,7 @@ export default function BasicPopover() {
         }}
       >
         <Typography sx={{ p: 2 }}>The content of the Popover.</Typography>
+        <ExecuteQueryChart />
       </Popover>
     </div>
   );

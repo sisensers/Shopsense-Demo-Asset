@@ -24,7 +24,7 @@ import { SisenseContextProvider } from "@sisense/sdk-ui";
 const sisenseContextProviderArgs = () => {
   const baseOptions = {
     url: process.env.REACT_APP_SISENSE_URL,
-    defaultDataSource: "Sample ECommerce",
+    defaultDataSource: "Ecommerce Data [MASTER]",
   };
   const username = process.env.REACT_APP_SISENSE_USERNAME;
   const password = process.env.REACT_APP_SISENSE_PASSWORD;

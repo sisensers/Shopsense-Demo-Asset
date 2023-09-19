@@ -52,6 +52,7 @@ interface CommerceDimension extends Dimension {
   Condition: Attribute;
   Cost: Attribute;
   CountryID: Attribute;
+  DayOfWeek: Attribute;
   Gender: Attribute;
   Quantity: Attribute;
   Revenue: Attribute;
@@ -89,6 +90,11 @@ export const Commerce = createDimension({
     name: "CountryID",
     type: "numeric-attribute",
     expression: "[Commerce.Country ID]",
+  }),
+  DayOfWeek: createAttribute({
+    name: "DayOfWeek",
+    type: "text-attribute",
+    expression: "[Commerce.DayOfWeek]",
   }),
   Gender: createAttribute({
     name: "Gender",

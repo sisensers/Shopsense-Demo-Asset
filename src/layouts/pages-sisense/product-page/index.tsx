@@ -41,6 +41,11 @@ import dataTableData from "layouts/pages-sisense/product-page/data/dataTableData
 // Sisense
 import ExecuteQueryChart from "sisense/Charts/ExecuteQueryChart";
 
+// Sisense Components
+import BasicPopOver from "components/Popover/BasicPopover";
+import TransitionModal from "components/Modal/TransitionModal";
+import ComplexStatisticsCard from "examples/Cards/StatisticsCards/ComplexStatisticsCard";
+
 function SisenseProductPage(): JSX.Element {
   const [infoSB, setInfoSB] = useState<boolean>(false);
 
@@ -81,10 +86,43 @@ function SisenseProductPage(): JSX.Element {
 
             <ExecuteQueryChart />
 
-            <MDButton variant="gradient" color="info" onClick={openInfoSB} fullWidth>
-              Tell me more
-            </MDButton>
-            {renderInfoSB}
+            <MDBox mt={1.5}>
+              <Grid container spacing={3}>
+                <Grid item xs={12} md={6} lg={3}>
+                  <MDBox mb={1.5}>
+                    <MDButton variant="gradient" color="info" onClick={openInfoSB} fullWidth>
+                      Tell me more with a SandBar
+                    </MDButton>
+                    {renderInfoSB}
+                  </MDBox>
+                </Grid>
+                <Grid item xs={12} md={6} lg={3}>
+                  <MDBox mb={1.5}>
+                    <BasicPopOver />
+                  </MDBox>
+                </Grid>
+                <Grid item xs={12} md={6} lg={3}>
+                  <MDBox mb={1.5}>
+                    <TransitionModal />
+                  </MDBox>
+                </Grid>
+                <Grid item xs={12} md={6} lg={3}>
+                  <MDBox mb={1.5}>
+                    <ComplexStatisticsCard
+                      color="primary"
+                      icon="person_add"
+                      title="Followers"
+                      count="+91"
+                      percentage={{
+                        color: "success",
+                        amount: "",
+                        label: "Just updated",
+                      }}
+                    />
+                  </MDBox>
+                </Grid>
+              </Grid>
+            </MDBox>
 
             <MDBox mt={8} mb={2}>
               <MDBox mb={1} ml={2}>

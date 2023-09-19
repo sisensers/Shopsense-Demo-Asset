@@ -44,8 +44,6 @@ import { ExecuteQuery } from "@sisense/sdk-ui";
 import * as DM from "sisense/Schemas/old-ecommerce";
 import { Data, measures, filters } from "@sisense/sdk-data";
 
-import ExecuteQueryChart from "sisense/Charts/ExecuteQueryChart";
-
 function SalesByCountry(): JSX.Element {
   return (
     <Card sx={{ width: "100%" }}>
@@ -79,7 +77,7 @@ function SalesByCountry(): JSX.Element {
               dataSource={DM.DataSource}
               dimensions={[DM.Country.Country]}
               measures={[
-                measures.sum(DM.Commerce.Quantity, "Total Quantity"),
+                measures.count(DM.Commerce.Quantity, "Total Quantity"),
                 measures.sum(DM.Commerce.Revenue, "Total Revenue"),
                 measures.sum(DM.Commerce.Cost, "Total Cost"),
               ]}
@@ -185,13 +183,6 @@ interface Column {
 interface TableRow {
   [key: string]: string | number | (string | number)[];
 }
-
-// {
-//   country: any[];
-//   sales: string | number | (string | number)[];
-//   value: string | number | (string | number)[];
-//   cost: string | number | (string | number)[];
-// }
 
 function TranslateSisenseDataToTable(data: Data) {
   const salesTable: Array<TableRow> = [];
