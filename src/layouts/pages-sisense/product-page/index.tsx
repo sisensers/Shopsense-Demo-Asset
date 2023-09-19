@@ -46,6 +46,9 @@ import BasicPopOver from "components/Popover/BasicPopover";
 import TransitionModal from "components/Modal/TransitionModal";
 import ComplexStatisticsCard from "examples/Cards/StatisticsCards/ComplexStatisticsCard";
 
+import MapChart from "components/Maps/Map";
+import HighChartsDrill from "components/Maps/HighChartsDrill";
+
 function SisenseProductPage(): JSX.Element {
   const [infoSB, setInfoSB] = useState<boolean>(false);
 
@@ -85,6 +88,9 @@ function SisenseProductPage(): JSX.Element {
             </Grid>
 
             <ExecuteQueryChart />
+
+            <h2>Highmaps</h2>
+            <MapChart />
 
             <MDBox mt={1.5}>
               <Grid container spacing={3}>

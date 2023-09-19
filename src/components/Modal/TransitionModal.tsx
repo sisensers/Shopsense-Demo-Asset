@@ -7,6 +7,8 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import MDButton from "components/MDButton";
 
+import ExecuteQueryChart from "sisense/Charts/ExecuteQueryChart";
+
 const style = {
   position: "absolute" as "absolute",
   top: "50%",
@@ -51,12 +53,7 @@ export default function TransitionsModal() {
       >
         <Fade in={open}>
           <Box sx={style}>
-            <Typography id="transition-modal-title" variant="h6" component="h2">
-              Text in a modal
-            </Typography>
-            <Typography id="transition-modal-description" sx={{ mt: 2 }}>
-              Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-            </Typography>
+            <ExecuteQueryChart />
           </Box>
         </Fade>
       </Modal>
