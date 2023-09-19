@@ -227,7 +227,6 @@ const colorList = ["info", "dark", "primary", "secondary", "success", "error", "
 function TranslateSisenseDataToChartJS(data: Data) {
   const lineNames: Array<string> = [];
   const xAxisLabels: Array<string> = [];
-  const labels: Array<string> = [];
   const datasets: Array<Dataset> = [];
   //gets a color from predefined options set in colors ts
   var colorPos = 0;

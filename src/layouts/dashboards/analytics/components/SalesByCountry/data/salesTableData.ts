@@ -38,7 +38,12 @@ const salesTableData = [
     value: "$190,700",
     bounce: "23.44%",
   },
-  { country: [BR, "brasil"], sales: 562, value: "$143,960", bounce: "32.14%" },
+  {
+    country: [BR, "brasil"],
+    sales: 562,
+    value: "$143,960",
+    bounce: "32.14%",
+  },
 ];
 
 export default salesTableData;
