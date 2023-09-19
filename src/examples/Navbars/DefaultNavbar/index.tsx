@@ -600,7 +600,7 @@ function DefaultNavbar({ routes, brand, transparent, light, action }: Props): JS
 
 // Declaring default props for DefaultNavbar
 DefaultNavbar.defaultProps = {
-  brand: "Material Dashboard PRO",
+  brand: "",
   transparent: false,
   light: false,
   action: false,
