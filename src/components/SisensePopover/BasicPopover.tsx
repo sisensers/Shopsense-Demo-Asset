@@ -6,6 +6,7 @@ import Button from "@mui/material/Button";
 // Sisense
 import ExecuteQueryChart from "sisense/Charts/ExecuteQueryChart";
 import MDButton from "components/MDButton";
+import DayOfWeek from "sisense/Charts/DayOfWeek";
 
 export default function BasicPopover() {
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
@@ -43,7 +44,7 @@ export default function BasicPopover() {
         }}
       >
         <Typography sx={{ p: 2 }}>The content of the Popover.</Typography>
-        <ExecuteQueryChart />
+        <DayOfWeek />
       </Popover>
     </div>
   );

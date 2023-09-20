@@ -1,3 +1,4 @@
+import { useState } from "react";
 import * as React from "react";
 import Backdrop from "@mui/material/Backdrop";
 import Box from "@mui/material/Box";
@@ -8,6 +9,9 @@ import Typography from "@mui/material/Typography";
 import MDButton from "components/MDButton";
 
 import ExecuteQueryChart from "sisense/Charts/ExecuteQueryChart";
+import DayOfWeek from "sisense/Charts/DayOfWeek";
+import { ButtonGroup } from "components/ButtonGroup";
+import DailySales from "sisense/Charts/DailySales";
 
 const style = {
   position: "absolute" as "absolute",
@@ -27,6 +31,8 @@ export default function TransitionsModal() {
   const handleClose = () => setOpen(false);
 
   const id = open ? "simple-popover" : undefined;
+
+  const [view, setView] = useState("Views");
   return (
     <div>
       <MDButton
@@ -53,7 +59,15 @@ export default function TransitionsModal() {
       >
         <Fade in={open}>
           <Box sx={style}>
-            <ExecuteQueryChart />
+            {view === "Views" && <DayOfWeek />}
+            {view === "Sales" && <DailySales />}
+            {view === "Discuss" && <DayOfWeek />}
+            {view === "Act" && <DailySales />}
+            <ButtonGroup
+              selected={view}
+              onChange={setView}
+              labels={["Views", "Sales", "Discuss", "Act"]}
+            />
           </Box>
         </Fade>
       </Modal>

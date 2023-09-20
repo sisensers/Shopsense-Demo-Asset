@@ -358,7 +358,7 @@ const routes = [
     type: "collapse",
     name: "Sisense",
     key: "sisense",
-    icon: <Icon fontSize="medium">apps</Icon>,
+    icon: <Icon fontSize="medium">analytics</Icon>,
     collapse: [
       {
         name: "Charts",

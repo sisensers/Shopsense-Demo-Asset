@@ -23,10 +23,10 @@ import ReviewCell from "layouts/ecommerce/products/product-page/components/Revie
 import DefaultCell from "layouts/ecommerce/products/product-page/components/DefaultCell";
 
 // Images
-import blackChair from "assets/images/ecommerce/black-chair.jpeg";
-import chairPink from "assets/images/ecommerce/chair-pink.jpeg";
-import chairSteel from "assets/images/ecommerce/chair-steel.jpeg";
-import chairWood from "assets/images/ecommerce/chair-wood.jpeg";
+import blackChair from "assets/images/ecommerce/AdidasUltraboostRunningShoes.png";
+import chairPink from "assets/images/ecommerce/VersaceMedusaHeadHighTopSneakers.png";
+import chairSteel from "assets/images/ecommerce/adidas-hoodie.jpeg";
+import chairWood from "assets/images/ecommerce/Adidas.png";
 
 const dataTableData = {
   columns: [
@@ -39,7 +39,7 @@ const dataTableData = {
 
   rows: [
     {
-      product: <ProductCell image={blackChair} name="Christopher Knight Home" />,
+      product: <ProductCell image={blackChair} name="Columbia Shoes" />,
       price: <DefaultCell>$89.53</DefaultCell>,
       review: <ReviewCell rating={4.5} />,
       availability: (
@@ -50,7 +50,7 @@ const dataTableData = {
       id: <DefaultCell>230019</DefaultCell>,
     },
     {
-      product: <ProductCell image={chairPink} name="Bar Height Swivel Barstool" />,
+      product: <ProductCell image={chairPink} name="Versace Shoes" />,
       price: <DefaultCell>$99.99</DefaultCell>,
       review: <ReviewCell rating={5} />,
       availability: (
@@ -61,7 +61,7 @@ const dataTableData = {
       id: <DefaultCell>87120</DefaultCell>,
     },
     {
-      product: <ProductCell image={chairSteel} name="Signature Design by Ashley" />,
+      product: <ProductCell image={chairSteel} name="Adidas Hoodie" />,
       price: <DefaultCell>$129.00</DefaultCell>,
       review: <ReviewCell rating={4.5} />,
       availability: (
@@ -72,7 +72,7 @@ const dataTableData = {
       id: <DefaultCell>412301</DefaultCell>,
     },
     {
-      product: <ProductCell image={chairWood} name="Modern Square" />,
+      product: <ProductCell image={chairWood} name="Adidas Shoes" />,
       price: <DefaultCell>$59.99</DefaultCell>,
       review: <ReviewCell rating={4.5} />,
       availability: (

@@ -9,6 +9,36 @@ import {
 
 export const DataSource = "Ecommerce Demo [MASTER]";
 
+interface ActualVPotentialDimension extends Dimension {
+  Actual_Revenue: Attribute;
+  Potential_Revenue: Attribute;
+  ProductName: Attribute;
+  Product_ID: Attribute;
+}
+export const ActualVPotential = createDimension({
+  name: "Actual V Potential",
+  Actual_Revenue: createAttribute({
+    name: "Actual_Revenue",
+    type: "numeric-attribute",
+    expression: "[Actual V Potential.Actual_Revenue]",
+  }),
+  Potential_Revenue: createAttribute({
+    name: "Potential_Revenue",
+    type: "numeric-attribute",
+    expression: "[Actual V Potential.Potential_Revenue]",
+  }),
+  ProductName: createAttribute({
+    name: "ProductName",
+    type: "text-attribute",
+    expression: "[Actual V Potential.Product Name]",
+  }),
+  Product_ID: createAttribute({
+    name: "Product_ID",
+    type: "numeric-attribute",
+    expression: "[Actual V Potential.Product_ID]",
+  }),
+}) as ActualVPotentialDimension;
+
 interface BrandDimension extends Dimension {
   BrandName: Attribute;
   Brand_Id: Attribute;
@@ -46,22 +76,36 @@ export const Category = createDimension({
 }) as CategoryDimension;
 
 interface CommerceDimension extends Dimension {
+  Age: Attribute;
+  AgeRange: Attribute;
   Brand_ID: Attribute;
   Category_ID: Attribute;
   Cost: Attribute;
   Country: Attribute;
   CustomerName: Attribute;
   Customer_ID: Attribute;
+  DayOfWeek: Attribute;
   Gender: Attribute;
   Product_ID: Attribute;
   Quantity: Attribute;
   Revenue: Attribute;
   Status: Attribute;
   Transaction_ID: Attribute;
+  Birthdate: DateDimension;
   Transaction_Date: DateDimension;
 }
 export const Commerce = createDimension({
   name: "Commerce",
+  Age: createAttribute({
+    name: "Age",
+    type: "numeric-attribute",
+    expression: "[Commerce.Age]",
+  }),
+  AgeRange: createAttribute({
+    name: "AgeRange",
+    type: "text-attribute",
+    expression: "[Commerce.Age Range]",
+  }),
   Brand_ID: createAttribute({
     name: "Brand_ID",
     type: "numeric-attribute",
@@ -92,6 +136,11 @@ export const Commerce = createDimension({
     type: "numeric-attribute",
     expression: "[Commerce.Customer_ID]",
   }),
+  DayOfWeek: createAttribute({
+    name: "DayOfWeek",
+    type: "text-attribute",
+    expression: "[Commerce.DayOfWeek]",
+  }),
   Gender: createAttribute({
     name: "Gender",
     type: "text-attribute",
@@ -121,6 +170,10 @@ export const Commerce = createDimension({
     name: "Transaction_ID",
     type: "numeric-attribute",
     expression: "[Commerce.Transaction_ID]",
+  }),
+  Birthdate: createDateDimension({
+    name: "Birthdate",
+    expression: "[Commerce.Birthdate (Calendar)]",
   }),
   Transaction_Date: createDateDimension({
     name: "Transaction_Date",
