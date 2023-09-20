@@ -7,18 +7,27 @@ import Fade from "@mui/material/Fade";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import MDButton from "components/MDButton";
+import MDBox from "components/MDBox";
 
 import ExecuteQueryChart from "sisense/Charts/ExecuteQueryChart";
 import DayOfWeek from "sisense/Charts/DayOfWeek";
 import { ButtonGroup } from "components/ButtonGroup";
 import DailySales from "sisense/Charts/DailySales";
 
+import ProductCell from "layouts/ecommerce/products/product-page/components/ProductCell";
+
+import blackChair from "assets/images/ecommerce/AdidasUltraboostRunningShoes.png";
+import CampaignPerformance from "sisense/Charts/CampaignPerformance";
+import Sentiment from "sisense/Charts/Sentiment";
+import Summary from "sisense/Charts/Summary";
+import Discuss from "sisense/Charts/Discuss";
+
 const style = {
   position: "absolute" as "absolute",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 400,
+  width: 650,
   bgcolor: "background.paper",
   border: "2px solid #000",
   boxShadow: 24,
@@ -32,7 +41,7 @@ export default function TransitionsModal() {
 
   const id = open ? "simple-popover" : undefined;
 
-  const [view, setView] = useState("Views");
+  const [view, setView] = useState("Campaign");
   return (
     <div>
       <MDButton
@@ -59,15 +68,25 @@ export default function TransitionsModal() {
       >
         <Fade in={open}>
           <Box sx={style}>
-            {view === "Views" && <DayOfWeek />}
-            {view === "Sales" && <DailySales />}
-            {view === "Discuss" && <DayOfWeek />}
-            {view === "Act" && <DailySales />}
-            <ButtonGroup
-              selected={view}
-              onChange={setView}
-              labels={["Views", "Sales", "Discuss", "Act"]}
-            />
+            <MDBox>
+              <MDBox mb={5}>
+                <ProductCell image={blackChair} name="Columbia Shoes" />
+              </MDBox>
+              <MDBox mb={5}>
+                {view === "Campaign" && <CampaignPerformance />}
+                {view === "Sales" && <DailySales />}
+                {view === "Sentiment" && <Sentiment />}
+                {view === "Discuss" && <Discuss />}
+                {view === "Summary" && <Summary />}
+              </MDBox>
+              <MDBox mb={5}>
+                <ButtonGroup
+                  selected={view}
+                  onChange={setView}
+                  labels={["Campaign", "Sales", "Sentiment", "Discuss", "Summary"]}
+                />
+              </MDBox>
+            </MDBox>
           </Box>
         </Fade>
       </Modal>

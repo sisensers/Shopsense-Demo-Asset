@@ -8,25 +8,26 @@ import { Data, measures, filters } from "@sisense/sdk-data";
 import MDBox from "components/MDBox";
 import MDProgress from "components/MDProgress";
 
-export default function DailySales(): JSX.Element {
-  const { sales } = reportsLineChartData;
+export default function Sentiment(): JSX.Element {
+  const { tasks } = reportsLineChartData;
+
   return (
     <MDBox>
       <MDBox>
         <ReportsLineChart
-          color="success"
+          color="warning"
           title="daily sales"
           description={
             <>
-              (<strong>+15%</strong>) increase in today sales.
+              (<strong>-52%</strong>) decrease in average review.
             </>
           }
-          date="updated 4 min ago"
-          chart={sales}
+          date="updated 35 min ago"
+          chart={tasks}
         />
       </MDBox>
       <MDBox>
-        <MDProgress variant="gradient" value={90} color="success" />
+        <MDProgress variant="gradient" value={30} color="error" />
       </MDBox>
     </MDBox>
   );

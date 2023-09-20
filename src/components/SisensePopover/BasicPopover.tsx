@@ -2,6 +2,10 @@ import * as React from "react";
 import Popover from "@mui/material/Popover";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import MDBox from "components/MDBox";
+
+import ProductCell from "layouts/ecommerce/products/product-page/components/ProductCell";
+import blackChair from "assets/images/ecommerce/AdidasUltraboostRunningShoes.png";
 
 // Sisense
 import ExecuteQueryChart from "sisense/Charts/ExecuteQueryChart";
@@ -43,8 +47,14 @@ export default function BasicPopover() {
           horizontal: "left",
         }}
       >
-        <Typography sx={{ p: 2 }}>The content of the Popover.</Typography>
-        <DayOfWeek />
+        <MDBox>
+          <MDBox mb={5}>
+            <ProductCell image={blackChair} name="Columbia Shoes" />
+          </MDBox>
+          <MDBox mb={1}>
+            <DayOfWeek />
+          </MDBox>
+        </MDBox>
       </Popover>
     </div>
   );
