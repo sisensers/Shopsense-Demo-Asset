@@ -17,6 +17,7 @@ Coded by www.creative-tim.com
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDAvatar from "components/MDAvatar";
+import TransitionModal from "components/SisenseModal/TransitionModal";
 
 // Declaring props types for ProductCell
 interface Props {
