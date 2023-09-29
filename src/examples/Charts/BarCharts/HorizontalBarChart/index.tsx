@@ -16,6 +16,7 @@ Coded by www.creative-tim.com
 import { ReactNode, useMemo } from "react";
 
 // react-chartjs-2 components
+import "chart.js/auto";
 import { Bar } from "react-chartjs-2";
 
 // @mui material components

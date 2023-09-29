@@ -16,6 +16,7 @@ Coded by www.creative-tim.com
 import { useRef, useEffect, useState, useMemo, ReactNode } from "react";
 
 // react-chartjs-2 components
+import "chart.js/auto";
 import { Line } from "react-chartjs-2";
 
 // @mui material components

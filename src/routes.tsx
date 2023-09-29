@@ -65,6 +65,11 @@ import SignInIllustration from "layouts/authentication/sign-in/illustration";
 import SignUpCover from "layouts/authentication/sign-up/cover";
 import ResetCover from "layouts/authentication/reset-password/cover";
 
+import SisenseCharts from "layouts/pages-sisense/charts";
+import NivoCharts from "layouts/pages-sisense/nivo-charts";
+import SisenseOrderList from "layouts/pages-sisense/order-list";
+import SisenseProductPage from "layouts/pages-sisense/product-page";
+
 // Material Dashboard 2 PRO React TS components
 import MDAvatar from "components/MDAvatar";
 
@@ -347,6 +352,74 @@ const routes = [
             component: <ResetCover />,
           },
         ],
+      },
+    ],
+  },
+  {
+    type: "collapse",
+    name: "Sisense",
+    key: "sisense",
+    icon: <Icon fontSize="medium">analytics</Icon>,
+    collapse: [
+      {
+        name: "Charts",
+        key: "charts",
+        collapse: [
+          {
+            name: "Basic",
+            key: "basic",
+            route: "/sisense/charts/basic",
+            component: <SisenseCharts />,
+          },
+          {
+            name: "ChartsJS",
+            key: "chartjs",
+            route: "/sisense/charts/chartjs",
+            component: <SisenseCharts />,
+          },
+          {
+            name: "Nivo",
+            key: "nivo",
+            route: "/sisense/charts/nivo",
+            component: <NivoCharts />,
+          },
+        ],
+      },
+      {
+        name: "Tables",
+        key: "tables",
+        collapse: [
+          {
+            name: "Basic",
+            key: "basic",
+            route: "/sisense/tables/basic",
+            component: <SisenseOrderList />,
+          },
+          {
+            name: "ChartsJS",
+            key: "chartjs",
+            route: "/sisense/tables/chartjs",
+            component: <SisenseOrderList />,
+          },
+          {
+            name: "Advanced",
+            key: "advanced",
+            route: "/sisense/tables/advanced",
+            component: <SisenseOrderList />,
+          },
+        ],
+      },
+      {
+        name: "Order List",
+        key: "order-list",
+        route: "/sisense/order-list",
+        component: <SisenseOrderList />,
+      },
+      {
+        name: "Product Page",
+        key: "product-page",
+        route: "/sisense/product-page",
+        component: <SisenseProductPage />,
       },
     ],
   },
