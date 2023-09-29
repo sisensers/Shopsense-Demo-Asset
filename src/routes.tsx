@@ -66,6 +66,7 @@ import SignUpCover from "layouts/authentication/sign-up/cover";
 import ResetCover from "layouts/authentication/reset-password/cover";
 
 import SisenseCharts from "layouts/pages-sisense/charts";
+import NivoCharts from "layouts/pages-sisense/nivo-charts";
 import SisenseOrderList from "layouts/pages-sisense/order-list";
 import SisenseProductPage from "layouts/pages-sisense/product-page";
 
@@ -363,8 +364,50 @@ const routes = [
       {
         name: "Charts",
         key: "charts",
-        route: "/sisense/charts",
-        component: <SisenseCharts />,
+        collapse: [
+          {
+            name: "Basic",
+            key: "basic",
+            route: "/sisense/charts/basic",
+            component: <SisenseCharts />,
+          },
+          {
+            name: "ChartsJS",
+            key: "chartjs",
+            route: "/sisense/charts/chartjs",
+            component: <SisenseCharts />,
+          },
+          {
+            name: "Nivo",
+            key: "nivo",
+            route: "/sisense/charts/nivo",
+            component: <NivoCharts />,
+          },
+        ],
+      },
+      {
+        name: "Tables",
+        key: "tables",
+        collapse: [
+          {
+            name: "Basic",
+            key: "basic",
+            route: "/sisense/tables/basic",
+            component: <SisenseOrderList />,
+          },
+          {
+            name: "ChartsJS",
+            key: "chartjs",
+            route: "/sisense/tables/chartjs",
+            component: <SisenseOrderList />,
+          },
+          {
+            name: "Advanced",
+            key: "advanced",
+            route: "/sisense/tables/advanced",
+            component: <SisenseOrderList />,
+          },
+        ],
       },
       {
         name: "Order List",
