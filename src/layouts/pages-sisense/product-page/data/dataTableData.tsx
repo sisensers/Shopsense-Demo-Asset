@@ -1,32 +1,23 @@
-/**
-=========================================================
-* Material Dashboard 2 PRO React TS - v1.0.2
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-2-pro-react-ts
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
-// Material Dashboard 2 PRO React TS components
+import React from "react";
 import MDBox from "components/MDBox";
 import MDProgress from "components/MDProgress";
-
-// ProductPage page components
+import MDTypography from "components/MDTypography";
+import HoverTooltip from "components/SisenseTooltip/HoverTooltip";
+import HoverTooltipVersace from "components/SisenseTooltip/HoverTooltipVersace";
+import TooltipContent from "components/SisenseTooltip/TooltipContent";
+import TooltipContentVersace from "components/SisenseTooltip/TooltipContentVersace";
+import DataTable from "examples/Tables/DataTable";
 import ProductCell from "layouts/ecommerce/products/product-page/components/ProductCell";
 import ReviewCell from "layouts/ecommerce/products/product-page/components/ReviewCell";
 import DefaultCell from "layouts/ecommerce/products/product-page/components/DefaultCell";
-
-// Images
 import blackChair from "assets/images/ecommerce/AdidasUltraboostRunningShoes.png";
 import chairPink from "assets/images/ecommerce/VersaceMedusaHeadHighTopSneakers.png";
 import chairSteel from "assets/images/ecommerce/adidas-hoodie.jpeg";
 import chairWood from "assets/images/ecommerce/Adidas.png";
+import HoverTooltipAdidas from "components/SisenseTooltip/HoverTooltipAdidas";
+import TooltipContentAdidas from "components/SisenseTooltip/TooltipContentAdidas";
+import HoverTooltipAdidasShoes from "components/SisenseTooltip/HoverTooltipAdidasShoes";
+import TooltipContentAdidasShoes from "components/SisenseTooltip/TooltipContentAdidasShoes";
 
 const dataTableData = {
   columns: [
@@ -39,7 +30,18 @@ const dataTableData = {
 
   rows: [
     {
-      product: <ProductCell image={blackChair} name="Columbia Shoes" />,
+      product: (
+        <>
+          <>
+            {/* Add the HoverTooltip component here */}
+            <HoverTooltip tooltipContent={TooltipContent}>
+              <span>
+                <ProductCell image={blackChair} name="Columbia Shoes" />
+              </span>
+            </HoverTooltip>
+          </>
+        </>
+      ),
       price: <DefaultCell>$89.53</DefaultCell>,
       review: <ReviewCell rating={4.5} />,
       availability: (
@@ -47,10 +49,25 @@ const dataTableData = {
           <MDProgress variant="gradient" value={80} color="success" />
         </MDBox>
       ),
-      id: <DefaultCell>230019</DefaultCell>,
+      id: (
+        <>
+          <DefaultCell>230019</DefaultCell>
+        </>
+      ),
     },
     {
-      product: <ProductCell image={chairPink} name="Versace Shoes" />,
+      product: (
+        <>
+          <>
+            {/* Add the HoverTooltip component here */}
+            <HoverTooltipVersace TooltipContentVersace={TooltipContentVersace}>
+              <span>
+                <ProductCell image={chairPink} name="Versace Shoes" />
+              </span>
+            </HoverTooltipVersace>
+          </>
+        </>
+      ),
       price: <DefaultCell>$99.99</DefaultCell>,
       review: <ReviewCell rating={5} />,
       availability: (
@@ -61,7 +78,18 @@ const dataTableData = {
       id: <DefaultCell>87120</DefaultCell>,
     },
     {
-      product: <ProductCell image={chairSteel} name="Adidas Hoodie" />,
+      product: (
+        <>
+          <>
+            {/* Add the HoverTooltip component here */}
+            <HoverTooltipAdidas tooltipContentadidas={TooltipContentAdidas}>
+              <span>
+                <ProductCell image={chairSteel} name="Adidas Hoodie" />
+              </span>
+            </HoverTooltipAdidas>
+          </>
+        </>
+      ),
       price: <DefaultCell>$129.00</DefaultCell>,
       review: <ReviewCell rating={4.5} />,
       availability: (
@@ -72,7 +100,18 @@ const dataTableData = {
       id: <DefaultCell>412301</DefaultCell>,
     },
     {
-      product: <ProductCell image={chairWood} name="Adidas Shoes" />,
+      product: (
+        <>
+          <>
+            {/* Add the HoverTooltip component here */}
+            <HoverTooltipAdidasShoes tooltipContentadidasshoes={TooltipContentAdidasShoes}>
+              <span>
+                <ProductCell image={chairWood} name="Adidas Shoes" />
+              </span>
+            </HoverTooltipAdidasShoes>
+          </>
+        </>
+      ),
       price: <DefaultCell>$59.99</DefaultCell>,
       review: <ReviewCell rating={4.5} />,
       availability: (

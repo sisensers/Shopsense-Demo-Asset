@@ -51,7 +51,7 @@ export default function TransitionsModal() {
         aria-describedby={id}
         onClick={handleOpen}
       >
-        Open modal
+        Order Insights
       </MDButton>
       <Modal
         aria-labelledby="transition-modal-title"

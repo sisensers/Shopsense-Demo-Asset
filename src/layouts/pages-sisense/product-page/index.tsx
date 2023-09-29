@@ -46,9 +46,13 @@ import BasicPopOver from "components/SisensePopover/BasicPopover";
 import TransitionModal from "components/SisenseModal/TransitionModal";
 import FollowCursorTooltips from "components/SisenseTooltip/FollowCursorTooltips";
 import ComplexStatisticsCard from "examples/Cards/StatisticsCards/ComplexStatisticsCard";
-
+import HoverTooltip from "components/SisenseTooltip/HoverTooltip";
+import TooltipContent from "components/SisenseTooltip/TooltipContent";
 import MapChart from "components/Maps/Map";
 import HighChartsDrill from "components/Maps/HighChartsDrill";
+import BasicPopover from "components/SisensePopover/BasicPopover";
+import tooltipcontent from "components/SisenseTooltip/TooltipContent";
+import MyComponent from "components/SisenseTooltip/TooltipContent";
 
 function SisenseProductPage(): JSX.Element {
   const [infoSB, setInfoSB] = useState<boolean>(false);
@@ -93,39 +97,6 @@ function SisenseProductPage(): JSX.Element {
                 </Grid>
               </Grid>
             </MDBox>
-            <MDBox mb={3}>
-              <MDTypography variant="h5" fontWeight="medium">
-                Microlytics
-              </MDTypography>
-            </MDBox>
-            <MDBox mt={1.5}>
-              <Grid container spacing={3}>
-                <Grid item xs={12} md={6} lg={3}>
-                  <MDBox mb={1.5}>
-                    <MDButton variant="gradient" color="info" onClick={openInfoSB} fullWidth>
-                      Tell me more with a SandBar
-                    </MDButton>
-                    {renderInfoSB}
-                  </MDBox>
-                </Grid>
-                <Grid item xs={12} md={6} lg={3}>
-                  <MDBox mb={1.5}>
-                    <BasicPopOver />
-                  </MDBox>
-                </Grid>
-                <Grid item xs={12} md={6} lg={3}>
-                  <MDBox mb={1.5}>
-                    <TransitionModal />
-                  </MDBox>
-                </Grid>
-                <Grid item xs={12} md={6} lg={3}>
-                  <MDBox mb={1.5}>
-                    <FollowCursorTooltips />
-                  </MDBox>
-                </Grid>
-              </Grid>
-            </MDBox>
-
             <MDBox mt={4} mb={2}>
               <MDBox mb={1} ml={2}>
                 <MDTypography variant="h5" fontWeight="medium">

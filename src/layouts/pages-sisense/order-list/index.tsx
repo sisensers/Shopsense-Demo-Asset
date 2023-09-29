@@ -40,6 +40,7 @@ import dataTableData from "layouts/ecommerce/orders/order-list/data/dataTableDat
 import { ExecuteQuery } from "@sisense/sdk-ui";
 import * as DM from "sisense/Schemas/ecommerce-master";
 import { Data, measures, filters } from "@sisense/sdk-data";
+import TransitionsModal from "components/SisenseModal/TransitionModalNoButton";
 
 function SisenseOrderList(): JSX.Element {
   const [menu, setMenu] = useState(null);
@@ -74,7 +75,7 @@ function SisenseOrderList(): JSX.Element {
       <MDBox my={3}>
         <MDBox display="flex" justifyContent="space-between" alignItems="flex-start" mb={2}>
           <MDButton variant="gradient" color="info">
-            new order
+            <TransitionsModal />
           </MDButton>
           <MDBox display="flex">
             <MDButton variant={menu ? "contained" : "outlined"} color="dark" onClick={openMenu}>

@@ -6,13 +6,13 @@ import { ExecuteQuery } from "@sisense/sdk-ui";
 import * as DM from "sisense/Schemas/ecommerce-master";
 import { Data, measures, filters } from "@sisense/sdk-data";
 
-export default function DayOfWeek(): JSX.Element {
+export default function DayOfWeekVersace(): JSX.Element {
   return (
     <ExecuteQuery
       dataSource={DM.DataSource}
       dimensions={[DM.Commerce.DayOfWeek]}
       measures={[measures.sum(DM.Commerce.Revenue, "Revenue")]}
-      filters={[filters.equals(DM.Brand.BrandName, "Columbia")]}
+      filters={[filters.equals(DM.Brand.BrandName, "Versace")]}
     >
       {(data: Data) => {
         console.log(data);

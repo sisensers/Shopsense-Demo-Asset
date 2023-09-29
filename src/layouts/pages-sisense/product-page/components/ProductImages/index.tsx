@@ -30,6 +30,8 @@ import image2 from "assets/images/products/NikeFreeRNFlyknitRunningShoes.png";
 import image3 from "assets/images/products/NikeFreeRNFlyknitRunningShoes.png";
 import image4 from "assets/images/products/NikeRosheRunSneakers.png";
 import image5 from "assets/images/products/NikeAirMax270RunningShoes.png";
+import { Popover } from "@mui/material";
+import BasicPopover from "components/SisensePopover/BasicPopover";
 
 function ProductImages(): JSX.Element {
   const [currentImage, setCurrentImage] = useState<string>(image1);

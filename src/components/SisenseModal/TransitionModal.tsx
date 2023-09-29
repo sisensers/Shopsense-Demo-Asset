@@ -21,6 +21,8 @@ import CampaignPerformance from "sisense/Charts/CampaignPerformance";
 import Sentiment from "sisense/Charts/Sentiment";
 import Summary from "sisense/Charts/Summary";
 import Discuss from "sisense/Charts/Discuss";
+import DefaultLineChart from "examples/Charts/LineCharts/DefaultLineChart";
+import SisenseLineChart from "sisense/Charts/SisenseLineChart";
 
 const style = {
   position: "absolute" as "absolute",
@@ -51,7 +53,7 @@ export default function TransitionsModal() {
         aria-describedby={id}
         onClick={handleOpen}
       >
-        Open modal
+        Store Insights
       </MDButton>
       <Modal
         aria-labelledby="transition-modal-title"
