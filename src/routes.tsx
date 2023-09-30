@@ -65,10 +65,12 @@ import SignInIllustration from "layouts/authentication/sign-in/illustration";
 import SignUpCover from "layouts/authentication/sign-up/cover";
 import ResetCover from "layouts/authentication/reset-password/cover";
 
+//Sisense
 import SisenseCharts from "layouts/pages-sisense/charts";
 import NivoCharts from "layouts/pages-sisense/nivo-charts";
 import SisenseOrderList from "layouts/pages-sisense/order-list";
 import SisenseProductPage from "layouts/pages-sisense/product-page";
+import SisenseMicroAnalyticsPage from "layouts/pages-sisense/micro-analytics";
 
 // Material Dashboard 2 PRO React TS components
 import MDAvatar from "components/MDAvatar";
@@ -408,6 +410,12 @@ const routes = [
             component: <SisenseOrderList />,
           },
         ],
+      },
+      {
+        name: "Micro Analytics",
+        key: "micro-analytics",
+        route: "/sisense/micro-analytics",
+        component: <SisenseMicroAnalyticsPage />,
       },
       {
         name: "Order List",
