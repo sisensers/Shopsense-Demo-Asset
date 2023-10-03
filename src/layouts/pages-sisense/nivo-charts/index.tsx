@@ -35,22 +35,22 @@ import PieChart from "sisense/Charts/PieChart";
 import RadarChart from "sisense/Charts/RadarChart";
 import PolarChart from "sisense/Charts/PolarChart";
 
-// Data
-import defaultLineChartData from "sisense/ChartData/defaultLineChartData";
-import gradientLineChartData from "sisense/ChartData/gradientLineChartData";
-import verticalBarChartData from "sisense/ChartData/verticalBarChartData";
-import horizontalBarChartData from "sisense/ChartData/horizontalBarChartData";
-import mixedChartData from "sisense/ChartData/mixedChartData";
-import bubbleChartData from "sisense/ChartData/bubbleChartData";
-import defaultDoughnutChartData from "sisense/ChartData/defaultDoughnutChartData";
-import pieChartData from "sisense/ChartData/pieChartData";
-import radarChartData from "sisense/ChartData/radarChartData";
-import polarChartData from "sisense/ChartData/polarChartData";
+// Dropdown
+import * as React from "react";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import ListItemText from "@mui/material/ListItemText";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
+import Checkbox from "@mui/material/Checkbox";
 
 // Sisense
 import { ExecuteQuery } from "@sisense/sdk-ui";
 import * as DM from "../../../sisense/Schemas/old-ecommerce";
-import { Data, measures } from "@sisense/sdk-data";
+import { Data, filters, measures } from "@sisense/sdk-data";
+import { useState } from "react";
+import { DateRangeFilterTile } from "@sisense/sdk-ui";
 
 //Nivo
 import NivoLine from "../../../sisense/Charts/NivoCharts/NivoLineExample";
@@ -59,10 +59,40 @@ import NivoHeapMap from "../../../sisense/Charts/NivoCharts/NivoHeapMapExample";
 import NivoRadialBar from "../../../sisense/Charts/NivoCharts/NivoRadialBarExample";
 
 function SisenseCharts(): JSX.Element {
+  const [dateRangeFilter, setDateRangeFilter] = useState(filters.dateRange(DM.Commerce.Date.Days));
+
   return (
     <DashboardLayout>
       <DashboardNavbar />
       <MDBox my={3}>
+        <MDBox mb={3}>
+          <Grid container spacing={3}>
+            <Grid item xs={12} md={6} sx={{ lineHeight: 0 }}>
+              <MDTypography variant="h5">Filters</MDTypography>
+              <MDTypography variant="button" color="text">
+                Sisense Filters that easily interact with all visualizations on page.
+              </MDTypography>
+            </Grid>
+          </Grid>
+        </MDBox>
+        <MDBox mb={6}>
+          <Grid container spacing={3}>
+            <Grid item xs={12} md={6}>
+              <div>
+                <DateRangeFilterTile
+                  title="Date Range"
+                  dataSource="Sample ECommerce"
+                  attribute={DM.Commerce.Date.Days}
+                  filter={dateRangeFilter}
+                  onChange={(filter) => {
+                    setDateRangeFilter(filter);
+                  }}
+                />
+              </div>
+            </Grid>
+            <Grid item xs={12} md={6}></Grid>
+          </Grid>
+        </MDBox>
         <MDBox mb={3}>
           <Grid container spacing={3}>
             <Grid item xs={12} md={6} sx={{ lineHeight: 0 }}>
@@ -77,81 +107,20 @@ function SisenseCharts(): JSX.Element {
         <MDBox mb={6}>
           <Grid container spacing={3}>
             <Grid item xs={12} md={6}>
-              <NivoLine />
+              <NivoLine filters={dateRangeFilter} />
             </Grid>
             <Grid item xs={12} md={6}>
-              <NivoBump />
-            </Grid>
-          </Grid>
-        </MDBox>
-        <MDBox mb={6}>
-          <Grid container spacing={3}>
-            <Grid item xs={12} md={6}>
-              <NivoHeapMap />
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <NivoRadialBar />
+              <NivoBump filters={dateRangeFilter} />
             </Grid>
           </Grid>
         </MDBox>
         <MDBox mb={6}>
           <Grid container spacing={3}>
             <Grid item xs={12} md={6}>
-              <MixedChart
-                icon={{ color: "primary", component: "auto_graph" }}
-                title="Mixed chart"
-                description="Analytics Insights"
-                height="19.75rem"
-                chart={mixedChartData}
-              />
+              <NivoHeapMap filters={dateRangeFilter} />
             </Grid>
             <Grid item xs={12} md={6}>
-              <BubbleChart
-                icon={{ color: "primary", component: "multiline_chart" }}
-                title="Bubble chart"
-                description="Users divided by regions"
-                chart={bubbleChartData}
-              />
-            </Grid>
-          </Grid>
-        </MDBox>
-        <MDBox mb={6}>
-          <Grid container spacing={3}>
-            <Grid item xs={12} md={6}>
-              <DefaultDoughnutChart
-                icon={{ color: "success", component: "donut_small" }}
-                title="Doughnut chart"
-                description="Affiliates program"
-                chart={defaultDoughnutChartData}
-              />
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <PieChart
-                icon={{ color: "success", component: "donut_small" }}
-                title="Pie chart"
-                description="Analytics Insights"
-                chart={pieChartData}
-              />
-            </Grid>
-          </Grid>
-        </MDBox>
-        <MDBox mb={3}>
-          <Grid container spacing={3}>
-            <Grid item xs={12} md={6}>
-              <RadarChart
-                icon={{ color: "warning", component: "data_saver_on" }}
-                title="Radar chart"
-                description="Sciences score"
-                chart={radarChartData}
-              />
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <PolarChart
-                icon={{ color: "warning", component: "scatter_plot" }}
-                title="Polar chart"
-                description="Analytics Insights"
-                chart={polarChartData}
-              />
+              <NivoRadialBar filters={dateRangeFilter} />
             </Grid>
           </Grid>
         </MDBox>

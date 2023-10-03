@@ -7,11 +7,15 @@ import CodeHighlight from "../../../components/CodeHighlight";
 import CodeBlock from "../../../components/CodeBlock";
 import SubTitle from "../../../components/SubTitle";
 import Paragraph from "../../../components/Paragraph";
-import { Data, measures } from "@sisense/sdk-data";
+import { Data, Filter, measures } from "@sisense/sdk-data";
 
 import { ResponsiveRadialBar } from "@nivo/radial-bar";
 
-export default function ExecuteQueryChart() {
+type Props = {
+  filters: Filter;
+};
+
+export default function ExecuteQueryChart(props: Props) {
   const [view, setView] = useState("Preview");
 
   return (
@@ -29,7 +33,7 @@ export default function ExecuteQueryChart() {
               measures.sum(DM.Commerce.Revenue, "Total Revenue"),
               measures.sum(DM.Commerce.Cost, "Total Cost"),
             ]}
-            filters={[]}
+            filters={[props.filters]}
           >
             {(data: Data) => {
               console.log("Nivo Radial Bar Sisense Data");

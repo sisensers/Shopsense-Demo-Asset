@@ -7,7 +7,7 @@ import CodeHighlight from "../../../components/CodeHighlight";
 import CodeBlock from "../../../components/CodeBlock";
 import SubTitle from "../../../components/SubTitle";
 import Paragraph from "../../../components/Paragraph";
-import { Data, measures } from "@sisense/sdk-data";
+import { Data, Filter, measures } from "@sisense/sdk-data";
 
 import {
   ResponsiveBump,
@@ -17,7 +17,11 @@ import {
   BumpSerieExtraProps,
 } from "@nivo/bump";
 
-export default function ExecuteQueryChart() {
+type Props = {
+  filters: Filter;
+};
+
+export default function ExecuteQueryChart(props: Props) {
   const [view, setView] = useState("Preview");
 
   return (
@@ -32,7 +36,7 @@ export default function ExecuteQueryChart() {
             dataSource={DM.DataSource}
             dimensions={[DM.Commerce.Date.Years, DM.Commerce.AgeRange]}
             measures={[measures.sum(DM.Commerce.Revenue, "Total Revenue")]}
-            filters={[]}
+            filters={[props.filters]}
           >
             {(data: Data) => {
               console.log("Nivo Bump Sisense Data Before Transformation");

@@ -51,27 +51,6 @@ import MapChart from "components/Maps/Map";
 import HighChartsDrill from "components/Maps/HighChartsDrill";
 
 function SisenseProductPage(): JSX.Element {
-  const [infoSB, setInfoSB] = useState<boolean>(false);
-
-  const openInfoSB = () => setInfoSB(true);
-  const closeInfoSB = () => setInfoSB(false);
-
-  const renderInfoSB = (
-    <MDSnackbar
-      icon="notifications"
-      title="Material Dashboard"
-      content="This analysis measures Revenue by days in transaction_date.
-      Total Revenue was 830.31 across all four days in transaction_date.
-      Values ranged from 100.15 (2/6/21) to 405.84 (4/2/21).
-      Revenue rose by 114% over the course of the series and ended on a good note,
-       increasing significantly in the final days in transaction_date.
-      The largest single increase occurred in 4/2/21 (+305%)."
-      dateTime="11 mins ago"
-      open={infoSB}
-      onClose={closeInfoSB}
-      close={closeInfoSB}
-    />
-  );
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -93,39 +72,6 @@ function SisenseProductPage(): JSX.Element {
                 </Grid>
               </Grid>
             </MDBox>
-            <MDBox mb={3}>
-              <MDTypography variant="h5" fontWeight="medium">
-                Microlytics
-              </MDTypography>
-            </MDBox>
-            <MDBox mt={1.5}>
-              <Grid container spacing={3}>
-                <Grid item xs={12} md={6} lg={3}>
-                  <MDBox mb={1.5}>
-                    <MDButton variant="gradient" color="info" onClick={openInfoSB} fullWidth>
-                      Tell me more with a SandBar
-                    </MDButton>
-                    {renderInfoSB}
-                  </MDBox>
-                </Grid>
-                <Grid item xs={12} md={6} lg={3}>
-                  <MDBox mb={1.5}>
-                    <BasicPopOver />
-                  </MDBox>
-                </Grid>
-                <Grid item xs={12} md={6} lg={3}>
-                  <MDBox mb={1.5}>
-                    <TransitionModal />
-                  </MDBox>
-                </Grid>
-                <Grid item xs={12} md={6} lg={3}>
-                  <MDBox mb={1.5}>
-                    <FollowCursorTooltips />
-                  </MDBox>
-                </Grid>
-              </Grid>
-            </MDBox>
-
             <MDBox mt={4} mb={2}>
               <MDBox mb={1} ml={2}>
                 <MDTypography variant="h5" fontWeight="medium">
