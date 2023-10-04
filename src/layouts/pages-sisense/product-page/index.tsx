@@ -53,6 +53,7 @@ import HighChartsDrill from "components/Maps/HighChartsDrill";
 import BasicPopover from "components/SisensePopover/BasicPopover";
 import tooltipcontent from "components/SisenseTooltip/TooltipContent";
 import MyComponent from "components/SisenseTooltip/TooltipContent";
+import TitlebarImageList from "components/imagelist";
 
 function SisenseProductPage(): JSX.Element {
   const [infoSB, setInfoSB] = useState<boolean>(false);
@@ -83,19 +84,7 @@ function SisenseProductPage(): JSX.Element {
         <Card sx={{ overflow: "visible" }}>
           <MDBox p={3}>
             <MDBox mb={3}>
-              <MDTypography variant="h5" fontWeight="medium">
-                Product Details
-              </MDTypography>
-            </MDBox>
-            <MDBox mb={3}>
-              <Grid container spacing={3}>
-                <Grid item xs={12} lg={6} xl={5}>
-                  <ProductImages />
-                </Grid>
-                <Grid item xs={12} lg={5} sx={{ mx: "auto" }}>
-                  <ProductInfo />
-                </Grid>
-              </Grid>
+              <TitlebarImageList />
             </MDBox>
             <MDBox mt={4} mb={2}>
               <MDBox mb={1} ml={2}>
