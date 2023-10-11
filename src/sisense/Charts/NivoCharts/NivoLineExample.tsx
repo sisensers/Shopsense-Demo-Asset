@@ -28,7 +28,7 @@ export default function ExecuteQueryChart(props: Props) {
         {view === "Preview" && (
           <ExecuteQuery
             dataSource={DM.DataSource}
-            dimensions={[DM.Commerce.Date.Months, DM.Commerce.Gender]}
+            dimensions={[DM.Commerce.Date.Months, DM.Commerce.AgeRange]}
             measures={[
               measures.sum(DM.Commerce.Revenue, "Total Revenue"),
               measures.sum(DM.Commerce.Cost, "Total Cost"),
