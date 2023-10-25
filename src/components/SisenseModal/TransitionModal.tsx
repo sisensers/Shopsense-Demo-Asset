@@ -72,9 +72,6 @@ export default function TransitionsModal() {
           <Box sx={style}>
             <MDBox>
               <MDBox mb={5}>
-                <ProductCell image={blackChair} name="Columbia Shoes" />
-              </MDBox>
-              <MDBox mb={5}>
                 {view === "Campaign" && <CampaignPerformance />}
                 {view === "Sales" && <DailySales />}
                 {view === "Sentiment" && <Sentiment />}

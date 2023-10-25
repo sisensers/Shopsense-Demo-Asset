@@ -1,5 +1,3 @@
-import MDButton from "components/MDButton";
-
 export const ButtonGroup: React.FC<{
   labels: string[];
   selected: string;
@@ -7,7 +5,7 @@ export const ButtonGroup: React.FC<{
 }> = ({ labels, onChange, selected }) => (
   <div className="inline-flex items-center ">
     {labels.map((label, index) => (
-      <MDButton
+      <button
         onClick={() => onChange(label)}
         key={index}
         className={`rounded-none hover:text-blue-600 text-sm bg-white hover:bg-slate-100 border border-slate-200 ${
@@ -23,7 +21,7 @@ export const ButtonGroup: React.FC<{
         `}
       >
         {label}
-      </MDButton>
+      </button>
     ))}
   </div>
 );

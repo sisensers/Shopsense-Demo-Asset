@@ -38,11 +38,11 @@ export default function CampaignPerformance(): JSX.Element {
           dataSource={DM.DataSource}
           dimensions={[DM.Commerce.Transaction_Date.Months]}
           measures={[measures.sum(DM.Commerce.Revenue, "Total Revenue")]}
-          filters={[filters.members(DM.Brand.BrandName, ["Adidas"])]}
+          filters={[]}
         >
           {(data: Data) => {
             console.log(data);
-            // const translatedMarket = TranslateSisenseDataToChartJS(data);
+            // const translatedMarket = TranslateSisenseDataToChartJS(data)
             return (
               <ReportsLineChart
                 color="dark"
@@ -93,6 +93,9 @@ export default function CampaignPerformance(): JSX.Element {
   );
 }
 
+function TranslateSisenseDataToChartJS(data: Data) {
+  throw new Error("Function not implemented.");
+}
 // function TranslateSisenseDataToChartJS(data: Data) {
 //   const lineNames: Array<string> = [];
 //   const xAxisLabels: Array<string> = [];

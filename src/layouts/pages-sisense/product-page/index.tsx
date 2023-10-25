@@ -54,6 +54,7 @@ import BasicPopover from "components/SisensePopover/BasicPopover";
 import tooltipcontent from "components/SisenseTooltip/TooltipContent";
 import MyComponent from "components/SisenseTooltip/TooltipContent";
 import TitlebarImageList from "components/imagelist";
+import CodePopover from "components/SisensePopover/CodePopover";
 
 function SisenseProductPage(): JSX.Element {
   const [infoSB, setInfoSB] = useState<boolean>(false);
@@ -89,7 +90,7 @@ function SisenseProductPage(): JSX.Element {
             <MDBox mt={4} mb={2}>
               <MDBox mb={1} ml={2}>
                 <MDTypography variant="h5" fontWeight="medium">
-                  Other Products
+                  <CodePopover />
                 </MDTypography>
               </MDBox>
               <DataTable

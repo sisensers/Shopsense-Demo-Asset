@@ -9,14 +9,8 @@ import image1 from "assets/images/products/NikeAirForce1Sneakers.png";
 import image2 from "assets/images/products/NikeFreeRNFlyknitRunningShoes.png";
 import image6 from "assets/images/products/VersaceMedusaHeadHighTopSneakers.png";
 import image7 from "assets/images/products/UnderArmourCrossTrainingShoes.png";
-import image4 from "assets/images/products/NikeRosheRunSneakers.png";
-import image5 from "assets/images/products/UnderArmourRunningShoes.png";
-import HoverTooltipAdidas from "./SisenseTooltip/HoverTooltipAdidas";
-import HoverTooltipAdidasShoes from "./SisenseTooltip/HoverTooltipAdidasShoes";
-import ProductCell from "layouts/dashboards/sales/components/ProductCell";
-import TooltipContentAdidasShoes from "./SisenseTooltip/TooltipContentAdidasShoes";
-import BasicPopover from "./SisensePopover/BasicPopover";
-import InfoPopover from "./SisensePopover/InfoPopover";
+import image4 from "assets/images/ecommerce/VersaceMedusaHeadHighTopSneakers.png";
+import image5 from "assets/images/ecommerce/adidas-hoodie.jpeg";
 
 export default function TitlebarImageList() {
   return (
@@ -32,11 +26,7 @@ export default function TitlebarImageList() {
             alt={item.title}
             loading="lazy"
           />
-          <ImageListItemBar
-            title={item.title}
-            subtitle={item.author}
-            actionIcon={<InfoPopover />}
-          />
+          <ImageListItemBar title={item.title} subtitle={item.author} />
         </ImageListItem>
       ))}
     </ImageList>
@@ -70,13 +60,13 @@ const itemData = [
   },
   {
     img: image4,
-    title: "Nike Rosh",
+    title: "Versace Shoes",
     author: "$135",
     cols: 2,
   },
   {
     img: image5,
-    title: "Under Armour Shoes",
+    title: "Adidas Hoodie",
     author: "$225",
     rows: 2,
     cols: 2,

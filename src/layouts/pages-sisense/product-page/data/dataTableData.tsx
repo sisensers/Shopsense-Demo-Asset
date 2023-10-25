@@ -18,6 +18,7 @@ import HoverTooltipAdidas from "components/SisenseTooltip/HoverTooltipAdidas";
 import TooltipContentAdidas from "components/SisenseTooltip/TooltipContentAdidas";
 import HoverTooltipAdidasShoes from "components/SisenseTooltip/HoverTooltipAdidasShoes";
 import TooltipContentAdidasShoes from "components/SisenseTooltip/TooltipContentAdidasShoes";
+import FollowCursorTooltips from "components/SisenseTooltip/FollowCursorTooltips";
 
 const dataTableData = {
   columns: [
@@ -43,7 +44,11 @@ const dataTableData = {
         </>
       ),
       price: <DefaultCell>$89.53</DefaultCell>,
-      review: <ReviewCell rating={4.5} />,
+      review: (
+        <span>
+          <ReviewCell rating={4.5} />
+        </span>
+      ),
       availability: (
         <MDBox width="8rem">
           <MDProgress variant="gradient" value={80} color="success" />

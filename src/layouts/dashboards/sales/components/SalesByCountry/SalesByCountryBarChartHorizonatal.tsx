@@ -24,7 +24,6 @@ import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDButton from "components/MDButton";
 import MDBadgeDot from "components/MDBadgeDot";
-import PieChart from "examples/Charts/PieChart";
 
 // Data
 import channelChartData from "layouts/dashboards/sales/components/ChannelsChart/data";
@@ -33,9 +32,10 @@ import channelChartData from "layouts/dashboards/sales/components/ChannelsChart/
 import { useMaterialUIController } from "context";
 import SisensePieChart from "sisense/Charts/sisensePirChart";
 import RerouteButton from "components/Reroute";
-import SalesLineChart from "../SalesLineChart";
+import SisenseLineChart from "sisense/Charts/LineChart";
+import SalesBarChart from "./SalesByCountryBarChart";
 
-function ChannelsChart(): JSX.Element {
+function SalesByCountryBar(): JSX.Element {
   const [controller] = useMaterialUIController();
   const { darkMode } = controller;
 
@@ -44,16 +44,15 @@ function ChannelsChart(): JSX.Element {
       <MDBox display="flex" justifyContent="space-between" alignItems="center" pt={2} px={2}>
         <MDTypography variant="h6">Age Demographic</MDTypography>
         <Tooltip
-          title="Total Revenue
-Total Revenue for these five Age Ranges is $9M. Percentage contributions to the total lie between 16.2% and 31.9% for the different Age Ranges.
-
-The Age Range values, in order of importance, are as follows:
-
-41-50, $2.9M (31.9% of the total)
-30-35, $1.7M (19.1%)
-36-40, $1.5M (16.5%)
-20-24, $1.5M (16.3%)
-25-29, $1.5M (16.2%)"
+          title="Sales
+          Statistical Analysis
+          For year 2023, Sales are 3M.
+          
+          Trend Analysis
+          For the period between January 2023 and December 2023, Sales rose from 251.7K to 255.5K, reaching a high of 269K in October 2023.
+          
+          Time Variance Analysis
+          Compared to the previous period, the overall Sales increased by 24.5K (10.6%) from 231K to 255.5K between November 2023 and December 2023 "
           placement="bottom"
           arrow
         >
@@ -65,7 +64,7 @@ The Age Range values, in order of importance, are as follows:
       <MDBox mt={3}>
         <Grid container alignItems="center">
           <Grid item xs={20}>
-            <SisensePieChart />
+            <SalesBarChart />
           </Grid>
         </Grid>
       </MDBox>
@@ -81,4 +80,4 @@ The Age Range values, in order of importance, are as follows:
   );
 }
 
-export default ChannelsChart;
+export default SalesByCountryBar;
