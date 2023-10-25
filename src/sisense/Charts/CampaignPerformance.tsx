@@ -46,7 +46,7 @@ export default function CampaignPerformance(): JSX.Element {
             return (
               <ReportsLineChart
                 color="dark"
-                title="completed tasks"
+                title="Ad Impressions Over Time"
                 description="Last Campaign Performance"
                 date="just updated"
                 chart={tasks}
@@ -92,7 +92,6 @@ export default function CampaignPerformance(): JSX.Element {
     </MDBox>
   );
 }
-
 function TranslateSisenseDataToChartJS(data: Data) {
   throw new Error("Function not implemented.");
 }

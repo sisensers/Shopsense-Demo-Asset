@@ -87,7 +87,7 @@ function Analytics(): JSX.Element {
               <MDBox mb={3}>
                 <ReportsLineChart
                   color="success"
-                  title="daily sales"
+                  title="Monthly Sales"
                   description={
                     <>
                       (<strong>+15%</strong>) increase in today sales.
@@ -102,7 +102,7 @@ function Analytics(): JSX.Element {
               <MDBox mb={3}>
                 <ReportsLineChart
                   color="dark"
-                  title="completed tasks"
+                  title="AD Impressions"
                   description="Last Campaign Performance"
                   date="just updated"
                   chart={tasks}
@@ -118,7 +118,7 @@ function Analytics(): JSX.Element {
                 <ComplexStatisticsCard
                   color="dark"
                   icon="weekend"
-                  title="Bookings"
+                  title="Items on Order"
                   count={281}
                   percentage={{
                     color: "success",
@@ -132,7 +132,7 @@ function Analytics(): JSX.Element {
               <MDBox mb={1.5}>
                 <ComplexStatisticsCard
                   icon="leaderboard"
-                  title="Today's Users"
+                  title="New Customers"
                   count="2,300"
                   percentage={{
                     color: "success",
@@ -148,7 +148,7 @@ function Analytics(): JSX.Element {
                   color="success"
                   icon="store"
                   title="Revenue"
-                  count="34k"
+                  count="$3M"
                   percentage={{
                     color: "success",
                     amount: "+1%",
@@ -160,9 +160,9 @@ function Analytics(): JSX.Element {
             <Grid item xs={12} md={6} lg={3}>
               <MDBox mb={1.5}>
                 <ComplexStatisticsCard
-                  color="primary"
-                  icon="person_add"
-                  title="Followers"
+                  color="info"
+                  icon="leaderboard"
+                  title="Return Customers"
                   count="+91"
                   percentage={{
                     color: "success",

@@ -14,8 +14,6 @@ import DayOfWeek from "sisense/Charts/DayOfWeek";
 import { ButtonGroup } from "components/ButtonGroup";
 import DailySales from "sisense/Charts/DailySales";
 
-import ProductCell from "layouts/ecommerce/products/product-page/components/ProductCell";
-
 import blackChair from "assets/images/ecommerce/AdidasUltraboostRunningShoes.png";
 import CampaignPerformance from "sisense/Charts/CampaignPerformance";
 import Sentiment from "sisense/Charts/Sentiment";
@@ -34,7 +32,7 @@ const style = {
   p: 4,
 };
 
-export default function TransitionsModal() {
+export default function OrderInsights() {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);

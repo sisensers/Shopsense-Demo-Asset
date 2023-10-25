@@ -16,10 +16,10 @@ export default function Sentiment(): JSX.Element {
       <MDBox>
         <ReportsLineChart
           color="warning"
-          title="daily sales"
+          title="Customer Review Sentiment"
           description={
             <>
-              (<strong>-52%</strong>) decrease in average review.
+              (<strong>+52%</strong>) increase in positive reviews.
             </>
           }
           date="updated 35 min ago"
@@ -27,7 +27,7 @@ export default function Sentiment(): JSX.Element {
         />
       </MDBox>
       <MDBox>
-        <MDProgress variant="gradient" value={30} color="error" />
+        <MDProgress variant="gradient" value={52} color="error" />
       </MDBox>
     </MDBox>
   );

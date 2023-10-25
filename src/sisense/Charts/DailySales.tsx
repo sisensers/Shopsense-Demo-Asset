@@ -15,10 +15,10 @@ export default function DailySales(): JSX.Element {
       <MDBox>
         <ReportsLineChart
           color="success"
-          title="daily sales"
+          title="Monthly sales"
           description={
             <>
-              (<strong>+15%</strong>) increase in today sales.
+              (<strong>+15%</strong>) increase YOY.
             </>
           }
           date="updated 4 min ago"

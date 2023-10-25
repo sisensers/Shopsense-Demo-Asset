@@ -14,15 +14,11 @@ import DayOfWeek from "sisense/Charts/DayOfWeek";
 import { ButtonGroup } from "components/ButtonGroup";
 import DailySales from "sisense/Charts/DailySales";
 
-import ProductCell from "layouts/ecommerce/products/product-page/components/ProductCell";
-
 import blackChair from "assets/images/ecommerce/AdidasUltraboostRunningShoes.png";
 import CampaignPerformance from "sisense/Charts/CampaignPerformance";
 import Sentiment from "sisense/Charts/Sentiment";
 import Summary from "sisense/Charts/Summary";
 import Discuss from "sisense/Charts/Discuss";
-import DefaultLineChart from "examples/Charts/LineCharts/DefaultLineChart";
-import SisenseLineChart from "sisense/Charts/SisenseLineChart";
 
 const style = {
   position: "absolute" as "absolute",
@@ -53,7 +49,7 @@ export default function TransitionsModal() {
         aria-describedby={id}
         onClick={handleOpen}
       >
-        Store Insights
+        Open modal
       </MDButton>
       <Modal
         aria-labelledby="transition-modal-title"
@@ -71,6 +67,7 @@ export default function TransitionsModal() {
         <Fade in={open}>
           <Box sx={style}>
             <MDBox>
+              <MDBox mb={5}></MDBox>
               <MDBox mb={5}>
                 {view === "Campaign" && <CampaignPerformance />}
                 {view === "Sales" && <DailySales />}

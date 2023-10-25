@@ -48,19 +48,17 @@ export default function BasicPopover() {
           horizontal: "left",
         }}
       >
-        <MDBox mb={5}>
-          <MDBox mb={0} style={{ backgroundColor: "white", borderRadius: "8px 8px 0 0" }}>
+        <MDBox mb={5} style={{ backgroundColor: "white", borderRadius: "8px" }}>
+          <MDBox mb={0}>
             <ProductCell
               image={ReactLogo}
               name={
-                // Use `as string` to cast the JSX element to a string
-                // Use `as string` to cast the JSX element to a string
                 (
                   <a
                     href="https://www.sisense.com/blog/take-control-of-your-data-visualizations/?utm_source=linkedin&utm_medium=organic_social"
                     target="_blank"
                     rel="noopener noreferrer"
-                    style={{ color: "blue", textDecoration: "underline", cursor: "pointer" }}
+                    style={{ color: "info", textDecoration: "underline", cursor: "pointer" }}
                   >
                     Connecting Sisense to third-party visualizations
                   </a>

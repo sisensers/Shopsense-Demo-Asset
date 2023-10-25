@@ -1,52 +1,32 @@
 import React, { useMemo, useState } from "react";
 import CodeHighlight from "components/CodeHighlight";
-import { ButtonGroup } from "components/ButtonGroup";
-import SubTitle from "components/SubTitle";
-import Header from "components/Header";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
-import {
-  ExecuteQuery,
-  BarChart,
-  LineChart,
-  PieChart,
-  IndicatorChart,
-  ColumnChart,
-  MemberFilterTile,
-  Chart,
-  StyleOptions,
-  IndicatorStyleOptions,
-  LineStyleOptions,
-  PieStyleOptions,
-  ThemeProvider,
-} from "@sisense/sdk-ui";
+import { ExecuteQuery, MemberFilterTile, Chart, ThemeProvider } from "@sisense/sdk-ui";
 import { Data, measures, filters, Filter } from "@sisense/sdk-data";
 import * as DM from "sisense/Schemas/ecommerce-master";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
-import SalesByCountryTable from "./components/SalesByCountry";
-import { Popover } from "@mui/material";
 import CodeBlock from "components/CodeBlock";
 import { dashboardCodeExample } from "./dashboardCodeExample";
 
 const theme = {
   chart: {
-    general: "#348CEC",
     textColor: "#3C3C44",
-    secondaryTextColor: "#348CEC",
   },
-  colorPaletteTheme: { Colors: ["#B1D4E0", "#0C2D48", "#050A30", "#7EC8E3"] },
+  general: {
+    brandColor: "#2196f3",
+    primaryButtonTextColor: "white",
+  },
+  palette: {
+    variantColors: ["#2196f3", "#0d47a1", "#050A30", "#7EC8E3"],
+  },
   typography: {
     fontFamily: "roboto",
   },
 };
-
-const drilldownOptions = {
-  drilldownCategories: [DM.Category.CategoryName, DM.Brand.BrandName, DM.Product.Prod],
-};
-
 type DataPointEventHandler = (point: { category: any; breakBy: any[] }) => void;
 
 export default function Dashboard() {
@@ -100,6 +80,22 @@ export default function Dashboard() {
     productnameFilter,
   ]);
 
+  const [isFilterColumnVisible, setFilterColumnVisibility] = useState(true);
+
+  const toggleFilterColumn = () => {
+    setFilterColumnVisibility(!isFilterColumnVisible);
+  };
+
+  const handleButtonClick = (action: string) => {
+    if (action === "Preview") {
+      setView("Preview");
+    } else if (action === "React") {
+      setView("React");
+    } else if (action === "ToggleFilterColumn") {
+      toggleFilterColumn();
+    }
+  };
+
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -109,14 +105,27 @@ export default function Dashboard() {
             <button
               style={{
                 padding: "6px 12px",
+                borderRadius: "12px",
+                backgroundColor: isFilterColumnVisible ? "#2196f3" : "#ecf0f1",
+                color: isFilterColumnVisible ? "#ffffff" : "#333",
+                border: "none",
+                cursor: "pointer",
+              }}
+              onClick={() => handleButtonClick("ToggleFilterColumn")}
+            >
+              {isFilterColumnVisible ? "Hide Filters" : "Show Filters"}
+            </button>
+            <button
+              style={{
+                padding: "6px 12px",
                 borderRadius: "10px",
                 marginRight: "8px",
-                backgroundColor: view === "Preview" ? "#3498db" : "#ecf0f1",
+                backgroundColor: view === "Preview" ? "#2196f3" : "#ecf0f1",
                 color: view === "Preview" ? "#ffffff" : "#333",
                 border: "none",
                 cursor: "pointer",
               }}
-              onClick={() => setView("Preview")}
+              onClick={() => handleButtonClick("Preview")}
             >
               Dashboard
             </button>
@@ -124,20 +133,19 @@ export default function Dashboard() {
               style={{
                 padding: "6px 12px",
                 borderRadius: "12px",
-                backgroundColor: view === "React" ? "#3498db" : "#ecf0f1",
+                backgroundColor: view === "React" ? "#2196f3" : "#ecf0f1",
                 color: view === "React" ? "#ffffff" : "#333",
                 border: "none",
                 cursor: "pointer",
               }}
-              onClick={() => setView("React")}
+              onClick={() => handleButtonClick("React")}
             >
-              React
+              Code
             </button>
           </div>
           {view === "React" && <CodeBlock language="tsx">{dashboardCodeExample}</CodeBlock>}
         </article>
       </CodeHighlight>
-
       <ExecuteQuery
         dataSource={DM.DataSource}
         dimensions={[
@@ -157,20 +165,26 @@ export default function Dashboard() {
         ]}
       >
         {(data: Data) => (
-          <Grid container spacing={-10}>
+          <Grid container spacing={-1}>
             {/* MemberFilterTile column */}
-            <Grid item xs={12} md={3}>
+            <Grid item xs={12} md={2} style={{ display: isFilterColumnVisible ? "block" : "none" }}>
               <Card
                 style={{
                   height: "100vh",
-                  width: "30vh", // Set the height to 100% of the viewport height
+                  width: "75%",
                   display: "flex",
                   flexDirection: "column",
-                  justifyContent: "center", // Center content vertically
-                  alignItems: "center", // Center content horizontally
+                  justifyContent: "center",
+                  alignItems: "center",
                 }}
               >
-                <CardContent style={{ flex: 1, padding: 20 }}>
+                <CardContent style={{ flex: "auto", padding: 25, textAlign: "center" }}>
+                  <Typography
+                    variant="h6"
+                    style={{ fontWeight: "bold", fontFamily: "Roboto", marginBottom: 15 }}
+                  >
+                    Dashboard Filters
+                  </Typography>
                   <ThemeProvider theme={theme}>
                     <MemberFilterTile
                       title={"Category"}
@@ -181,7 +195,7 @@ export default function Dashboard() {
                     />
                   </ThemeProvider>
                 </CardContent>
-                <CardContent style={{ flex: 10, padding: 0 }}>
+                <CardContent style={{ flex: "auto", padding: 0 }}>
                   <ThemeProvider theme={theme}>
                     <MemberFilterTile
                       title={"Brand"}
@@ -192,7 +206,7 @@ export default function Dashboard() {
                     />
                   </ThemeProvider>
                 </CardContent>
-                <CardContent style={{ flex: 65, padding: 0 }}>
+                <CardContent style={{ flex: "auto", padding: 0 }}>
                   <ThemeProvider theme={theme}>
                     <MemberFilterTile
                       title={"Customer Sentiment"}
@@ -203,7 +217,7 @@ export default function Dashboard() {
                     />
                   </ThemeProvider>
                 </CardContent>
-                <CardContent style={{ flex: 350, padding: 0 }}>
+                <CardContent style={{ flex: "auto", padding: 0 }}>
                   <ThemeProvider theme={theme}>
                     <MemberFilterTile
                       title={"Country"}
@@ -214,7 +228,7 @@ export default function Dashboard() {
                     />
                   </ThemeProvider>
                 </CardContent>
-                <CardContent style={{ flex: 1600, padding: 0 }}>
+                <CardContent style={{ flex: "auto", padding: 0 }}>
                   <ThemeProvider theme={theme}>
                     <MemberFilterTile
                       title={"Demographic"}
@@ -225,7 +239,7 @@ export default function Dashboard() {
                     />
                   </ThemeProvider>
                 </CardContent>
-                <CardContent style={{ flex: 6000, padding: 0 }}>
+                <CardContent style={{ flex: "auto", padding: 0 }}>
                   <ThemeProvider theme={theme}>
                     <MemberFilterTile
                       title={"Day Of Week"}
@@ -236,7 +250,7 @@ export default function Dashboard() {
                     />
                   </ThemeProvider>
                 </CardContent>
-                <CardContent style={{ flex: 18000, padding: 0 }}>
+                <CardContent style={{ flex: "auto", padding: 0 }}>
                   <ThemeProvider theme={theme}>
                     <MemberFilterTile
                       title={"Product"}
@@ -253,62 +267,8 @@ export default function Dashboard() {
             {/* Charts */}
             <Grid item xs={12} md={9}>
               {/* Place your charts here */}
-              {/* For example, a chart for Sales By Age Demographic */}
-              <Grid container spacing={2}>
-                <Grid item xs={12} sm={6} md={4}>
-                  <Card>
-                    <CardContent>
-                      <Typography variant="h6">Cost</Typography>
-                      <ThemeProvider theme={theme}>
-                        <Chart
-                          dataSet={DM.DataSource}
-                          chartType={"indicator"}
-                          dataOptions={{
-                            value: [measures.sum(DM.Commerce.Cost, "Total Cost")],
-                          }}
-                          filters={filters}
-                        />
-                      </ThemeProvider>
-                    </CardContent>
-                  </Card>
-                </Grid>
 
-                <Grid item xs={12} sm={6} md={4}>
-                  <Card>
-                    <CardContent>
-                      <Typography variant="h6">Revenue</Typography>
-                      <ThemeProvider theme={theme}>
-                        <Chart
-                          dataSet={DM.DataSource}
-                          chartType={"indicator"}
-                          dataOptions={{
-                            value: [measures.sum(DM.Commerce.Revenue, "Orders Revenue")],
-                          }}
-                          filters={filters}
-                        />
-                      </ThemeProvider>
-                    </CardContent>
-                  </Card>
-                </Grid>
-
-                <Grid item xs={12} sm={6} md={4}>
-                  <Card>
-                    <CardContent>
-                      <Typography variant="h6">Orders Filled</Typography>
-                      <ThemeProvider theme={theme}>
-                        <Chart
-                          dataSet={DM.DataSource}
-                          chartType={"indicator"}
-                          dataOptions={{
-                            value: [measures.sum(DM.Commerce.Quantity, "Quantty")],
-                          }}
-                          filters={filters}
-                        />
-                      </ThemeProvider>
-                    </CardContent>
-                  </Card>
-                </Grid>
-
+              <Grid container spacing={1}>
                 <Grid item xs={12} md={6}>
                   <Card>
                     <CardContent>
@@ -387,6 +347,28 @@ export default function Dashboard() {
                               category: [DM.Commerce.Transaction_Date.Months],
                               value: [measures.sum(DM.Commerce.Revenue, "Revenue")],
                               breakBy: [],
+                            }}
+                            filters={filters}
+                          />
+                        </div>
+                      </ThemeProvider>
+                    </CardContent>
+                  </Card>
+                </Grid>
+
+                <Grid item xs={5} md={12}>
+                  <Card>
+                    <CardContent>
+                      <Typography variant="h6">Cost Over Time By Customer Sentient</Typography>
+                      <ThemeProvider theme={theme}>
+                        <div style={{ height: "280px" }}>
+                          <Chart
+                            dataSet={DM.DataSource}
+                            chartType={"area"}
+                            dataOptions={{
+                              category: [DM.Commerce.Transaction_Date.Months],
+                              value: [measures.sum(DM.Commerce.Cost, "Revenue")],
+                              breakBy: [DM.CustomerReviews.Sentiment],
                             }}
                             filters={filters}
                           />
