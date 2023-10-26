@@ -91,6 +91,9 @@
     ]
   },
   "devDependencies": {
+    "@babel/cli": "^7.23.0",
+    "@babel/core": "^7.23.2",
+    "@babel/preset-env": "^7.23.2",
     "@sisense/sdk-cli": "^0.11.3",
     "@types/chroma-js": "2.4.0",
     "@types/draft-convert": "^2.1.4",
