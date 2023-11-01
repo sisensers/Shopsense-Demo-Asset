@@ -7,9 +7,16 @@ import HoverTooltipVersace from "components/SisenseTooltip/HoverTooltipVersace";
 import TooltipContent from "components/SisenseTooltip/TooltipContent";
 import TooltipContentVersace from "components/SisenseTooltip/TooltipContentVersace";
 import DataTable from "examples/Tables/DataTable";
-import ProductCell from "layouts/ecommerce/products/product-page/components/ProductCell";
-import ReviewCell from "layouts/ecommerce/products/product-page/components/ReviewCell";
-import DefaultCell from "layouts/ecommerce/products/product-page/components/DefaultCell";
+// import ProductCell from "layouts/ecommerce/products/product-page/components/ProductCell";
+// import ReviewCell from "layouts/ecommerce/products/product-page/components/ReviewCell";
+// import DefaultCell from "layouts/ecommerce/products/product-page/components/DefaultCell";
+
+// ProductPage page components
+import ProductCell from "layouts/pages-sisense/product-page/components/ProductCell";
+import ReviewCell from "layouts/pages-sisense/product-page/components/ReviewCell";
+import DefaultCell from "layouts/pages-sisense/product-page/components/DefaultCell";
+
+// Images
 import blackChair from "assets/images/ecommerce/AdidasUltraboostRunningShoes.png";
 import chairPink from "assets/images/ecommerce/VersaceMedusaHeadHighTopSneakers.png";
 import chairSteel from "assets/images/ecommerce/adidas-hoodie.jpeg";

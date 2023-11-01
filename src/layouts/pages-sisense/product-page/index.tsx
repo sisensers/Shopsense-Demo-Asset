@@ -56,27 +56,6 @@ import MyComponent from "components/SisenseTooltip/TooltipContent";
 import TitlebarImageList from "components/imagelist";
 
 function SisenseProductPage(): JSX.Element {
-  const [infoSB, setInfoSB] = useState<boolean>(false);
-
-  const openInfoSB = () => setInfoSB(true);
-  const closeInfoSB = () => setInfoSB(false);
-
-  const renderInfoSB = (
-    <MDSnackbar
-      icon="notifications"
-      title="Material Dashboard"
-      content="This analysis measures Revenue by days in transaction_date.
-      Total Revenue was 830.31 across all four days in transaction_date.
-      Values ranged from 100.15 (2/6/21) to 405.84 (4/2/21).
-      Revenue rose by 114% over the course of the series and ended on a good note,
-       increasing significantly in the final days in transaction_date.
-      The largest single increase occurred in 4/2/21 (+305%)."
-      dateTime="11 mins ago"
-      open={infoSB}
-      onClose={closeInfoSB}
-      close={closeInfoSB}
-    />
-  );
   return (
     <DashboardLayout>
       <DashboardNavbar />
