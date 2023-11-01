@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+export const dashboardCodeExample = `import React, { useMemo, useState } from "react";
 import CodeHighlight from "components/CodeHighlight";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
@@ -170,13 +170,12 @@ export default function Dashboard() {
             <Grid item xs={12} md={2} style={{ display: isFilterColumnVisible ? "block" : "none" }}>
               <Card
                 style={{
-                  height: "auto",
-                  width: "auto",
+                  height: "100vh",
+                  width: "75%",
                   display: "flex",
                   flexDirection: "column",
                   justifyContent: "center",
                   alignItems: "center",
-                  marginRight: "10px",
                 }}
               >
                 <CardContent style={{ flex: "auto", padding: 25, textAlign: "center" }}>
@@ -266,7 +265,7 @@ export default function Dashboard() {
             </Grid>
 
             {/* Charts */}
-            <Grid item xs={12} md={10}>
+            <Grid item xs={12} md={9}>
               {/* Place your charts here */}
 
               <Grid container spacing={1}>
@@ -385,4 +384,4 @@ export default function Dashboard() {
       </ExecuteQuery>
     </DashboardLayout>
   );
-}
+}`;

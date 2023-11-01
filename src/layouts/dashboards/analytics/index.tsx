@@ -39,9 +39,9 @@ import reportsBarChartData from "layouts/dashboards/analytics/data/reportsBarCha
 import reportsLineChartData from "layouts/dashboards/analytics/data/reportsLineChartData";
 
 // Images
-import booking1 from "assets/images/products/product-1-min.jpg";
-import booking2 from "assets/images/products/product-2-min.jpg";
-import booking3 from "assets/images/products/product-3-min.jpg";
+import booking1 from "assets/images/ecommerce/Adidas.png";
+import booking2 from "assets/images/ecommerce/ColumbiaShoes.png";
+import booking3 from "assets/images/products/VersaceMedusaHeadHighTopSneakers.png";
 
 import DayOfWeek from "sisense/Charts/DayOfWeek";
 
@@ -87,7 +87,7 @@ function Analytics(): JSX.Element {
               <MDBox mb={3}>
                 <ReportsLineChart
                   color="success"
-                  title="daily sales"
+                  title="Monthly Sales"
                   description={
                     <>
                       (<strong>+15%</strong>) increase in today sales.
@@ -102,7 +102,7 @@ function Analytics(): JSX.Element {
               <MDBox mb={3}>
                 <ReportsLineChart
                   color="dark"
-                  title="completed tasks"
+                  title="AD Impressions"
                   description="Last Campaign Performance"
                   date="just updated"
                   chart={tasks}
@@ -118,7 +118,7 @@ function Analytics(): JSX.Element {
                 <ComplexStatisticsCard
                   color="dark"
                   icon="weekend"
-                  title="Bookings"
+                  title="Items on Order"
                   count={281}
                   percentage={{
                     color: "success",
@@ -132,7 +132,7 @@ function Analytics(): JSX.Element {
               <MDBox mb={1.5}>
                 <ComplexStatisticsCard
                   icon="leaderboard"
-                  title="Today's Users"
+                  title="New Customers"
                   count="2,300"
                   percentage={{
                     color: "success",
@@ -148,7 +148,7 @@ function Analytics(): JSX.Element {
                   color="success"
                   icon="store"
                   title="Revenue"
-                  count="34k"
+                  count="$3M"
                   percentage={{
                     color: "success",
                     amount: "+1%",
@@ -160,9 +160,9 @@ function Analytics(): JSX.Element {
             <Grid item xs={12} md={6} lg={3}>
               <MDBox mb={1.5}>
                 <ComplexStatisticsCard
-                  color="primary"
-                  icon="person_add"
-                  title="Followers"
+                  color="info"
+                  icon="leaderboard"
+                  title="Return Customers"
                   count="+91"
                   percentage={{
                     color: "success",
@@ -180,9 +180,9 @@ function Analytics(): JSX.Element {
               <MDBox mt={3}>
                 <BookingCard
                   image={booking1}
-                  title="Cozy 5 Stars Apartment"
-                  description='The place is close to Barceloneta Beach and bus stop just 2 min by walk and near to "Naviglio" where you can enjoy the main night life in Barcelona.'
-                  price="$899/night"
+                  title="Adidas Superstars!"
+                  description="Adidas Superstar shoes effortlessly marry elegance with comfort, boasting a timeless design that effortlessly elevates any look, while their cushioned insoles and supportive structure make each step a luxurious and comfortable experience. Whether you are strolling down the street or making a fashion statement, these iconic sneakers provide a perfect blend of style and coziness."
+                  price="$99/Pair"
                   location="Barcelona, Spain"
                   action={actionButtons}
                 />
@@ -192,9 +192,9 @@ function Analytics(): JSX.Element {
               <MDBox mt={3}>
                 <BookingCard
                   image={booking2}
-                  title="Office Studio"
-                  description='The place is close to Metro Station and bus stop just 2 min by walk and near to "Naviglio" where you can enjoy the night life in London, UK.'
-                  price="$1.119/night"
+                  title="Columbia Running"
+                  description="Columbia running shoes redefine the essence of comfort and versatility, enveloping each step with a harmonious blend of cushioned support that caters to the unique demands of both the track and daily activities, and their adaptable design seamlessly fuses performance with style, making them not just athletic essentials but also a statement of enduring comfort in any dynamic lifestyle."
+                  price="$79/Pair"
                   location="London, UK"
                   action={actionButtons}
                 />
@@ -204,9 +204,9 @@ function Analytics(): JSX.Element {
               <MDBox mt={3}>
                 <BookingCard
                   image={booking3}
-                  title="Beautiful Castle"
-                  description='The place is close to Metro Station and bus stop just 2 min by walk and near to "Naviglio" where you can enjoy the main night life in Milan.'
-                  price="$459/night"
+                  title="Versace"
+                  description="Versace shoes redefine the pinnacle of opulence and comfort, as sumptuous cushioning wraps each step in a cocoon of luxury that transcends mere functionality, and their versatile designs seamlessly transition from upscale events to everyday settings, ensuring an enduring symbol of lavish comfort that becomes an integral part of one's distinctive lifestyle, where every stride is a statement of sophistication and ease."
+                  price="$129/Pair"
                   location="Milan, Italy"
                   action={actionButtons}
                 />

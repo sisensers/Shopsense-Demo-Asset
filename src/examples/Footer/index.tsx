@@ -109,8 +109,8 @@ Footer.defaultProps = {
     { href: "https://github.com/sisense", name: "Github" },
     { href: "https://community.sisense.com/", name: "Community" },
     {
-      href: "https://community.sisense.com/t5/sisense-community-blog/bg-p/blog_general/label-name/developers",
-      name: "Blog",
+      href: "https://magpie-us.sisensepoc.com/auth/login",
+      name: "Best CRM",
     },
   ],
 };

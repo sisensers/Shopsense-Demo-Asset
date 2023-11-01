@@ -17,14 +17,16 @@ export default function Discuss(): JSX.Element {
     <Card sx={{ height: "100%" }}>
       <MDBox padding="1rem">
         <MDBox mb={3}>
-          <MDTypography variant="h5">Paid</MDTypography>
+          <MDTypography variant="h5">Actual Sales VS Potential Sales</MDTypography>
           <MDTypography variant="p">
-            Total Revenue was 7,909 across all 12 quarters. Revenue fell by 41% over the course of
-            the series and ended on a disappointing note, decreasing significantly in the final
-            quarters. The largest single decline on a percentage basis occurred in 2021 Q3 and 2022
-            Q2 (-100%). However, the largest single decline on an absolute basis occurred in 2021 Q3
-            and 2022 Q2 (-1,748). The largest net decline was from 2022 Q4 to 2023 Q4, when Revenue
-            decreased by 1,855 (85%).
+            The total Actual Sales value is $62M. T-Strap Shoes makes the most significant
+            contribution ($2.4M), which constitutes 3.86% of the overall total. Oxfords has the
+            lowest Actual Sales ($2M), which comprises 3.2% of the total Actual Sales. The average
+            value of Actual Sales per Category Name is $2.2M. Potential Sales Statistical Analysis
+            The total Potential Sales value is $60.3M. Category Name There are 28 Category Names.
+            Slippers has the highest Potential Sales ($2.4M), which constitutes 3.92% of the overall
+            total. Ballet Flats has the lowest ($2M), which comprises 3.24% of the total Potential
+            Sales. The average value of Potential Sales per Category Name is $2.2M.
           </MDTypography>
         </MDBox>
       </MDBox>

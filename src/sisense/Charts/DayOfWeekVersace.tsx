@@ -6,20 +6,13 @@ import { ExecuteQuery } from "@sisense/sdk-ui";
 import * as DM from "sisense/Schemas/ecommerce-master";
 import { Data, measures, filters } from "@sisense/sdk-data";
 
-export default function DayOfWeek(): JSX.Element {
+export default function DayOfWeekVersace(): JSX.Element {
   return (
     <ExecuteQuery
       dataSource={DM.DataSource}
       dimensions={[DM.Commerce.DayOfWeek]}
-      measures={[measures.average(DM.Commerce.Revenue, "Revenue")]}
-      filters={[
-        filters.members(DM.Commerce.Country, [
-          "United States",
-          "Germany",
-          "United Kingdom",
-          "Brazil",
-        ]),
-      ]}
+      measures={[measures.sum(DM.Commerce.Revenue, "Revenue")]}
+      filters={[filters.equals(DM.Brand.BrandName, "Versace")]}
     >
       {(data: Data) => {
         console.log(data);
@@ -27,9 +20,9 @@ export default function DayOfWeek(): JSX.Element {
         return (
           <ReportsBarChart
             color="info"
-            title="Weekly Sales"
-            description="Last Week's Performance"
-            date="Updated Monday"
+            title="website views"
+            description="Last Campaign Performance"
+            date="campaign sent 2 days ago"
             chart={transformedData}
           />
         );

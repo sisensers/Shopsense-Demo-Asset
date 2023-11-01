@@ -46,9 +46,14 @@ import BasicPopOver from "components/SisensePopover/BasicPopover";
 import TransitionModal from "components/SisenseModal/TransitionModal";
 import FollowCursorTooltips from "components/SisenseTooltip/FollowCursorTooltips";
 import ComplexStatisticsCard from "examples/Cards/StatisticsCards/ComplexStatisticsCard";
-
+import HoverTooltip from "components/SisenseTooltip/HoverTooltip";
+import TooltipContent from "components/SisenseTooltip/TooltipContent";
 import MapChart from "components/Maps/Map";
 import HighChartsDrill from "components/Maps/HighChartsDrill";
+import BasicPopover from "components/SisensePopover/BasicPopover";
+import tooltipcontent from "components/SisenseTooltip/TooltipContent";
+import MyComponent from "components/SisenseTooltip/TooltipContent";
+import TitlebarImageList from "components/imagelist";
 
 function SisenseProductPage(): JSX.Element {
   return (
@@ -58,25 +63,11 @@ function SisenseProductPage(): JSX.Element {
         <Card sx={{ overflow: "visible" }}>
           <MDBox p={3}>
             <MDBox mb={3}>
-              <MDTypography variant="h5" fontWeight="medium">
-                Product Details
-              </MDTypography>
-            </MDBox>
-            <MDBox mb={3}>
-              <Grid container spacing={3}>
-                <Grid item xs={12} lg={6} xl={5}>
-                  <ProductImages />
-                </Grid>
-                <Grid item xs={12} lg={5} sx={{ mx: "auto" }}>
-                  <ProductInfo />
-                </Grid>
-              </Grid>
+              <TitlebarImageList />
             </MDBox>
             <MDBox mt={4} mb={2}>
               <MDBox mb={1} ml={2}>
-                <MDTypography variant="h5" fontWeight="medium">
-                  Other Products
-                </MDTypography>
+                <MDTypography variant="h5" fontWeight="medium"></MDTypography>
               </MDBox>
               <DataTable
                 table={dataTableData}
