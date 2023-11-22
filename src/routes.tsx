@@ -38,6 +38,7 @@ Coded by www.creative-tim.com
 // Material Dashboard 2 PRO React layouts
 import Analytics from "layouts/dashboards/analytics";
 import Sales from "layouts/dashboards/sales";
+import SelfService from "layouts/dashboards/selfservice";
 import ProfileOverview from "layouts/pages/profile/profile-overview";
 import AllProjects from "layouts/pages/profile/all-projects";
 import NewUser from "layouts/pages/users/new-user";
@@ -126,6 +127,12 @@ const routes = [
         key: "sales",
         route: "/dashboards/sales",
         component: <Sales />,
+      },
+      {
+        name: "Self Service",
+        key: "Self Service",
+        route: "/dashboards/selfservice",
+        component: <SelfService />,
       },
     ],
   },
