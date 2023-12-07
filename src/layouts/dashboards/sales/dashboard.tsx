@@ -19,6 +19,7 @@ import {
   LineStyleOptions,
   PieStyleOptions,
   ThemeProvider,
+  DrilldownWidget,
 } from "@sisense/sdk-ui";
 import { Data, measures, filters, Filter } from "@sisense/sdk-data";
 import * as DM from "sisense/Schemas/ecommerce-master";
