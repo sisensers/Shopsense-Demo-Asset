@@ -1,8 +1,8 @@
 // File: charts.tsx
 
-import React, { useState } from "react";
-import { ExecuteQuery, Chart, ThemeProvider, Table } from "@sisense/sdk-ui";
-import { Data, measures, filters } from "@sisense/sdk-data";
+import React from "react";
+import { ExecuteQuery, Chart, ThemeProvider, Table, DashboardWidget } from "@sisense/sdk-ui";
+import { Data, measures, Filter } from "@sisense/sdk-data";
 import * as DM from "sisense/Schemas/ecommerce-master";
 
 const theme = {
@@ -21,11 +21,15 @@ const theme = {
   },
 };
 
+// Update BarChartProps
 interface BarChartProps {
   title: string;
   date: string;
+  filters: Filter[]; // Add this line
 }
-export const BarChart: React.FC<BarChartProps> = ({ title, date }) => {
+
+// Update BarChart component
+export const BarChart: React.FC<BarChartProps> = ({ title, date, filters }) => {
   return (
     <ExecuteQuery
       dataSource={DM.DataSource}
@@ -34,15 +38,13 @@ export const BarChart: React.FC<BarChartProps> = ({ title, date }) => {
     >
       {(data: Data) => (
         <ThemeProvider theme={theme}>
-          <Chart
-            dataSet={DM.DataSource}
-            chartType={"bar"}
-            dataOptions={{
-              category: [DM.Commerce.AgeRange],
-              value: [measures.sum(DM.Commerce.Revenue, "Total Sales")],
-              breakBy: [],
+          <DashboardWidget
+            widgetOid={"65737c3019622d0033e7d705"}
+            dashboardOid={"656f7a6a19622d0033e7d69d"}
+            filters={filters} // Update this line
+            drilldownOptions={{
+              drilldownDimensions: [DM.Commerce.AgeRange, DM.Commerce.DayOfWeek],
             }}
-            filters={[]}
           />
         </ThemeProvider>
       )}
@@ -53,9 +55,10 @@ export const BarChart: React.FC<BarChartProps> = ({ title, date }) => {
 interface LineChartProps {
   title: string;
   date: string;
+  filters: Filter[];
 }
 
-export const LineChart: React.FC<LineChartProps> = ({ title, date }) => {
+export const LineChart: React.FC<LineChartProps> = ({ title, date, filters }) => {
   return (
     <ExecuteQuery
       dataSource={DM.DataSource}
@@ -64,15 +67,13 @@ export const LineChart: React.FC<LineChartProps> = ({ title, date }) => {
     >
       {(data: Data) => (
         <ThemeProvider theme={theme}>
-          <Chart
-            dataSet={DM.DataSource}
-            chartType={"line"}
-            dataOptions={{
-              category: [DM.Commerce.Transaction_Date.Months],
-              value: [measures.sum(DM.Commerce.Revenue, "Total Revenue")],
-              breakBy: [],
+          <DashboardWidget
+            widgetOid={"656f87eb19622d0033e7d6c1"}
+            dashboardOid={"656f7a6a19622d0033e7d69d"}
+            filters={filters}
+            drilldownOptions={{
+              drilldownDimensions: [DM.Commerce.AgeRange, DM.Category.CategoryName],
             }}
-            filters={[]}
           />
         </ThemeProvider>
       )}
@@ -83,9 +84,10 @@ export const LineChart: React.FC<LineChartProps> = ({ title, date }) => {
 interface PieChartProps {
   title: string;
   date: string;
+  filters: Filter[];
 }
 
-export const PieChart: React.FC<PieChartProps> = ({ title, date }) => {
+export const PieChart: React.FC<PieChartProps> = ({ title, date, filters }) => {
   return (
     <ExecuteQuery
       dataSource={DM.DataSource}
@@ -94,14 +96,18 @@ export const PieChart: React.FC<PieChartProps> = ({ title, date }) => {
     >
       {(data: Data) => (
         <ThemeProvider theme={theme}>
-          <Chart
-            dataSet={DM.DataSource}
-            chartType={"pie"}
-            dataOptions={{
-              category: [DM.Commerce.Transaction_Date.Years],
-              value: [measures.sum(DM.Commerce.Quantity, "Total Quantity")],
+          <DashboardWidget
+            widgetOid={"656f974b19622d0033e7d6d3"}
+            dashboardOid={"656f7a6a19622d0033e7d69d"}
+            filters={filters}
+            drilldownOptions={{
+              drilldownDimensions: [
+                DM.Commerce.AgeRange,
+                DM.Category.CategoryName,
+                DM.Brand.BrandName,
+                DM.Commerce.Country,
+              ],
             }}
-            filters={[]}
           />
         </ThemeProvider>
       )}
@@ -112,25 +118,31 @@ export const PieChart: React.FC<PieChartProps> = ({ title, date }) => {
 interface ColumnChartProps {
   title: string;
   date: string;
+  filters: Filter[];
 }
 
-export const ColumnChart: React.FC<ColumnChartProps> = ({ title, date }) => {
+export const ColumnChart: React.FC<ColumnChartProps> = ({ title, date, filters }) => {
   return (
     <ExecuteQuery
       dataSource={DM.DataSource}
       dimensions={[DM.Category.CategoryName]}
-      measures={[measures.sum(DM.Commerce.Quantity, "Total Quantity")]}
+      measures={[measures.sum(DM.Commerce.Revenue, "Total Quantity")]}
     >
       {(data: Data) => (
         <ThemeProvider theme={theme}>
-          <Chart
-            dataSet={DM.DataSource}
-            chartType={"column"}
-            dataOptions={{
-              category: [DM.Commerce.AgeRange],
-              value: [measures.sum(DM.Commerce.Quantity, "Total Quantity")],
+          <DashboardWidget
+            widgetOid={"656f7d0219622d0033e7d6b7"}
+            dashboardOid={"656f7a6a19622d0033e7d69d"}
+            filters={filters}
+            drilldownOptions={{
+              drilldownDimensions: [
+                DM.Commerce.AgeRange,
+                DM.Brand.BrandName,
+                DM.Product.ProductName,
+                DM.CustomerReviews.Sentiment,
+                DM.Commerce.Transaction_Date.Days,
+              ],
             }}
-            filters={[]}
           />
         </ThemeProvider>
       )}
@@ -141,9 +153,10 @@ export const ColumnChart: React.FC<ColumnChartProps> = ({ title, date }) => {
 interface PolarChartProps {
   title: string;
   date: string;
+  filters: Filter[];
 }
 
-export const PolarChart: React.FC<PolarChartProps> = ({ title, date }) => {
+export const PolarChart: React.FC<PolarChartProps> = ({ title, date, filters }) => {
   return (
     <ExecuteQuery
       dataSource={DM.DataSource}
@@ -152,14 +165,18 @@ export const PolarChart: React.FC<PolarChartProps> = ({ title, date }) => {
     >
       {(data: Data) => (
         <ThemeProvider theme={theme}>
-          <Chart
-            dataSet={DM.DataSource}
-            chartType={"polar"}
-            dataOptions={{
-              category: [DM.Commerce.AgeRange],
-              value: [measures.count(DM.CustomerReviews.Sentiment, "Sentiment")],
+          <DashboardWidget
+            widgetOid={"656f7c6d19622d0033e7d6b5"}
+            dashboardOid={"656f7a6a19622d0033e7d69d"}
+            filters={filters}
+            drilldownOptions={{
+              drilldownDimensions: [
+                DM.Commerce.AgeRange,
+                DM.Category.CategoryName,
+                DM.Brand.BrandName,
+                DM.Product.ProductName,
+              ],
             }}
-            filters={[]}
           />
         </ThemeProvider>
       )}
@@ -170,9 +187,10 @@ export const PolarChart: React.FC<PolarChartProps> = ({ title, date }) => {
 interface TableChartProps {
   title: string;
   date: string;
+  filters: Filter[];
 }
 
-export const TableChart: React.FC<TableChartProps> = ({ title, date }) => {
+export const TableChart: React.FC<TableChartProps> = ({ title, date, filters }) => {
   return (
     <ExecuteQuery
       dataSource={DM.DataSource}
@@ -181,17 +199,18 @@ export const TableChart: React.FC<TableChartProps> = ({ title, date }) => {
     >
       {(data: Data) => (
         <ThemeProvider theme={theme}>
-          <Table
-            dataSet={DM.DataSource}
-            dataOptions={{
-              columns: [
+          <DashboardWidget
+            widgetOid={"656f9a5919622d0033e7d6d7"}
+            dashboardOid={"656f7a6a19622d0033e7d69d"}
+            filters={filters}
+            drilldownOptions={{
+              drilldownDimensions: [
                 DM.Commerce.AgeRange,
-                DM.Commerce.Revenue,
-                DM.Commerce.Cost,
-                DM.Commerce.Revenue,
+                DM.Category.CategoryName,
+                DM.Brand.BrandName,
+                DM.Product.ProductName,
               ],
             }}
-            styleOptions={{ width: 600, height: 750 }}
           />
         </ThemeProvider>
       )}

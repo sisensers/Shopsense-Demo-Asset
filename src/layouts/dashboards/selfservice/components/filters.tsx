@@ -1,8 +1,6 @@
-// File: charts.tsx
-
 import React, { useState } from "react";
-import { ExecuteQuery, Chart, MemberFilterTile, ThemeProvider } from "@sisense/sdk-ui";
-import { Data, measures, filters, Filter } from "@sisense/sdk-data";
+import { ExecuteQuery, MemberFilterTile, ThemeProvider } from "@sisense/sdk-ui";
+import { Data, Filter } from "@sisense/sdk-data";
 import * as DM from "sisense/Schemas/ecommerce-master";
 
 const theme = {
@@ -21,30 +19,60 @@ const theme = {
   },
 };
 
-const [countryFilter, setCountryFilter] = useState<Filter | null>(null);
-
-interface MemberFilterTileProps {
+interface CommonFilterProps {
   title: string;
-  date: string;
+  onChange: (newFilter: Filter | null) => void;
+  attribute: any; // Adjust the type accordingly
 }
-export const CountryFilter: React.FC<MemberFilterTileProps> = ({ title, date }) => {
+
+const CommonFilter: React.FC<CommonFilterProps> = ({ title, onChange, attribute }) => {
+  const [filter, setFilter] = useState<Filter | null>(null);
+
   return (
-    <ExecuteQuery
-      dataSource={DM.DataSource}
-      dimensions={[DM.Commerce.Transaction_Date.Years, DM.Commerce.Transaction_Date.Months]}
-      measures={[measures.sum(DM.Commerce.Quantity, "Total Quantity")]}
-    >
+    <ExecuteQuery dataSource={DM.DataSource} dimensions={[attribute]}>
       {(data: Data) => (
         <ThemeProvider theme={theme}>
           <MemberFilterTile
-            title={"Country"}
+            title={title}
             dataSource={DM.DataSource}
-            attribute={DM.Commerce.Country}
-            filter={countryFilter}
-            onChange={setCountryFilter}
+            attribute={attribute}
+            filter={filter}
+            onChange={(newFilter) => {
+              setFilter(newFilter);
+              onChange(newFilter);
+            }}
           />
         </ThemeProvider>
       )}
     </ExecuteQuery>
   );
 };
+
+interface CountryFilterProps {
+  title: string;
+  onChange: (newFilter: Filter | null) => void;
+}
+
+const CountryFilter: React.FC<CountryFilterProps> = ({ title, onChange }) => (
+  <CommonFilter title={title} onChange={onChange} attribute={DM.Commerce.Country} />
+);
+
+interface DateFilterProps {
+  title: string;
+  onChange: (newFilter: Filter | null) => void;
+}
+
+const DateFilter: React.FC<DateFilterProps> = ({ title, onChange }) => (
+  <CommonFilter title={title} onChange={onChange} attribute={DM.Commerce.Transaction_Date.Months} />
+);
+
+interface AgeRangeFilterProps {
+  title: string;
+  onChange: (newFilter: Filter | null) => void;
+}
+
+const AgeRangeFilter: React.FC<AgeRangeFilterProps> = ({ title, onChange }) => (
+  <CommonFilter title={title} onChange={onChange} attribute={DM.Commerce.AgeRange} />
+);
+
+export { CountryFilter, DateFilter, AgeRangeFilter };

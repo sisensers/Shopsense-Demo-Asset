@@ -1,40 +1,86 @@
-// Import necessary dependencies and chart components
-import React from "react";
+import React, { useState } from "react";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import Typography from "@mui/material/Typography";
+import Checkbox from "@mui/material/Checkbox";
+import FormControlLabel from "@mui/material/FormControlLabel";
 import { BarChart, LineChart, PieChart, ColumnChart, PolarChart, TableChart } from "./charts";
 
 interface ChartLibraryProps {
   charts: string[];
-  onSelectChart: (chartType: string) => void;
+  onSelectCharts: (selectedCharts: string[]) => void;
   onClose: () => void;
 }
 
-const ChartLibrary: React.FC<ChartLibraryProps> = ({ charts, onSelectChart, onClose }) => {
+const ChartLibrary: React.FC<ChartLibraryProps> = ({ charts, onSelectCharts, onClose }) => {
+  const [selectedChartTypes, setSelectedChartTypes] = useState<string[]>([]);
+
+  const handleToggleChart = (chartType: string) => {
+    setSelectedChartTypes((prevSelectedChartTypes) => {
+      if (prevSelectedChartTypes.includes(chartType)) {
+        return prevSelectedChartTypes.filter((type) => type !== chartType);
+      } else {
+        return [...prevSelectedChartTypes, chartType];
+      }
+    });
+  };
+
+  const handleAddToDashboard = () => {
+    onSelectCharts(selectedChartTypes);
+    onClose();
+  };
+
   return (
     <Dialog open={true} onClose={onClose}>
       <DialogTitle>Choose a Chart</DialogTitle>
       <DialogContent
         style={{
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fill, minmax(500px, 1fr))", // Adjust the width
-          gridTemplateRows: `repeat(${Math.ceil(charts.length * 1)}, minmax(500px, 1fr))`, // Adjust the height
-          gap: "25px",
+          gridTemplateColumns: "repeat(2, minmax(100px, 1fr))",
+          gridAutoRows: "minmax(300px, auto)", // Use minHeight for grid rows
+          gap: "10px",
+          width: "500px",
+          minWidth: "500px",
+          height: "600px", // Set a fixed height for the content
+          overflow: "auto",
         }}
       >
-        {/* Display actual renders of chart components for each chart type */}
         {charts.map((chartType) => (
-          <div key={chartType} onClick={() => onSelectChart(chartType)}>
-            {renderChartComponent(chartType)}
-            <Typography variant="body2">{chartType}</Typography>
-          </div>
+          <React.Fragment key={chartType}>
+            <div key={`${chartType}-chart`} style={{ boxSizing: "border-box" }}>
+              {renderChartComponent(chartType)}
+              <Typography variant="body2">{chartType}</Typography>
+            </div>
+            <div
+              key={`${chartType}-checkbox`}
+              style={{
+                boxSizing: "border-box",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={selectedChartTypes.includes(chartType)}
+                    onChange={() => handleToggleChart(chartType)}
+                  />
+                }
+                label={""}
+              />
+            </div>
+          </React.Fragment>
         ))}
       </DialogContent>
+
       <DialogActions>
+        <Button onClick={handleAddToDashboard} color="primary">
+          Add to Dashboard
+        </Button>
         <Button onClick={onClose} color="primary">
           Cancel
         </Button>
@@ -43,21 +89,22 @@ const ChartLibrary: React.FC<ChartLibraryProps> = ({ charts, onSelectChart, onCl
   );
 };
 
-// Helper function to render the correct chart component based on the chart type
 const renderChartComponent = (chartType: string): JSX.Element => {
   switch (chartType.toLowerCase()) {
     case "bar":
-      return <BarChart title={"Sales By Age Group"} date={""} />;
+      return <BarChart title={""} date={""} filters={[]} />;
     case "line":
-      return <LineChart title={"Sales Over Time"} date={""} />;
+      return <LineChart title={""} date={""} filters={[]} />;
     case "pie":
-      return <PieChart title={"Orders By Year"} date={""} />;
+      return <PieChart title={""} date={""} filters={[]} />;
     case "column":
-      return <ColumnChart title={"Sales By Age Group"} date={""} />;
+      return <ColumnChart title={""} date={""} filters={[]} />;
     case "polar":
-      return <PolarChart title={"Sales By Age Group"} date={""} />;
+      return <PolarChart title={""} date={""} filters={[]} />;
     case "table":
-      return <TableChart title={"Sales By Age Group"} date={""} />;
+      return <TableChart title={""} date={""} filters={[]} />;
+    default:
+      return <div>Chart not found</div>;
   }
 };
 

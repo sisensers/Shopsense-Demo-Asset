@@ -1,132 +1,175 @@
 import React, { useState } from "react";
 import Draggable from "react-draggable";
-import { Button, IconButton } from "@mui/material";
+import {
+  IconButton,
+  Select,
+  MenuItem,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Button,
+  Card,
+  CardContent,
+} from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
-import { Resizable } from "react-resizable";
+import CloseIcon from "@mui/icons-material/Close";
+import BarChartIcon from "@mui/icons-material/BarChart";
+import LockIcon from "@mui/icons-material/Lock";
+import LockOpenIcon from "@mui/icons-material/LockOpen";
 import { BarChart, LineChart, PieChart, ColumnChart, PolarChart, TableChart } from "./charts";
+import { ResizableBox, ResizeCallbackData } from "react-resizable";
+import { Filter } from "@sisense/sdk-data";
 
 interface ChartComponentProps {
   chartType: string;
   onDelete: () => void;
   position: { x: number; y: number };
   onDragStop: (position: { x: number; y: number }) => void;
+  appliedFilters: Filter[];
 }
-
-const theme = {
-  chart: {
-    textColor: "#3C3C44",
-  },
-  general: {
-    brandColor: "#2196f3",
-    primaryButtonTextColor: "white",
-  },
-  palette: {
-    variantColors: ["#2196f3", "#0d47a1", "#050A30", "#7EC8E3"],
-  },
-  typography: {
-    fontFamily: "roboto",
-  },
-};
 
 const ChartComponent: React.FC<ChartComponentProps> = ({
   chartType,
   onDelete,
   position,
   onDragStop,
+  appliedFilters,
 }) => {
   const [size, setSize] = useState({ width: 400, height: 300 });
+  const [selectedChartType, setSelectedChartType] = useState(chartType);
+  const [isDialogOpen, setDialogOpen] = useState(false);
+  const [isLocked, setIsLocked] = useState(false);
+  const [isResizing, setIsResizing] = useState(false);
+  const [isExpanding, setIsExpanding] = useState(false);
+
+  const handleOpenDialog = () => {
+    setDialogOpen(true);
+  };
+
+  const handleCloseDialog = () => {
+    setDialogOpen(false);
+  };
+
+  const handleToggleLock = () => {
+    setIsLocked((prevIsLocked) => !prevIsLocked);
+    setIsExpanding(false);
+  };
+
+  const handleToggleExpand = () => {
+    if (!isLocked) {
+      setIsExpanding((prevIsExpanding) => !prevIsExpanding);
+    }
+  };
+
+  const handleResizeStart = () => {
+    setIsResizing(true);
+  };
+
+  const handleResizeEnd = (e: React.SyntheticEvent, data: ResizeCallbackData) => {
+    setIsResizing(false);
+    setSize({ width: data.size.width, height: data.size.height });
+  };
 
   return (
     <Draggable
       position={position}
       bounds="parent"
-      onStop={(e, data) => onDragStop({ x: data.x, y: data.y })}
+      onStop={(e, data) => !isLocked && onDragStop({ x: data.x, y: data.y })}
+      disabled={isLocked}
     >
-      <Resizable
+      <ResizableBox
         width={size.width}
         height={size.height}
-        onResize={(e, { size }) => {
-          setSize({ width: size.width, height: size.height });
-        }}
+        onResizeStart={handleResizeStart}
+        onResizeStop={handleResizeEnd}
+        minConstraints={[300, 200]}
+        maxConstraints={[Infinity, Infinity]}
+        handle={
+          <div
+            style={{
+              position: "absolute",
+              bottom: 0,
+              right: 0,
+              width: "20px",
+              height: "20px",
+              cursor: isLocked ? "not-allowed" : "se-resize",
+              background: isResizing ? "#2196f3" : "#0d47a1",
+            }}
+          />
+        }
       >
-        <div
-          style={{
-            position: "relative",
-            width: `${size.width}px`,
-            height: `${size.height}px`,
-            overflow: "hidden",
-          }}
-        >
-          {renderChart()}
+        <Card style={{ width: "auto", height: "auto" }}>
+          <CardContent style={{ position: "relative" }}>
+            {renderChart()}
 
-          <div
-            style={{
-              position: "absolute",
-              bottom: "8px",
-              right: "8px",
-              display: "flex",
-              gap: "4px",
-            }}
-          >
-            <IconButton
-              size="small"
-              onClick={() => {
-                setSize((prevSize) => ({
-                  width: prevSize.width + 20,
-                  height: prevSize.height + 20,
-                }));
+            <div
+              style={{
+                position: "absolute",
+                bottom: "8px",
+                left: "8px",
+                display: "flex",
+                gap: "4px",
+                alignItems: "center",
               }}
             >
-              <AddIcon fontSize="inherit" />
-            </IconButton>
-            <IconButton
-              size="small"
-              onClick={() => {
-                setSize((prevSize) => ({ ...prevSize, height: prevSize.height - 20 }));
-              }}
-            >
-              <RemoveIcon fontSize="inherit" />
-            </IconButton>
-          </div>
+              <IconButton size="small" onClick={handleOpenDialog} aria-label="Change Chart Type">
+                <BarChartIcon fontSize="small" />
+              </IconButton>
+              <IconButton size="small" onClick={onDelete} aria-label="Remove Chart">
+                <CloseIcon fontSize="small" />
+              </IconButton>
+              <IconButton
+                size="small"
+                onClick={handleToggleLock}
+                aria-label={isLocked ? "Unlock" : "Lock"}
+              >
+                {isLocked ? <LockIcon fontSize="small" /> : <LockOpenIcon fontSize="small" />}
+              </IconButton>
+            </div>
 
-          <div
-            style={{
-              position: "absolute",
-              bottom: "8px",
-              left: "8px",
-              display: "flex",
-              gap: "4px",
-            }}
-          >
-            <Button
-              onClick={onDelete}
-              variant="contained"
-              color="primary"
-              style={{ color: "white", fontSize: "0.6rem", padding: "1px 4px" }}
-            >
-              Remove
-            </Button>
-          </div>
-        </div>
-      </Resizable>
+            <Dialog open={isDialogOpen} onClose={handleCloseDialog}>
+              <DialogTitle>Change Chart Type</DialogTitle>
+              <DialogContent>
+                <Select
+                  value={selectedChartType}
+                  onChange={(e) => setSelectedChartType(e.target.value)}
+                >
+                  <MenuItem value="bar">Bar Chart</MenuItem>
+                  <MenuItem value="column">Column Chart</MenuItem>
+                  <MenuItem value="line">Line Chart</MenuItem>
+                  <MenuItem value="pie">Pie Chart</MenuItem>
+                  <MenuItem value="polar">Polar Chart</MenuItem>
+                  <MenuItem value="table">Table Chart</MenuItem>
+                </Select>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={handleCloseDialog} color="primary">
+                  Close
+                </Button>
+              </DialogActions>
+            </Dialog>
+          </CardContent>
+        </Card>
+      </ResizableBox>
     </Draggable>
   );
 
   function renderChart() {
-    switch (chartType.toLowerCase()) {
+    switch (selectedChartType.toLowerCase()) {
       case "bar":
-        return <BarChart title="" date="" />;
+        return <BarChart title="" date="" filters={appliedFilters} />;
       case "column":
-        return <ColumnChart title="" date="" />;
+        return <ColumnChart title="" date="" filters={appliedFilters} />;
       case "line":
-        return <LineChart title="" date="" />;
+        return <LineChart title="" date="" filters={appliedFilters} />;
       case "pie":
-        return <PieChart title="" date="" />;
+        return <PieChart title="" date="" filters={appliedFilters} />;
       case "polar":
-        return <PolarChart title="" date="" />;
+        return <PolarChart title="" date="" filters={appliedFilters} />;
       case "table":
-        return <TableChart title="" date="" />;
+        return <TableChart title="" date="" filters={appliedFilters} />;
       default:
         return null;
     }
