@@ -2,14 +2,8 @@ import React, { useMemo, useState } from "react";
 import CodeHighlight from "components/CodeHighlight";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
-import {
-  ExecuteQuery,
-  MemberFilterTile,
-  Chart,
-  ThemeProvider,
-  DashboardWidget,
-} from "@sisense/sdk-ui";
-import { Data, measures, filters, Filter } from "@sisense/sdk-data";
+import { ExecuteQuery, MemberFilterTile, ThemeProvider, DashboardWidget } from "@sisense/sdk-ui";
+import { Data, measures, Filter } from "@sisense/sdk-data";
 import * as DM from "sisense/Schemas/ecommerce-master";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -17,7 +11,6 @@ import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import CodeBlock from "components/CodeBlock";
 import { dashboardCodeExample } from "./dashboardCodeExample";
-import { width } from "@mui/system";
 
 const theme = {
   chart: {
@@ -34,6 +27,18 @@ const theme = {
     fontFamily: "roboto",
   },
 };
+
+/* THIS SECTION DEFINES THE DASHBOARD AND WIDGETS BEING PULLED FROM SISENSE PLATFORM */
+
+const DASHBOARD_ID = "656f7a6a19622d0033e7d69d";
+const WIDGET_IDS = {
+  WIDGET_1: "656f7d0219622d0033e7d6b7",
+  WIDGET_2: "656f974b19622d0033e7d6d3",
+  WIDGET_3: "656f7c6d19622d0033e7d6b5",
+  WIDGET_4: "65737c3019622d0033e7d705",
+  WIDGET_5: "656f87eb19622d0033e7d6c1",
+};
+
 type DataPointEventHandler = (point: { category: any; breakBy: any[] }) => void;
 
 export default function Dashboard() {
@@ -173,7 +178,7 @@ export default function Dashboard() {
       >
         {(data: Data) => (
           <Grid container spacing={-1}>
-            {/* MemberFilterTile column */}
+            {/* add filters as needed to this column */}
             <Grid item xs={12} md={2} style={{ display: isFilterColumnVisible ? "block" : "none" }}>
               <Card
                 style={{
@@ -202,8 +207,6 @@ export default function Dashboard() {
                       onChange={setCategoryFilter}
                     />
                   </ThemeProvider>
-                </CardContent>
-                <CardContent style={{ flex: "auto", padding: 0 }}>
                   <ThemeProvider theme={theme}>
                     <MemberFilterTile
                       title={"Brand"}
@@ -274,7 +277,7 @@ export default function Dashboard() {
 
             {/* Charts */}
             <Grid item xs={12} md={10}>
-              {/* Place your charts here */}
+              {/* add more charts as needed here */}
 
               <Grid container spacing={1}>
                 <Grid item xs={12} md={6}>
@@ -282,8 +285,8 @@ export default function Dashboard() {
                     <CardContent>
                       <ThemeProvider theme={theme}>
                         <DashboardWidget
-                          widgetOid={"656f7d0219622d0033e7d6b7"}
-                          dashboardOid={"656f7a6a19622d0033e7d69d"}
+                          widgetOid={WIDGET_IDS.WIDGET_1}
+                          dashboardOid={DASHBOARD_ID}
                           filters={filters}
                           drilldownOptions={{
                             drilldownDimensions: [
@@ -303,8 +306,8 @@ export default function Dashboard() {
                     <CardContent>
                       <ThemeProvider theme={theme}>
                         <DashboardWidget
-                          widgetOid={"656f974b19622d0033e7d6d3"}
-                          dashboardOid={"656f7a6a19622d0033e7d69d"}
+                          widgetOid={WIDGET_IDS.WIDGET_2}
+                          dashboardOid={DASHBOARD_ID}
                           filters={filters}
                           drilldownOptions={{
                             drilldownDimensions: [
@@ -323,8 +326,8 @@ export default function Dashboard() {
                     <CardContent>
                       <ThemeProvider theme={theme}>
                         <DashboardWidget
-                          widgetOid={"656f87eb19622d0033e7d6c1"}
-                          dashboardOid={"656f7a6a19622d0033e7d69d"}
+                          widgetOid={WIDGET_IDS.WIDGET_3}
+                          dashboardOid={DASHBOARD_ID}
                           filters={filters}
                           drilldownOptions={{
                             drilldownDimensions: [DM.Brand.BrandName, DM.Product.ProductName],
@@ -339,11 +342,16 @@ export default function Dashboard() {
                     <CardContent>
                       <ThemeProvider theme={theme}>
                         <DashboardWidget
-                          widgetOid={"656f7c0619622d0033e7d6b3"}
-                          dashboardOid={"656f7a6a19622d0033e7d69d"}
+                          widgetOid={WIDGET_IDS.WIDGET_4}
+                          dashboardOid={DASHBOARD_ID}
                           filters={filters}
                           drilldownOptions={{
-                            drilldownDimensions: [DM.Brand.BrandName, DM.Product.ProductName],
+                            drilldownDimensions: [
+                              DM.Category.CategoryName,
+                              DM.Product.ProductName,
+                              DM.Commerce.Transaction_Date.Days,
+                              DM.Commerce.AgeRange,
+                            ],
                           }}
                         />
                       </ThemeProvider>
@@ -351,13 +359,13 @@ export default function Dashboard() {
                   </Card>
                 </Grid>
 
-                <Grid item xs={12} md={610}>
+                <Grid item xs={12} md={6}>
                   <Card>
                     <CardContent>
                       <ThemeProvider theme={theme}>
                         <DashboardWidget
-                          widgetOid={"656f9a5919622d0033e7d6d7"}
-                          dashboardOid={"656f7a6a19622d0033e7d69d"}
+                          widgetOid={WIDGET_IDS.WIDGET_5}
+                          dashboardOid={DASHBOARD_ID}
                           filters={filters}
                           drilldownOptions={{
                             drilldownDimensions: [DM.Brand.BrandName, DM.Product.ProductName],
