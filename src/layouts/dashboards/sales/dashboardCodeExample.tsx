@@ -2,8 +2,8 @@ export const dashboardCodeExample = `import React, { useMemo, useState } from "r
 import CodeHighlight from "components/CodeHighlight";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
-import { ExecuteQuery, MemberFilterTile, Chart, ThemeProvider } from "@sisense/sdk-ui";
-import { Data, measures, filters, Filter } from "@sisense/sdk-data";
+import { ExecuteQuery, MemberFilterTile, ThemeProvider, DashboardWidget } from "@sisense/sdk-ui";
+import { Data, measures, Filter } from "@sisense/sdk-data";
 import * as DM from "sisense/Schemas/ecommerce-master";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -27,6 +27,18 @@ const theme = {
     fontFamily: "roboto",
   },
 };
+
+/* THIS SECTION DEFINES THE DASHBOARD AND WIDGETS BEING PULLED FROM SISENSE PLATFORM */
+
+const DASHBOARD_ID = "656f7a6a19622d0033e7d69d";
+const WIDGET_IDS = {
+  WIDGET_1: "656f7d0219622d0033e7d6b7",
+  WIDGET_2: "656f974b19622d0033e7d6d3",
+  WIDGET_3: "656f7c6d19622d0033e7d6b5",
+  WIDGET_4: "65737c3019622d0033e7d705",
+  WIDGET_5: "656f87eb19622d0033e7d6c1",
+};
+
 type DataPointEventHandler = (point: { category: any; breakBy: any[] }) => void;
 
 export default function Dashboard() {
@@ -166,16 +178,17 @@ export default function Dashboard() {
       >
         {(data: Data) => (
           <Grid container spacing={-1}>
-            {/* MemberFilterTile column */}
+            {/* add filters as needed to this column */}
             <Grid item xs={12} md={2} style={{ display: isFilterColumnVisible ? "block" : "none" }}>
               <Card
                 style={{
-                  height: "100vh",
-                  width: "75%",
+                  height: "auto",
+                  width: "auto",
                   display: "flex",
                   flexDirection: "column",
                   justifyContent: "center",
                   alignItems: "center",
+                  marginRight: "10px",
                 }}
               >
                 <CardContent style={{ flex: "auto", padding: 25, textAlign: "center" }}>
@@ -194,8 +207,6 @@ export default function Dashboard() {
                       onChange={setCategoryFilter}
                     />
                   </ThemeProvider>
-                </CardContent>
-                <CardContent style={{ flex: "auto", padding: 0 }}>
                   <ThemeProvider theme={theme}>
                     <MemberFilterTile
                       title={"Brand"}
@@ -265,27 +276,26 @@ export default function Dashboard() {
             </Grid>
 
             {/* Charts */}
-            <Grid item xs={12} md={9}>
-              {/* Place your charts here */}
+            <Grid item xs={12} md={10}>
+              {/* add more charts as needed here */}
 
               <Grid container spacing={1}>
                 <Grid item xs={12} md={6}>
                   <Card>
                     <CardContent>
-                      <Typography variant="h6">Sales By Age Demographic</Typography>
                       <ThemeProvider theme={theme}>
-                        <div style={{ height: "300px" }}>
-                          <Chart
-                            dataSet={DM.DataSource}
-                            chartType={"bar"}
-                            dataOptions={{
-                              category: [DM.Commerce.AgeRange],
-                              value: [measures.sum(DM.Commerce.Revenue, "Revenue")],
-                              breakBy: [],
-                            }}
-                            filters={filters}
-                          />
-                        </div>
+                        <DashboardWidget
+                          widgetOid={WIDGET_IDS.WIDGET_1}
+                          dashboardOid={DASHBOARD_ID}
+                          filters={filters}
+                          drilldownOptions={{
+                            drilldownDimensions: [
+                              DM.Category.CategoryName,
+                              DM.Brand.BrandName,
+                              DM.Product.ProductName,
+                            ],
+                          }}
+                        />
                       </ThemeProvider>
                     </CardContent>
                   </Card>
@@ -294,20 +304,18 @@ export default function Dashboard() {
                 <Grid item xs={12} md={6}>
                   <Card>
                     <CardContent>
-                      <Typography variant="h6">Sales By Year</Typography>
                       <ThemeProvider theme={theme}>
-                        <div style={{ height: "300px" }}>
-                          <Chart
-                            dataSet={DM.DataSource}
-                            chartType={"pie"}
-                            dataOptions={{
-                              category: [DM.Commerce.Transaction_Date.Years],
-                              value: [measures.sum(DM.Commerce.Revenue, "Revenue")],
-                              breakBy: [],
-                            }}
-                            filters={filters}
-                          />
-                        </div>
+                        <DashboardWidget
+                          widgetOid={WIDGET_IDS.WIDGET_2}
+                          dashboardOid={DASHBOARD_ID}
+                          filters={filters}
+                          drilldownOptions={{
+                            drilldownDimensions: [
+                              DM.Commerce.Country,
+                              DM.CustomerReviews.Sentiment,
+                            ],
+                          }}
+                        />
                       </ThemeProvider>
                     </CardContent>
                   </Card>
@@ -316,20 +324,15 @@ export default function Dashboard() {
                 <Grid item xs={12} md={6}>
                   <Card>
                     <CardContent>
-                      <Typography variant="h6">Sales By Country</Typography>
                       <ThemeProvider theme={theme}>
-                        <div style={{ height: "300px" }}>
-                          <Chart
-                            dataSet={DM.DataSource}
-                            chartType={"column"}
-                            dataOptions={{
-                              category: [DM.Commerce.Country],
-                              value: [measures.sum(DM.Commerce.Revenue, "Revenue")],
-                              breakBy: [],
-                            }}
-                            filters={filters}
-                          />
-                        </div>
+                        <DashboardWidget
+                          widgetOid={WIDGET_IDS.WIDGET_3}
+                          dashboardOid={DASHBOARD_ID}
+                          filters={filters}
+                          drilldownOptions={{
+                            drilldownDimensions: [DM.Brand.BrandName, DM.Product.ProductName],
+                          }}
+                        />
                       </ThemeProvider>
                     </CardContent>
                   </Card>
@@ -337,42 +340,37 @@ export default function Dashboard() {
                 <Grid item xs={12} md={6}>
                   <Card>
                     <CardContent>
-                      <Typography variant="h6">Sales Over Time</Typography>
                       <ThemeProvider theme={theme}>
-                        <div style={{ height: "300px" }}>
-                          <Chart
-                            dataSet={DM.DataSource}
-                            chartType={"line"}
-                            dataOptions={{
-                              category: [DM.Commerce.Transaction_Date.Months],
-                              value: [measures.sum(DM.Commerce.Revenue, "Revenue")],
-                              breakBy: [],
-                            }}
-                            filters={filters}
-                          />
-                        </div>
+                        <DashboardWidget
+                          widgetOid={WIDGET_IDS.WIDGET_4}
+                          dashboardOid={DASHBOARD_ID}
+                          filters={filters}
+                          drilldownOptions={{
+                            drilldownDimensions: [
+                              DM.Category.CategoryName,
+                              DM.Product.ProductName,
+                              DM.Commerce.Transaction_Date.Days,
+                              DM.Commerce.AgeRange,
+                            ],
+                          }}
+                        />
                       </ThemeProvider>
                     </CardContent>
                   </Card>
                 </Grid>
 
-                <Grid item xs={5} md={12}>
+                <Grid item xs={12} md={12}>
                   <Card>
                     <CardContent>
-                      <Typography variant="h6">Cost Over Time By Customer Sentient</Typography>
                       <ThemeProvider theme={theme}>
-                        <div style={{ height: "280px" }}>
-                          <Chart
-                            dataSet={DM.DataSource}
-                            chartType={"area"}
-                            dataOptions={{
-                              category: [DM.Commerce.Transaction_Date.Months],
-                              value: [measures.sum(DM.Commerce.Cost, "Revenue")],
-                              breakBy: [DM.CustomerReviews.Sentiment],
-                            }}
-                            filters={filters}
-                          />
-                        </div>
+                        <DashboardWidget
+                          widgetOid={WIDGET_IDS.WIDGET_5}
+                          dashboardOid={DASHBOARD_ID}
+                          filters={filters}
+                          drilldownOptions={{
+                            drilldownDimensions: [DM.Brand.BrandName, DM.Product.ProductName],
+                          }}
+                        />
                       </ThemeProvider>
                     </CardContent>
                   </Card>
@@ -384,4 +382,5 @@ export default function Dashboard() {
       </ExecuteQuery>
     </DashboardLayout>
   );
-}`;
+}
+`;
