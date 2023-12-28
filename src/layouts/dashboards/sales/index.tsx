@@ -290,9 +290,10 @@ export default function Dashboard() {
                           filters={filters}
                           drilldownOptions={{
                             drilldownDimensions: [
-                              DM.Category.CategoryName,
                               DM.Brand.BrandName,
                               DM.Product.ProductName,
+                              DM.Commerce.Transaction_Date.Months,
+                              DM.Commerce.Transaction_Date.Days,
                             ],
                           }}
                         />

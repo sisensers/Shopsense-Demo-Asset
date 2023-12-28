@@ -1,34 +1,27 @@
+import React from "react";
 import { VectorMap } from "@react-jvectormap/core";
 import { worldMerc } from "@react-jvectormap/world";
-
-// @mui material components
 import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
 import Icon from "@mui/material/Icon";
-
-// Material Dashboard 2 PRO React TS components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
-
-// Material Dashboard 2 PRO React TS examples components
 import SalesTable from "examples/Tables/SalesTable";
-
-// Assets
-// Countries flags
+import { ExecuteQuery } from "@sisense/sdk-ui";
+import * as DM from "sisense/Schemas/ecommerce-master";
+import { Data, measures, filters } from "@sisense/sdk-data";
 import US from "assets/images/icons/flags/US.png";
 import DE from "assets/images/icons/flags/DE.png";
 import GB from "assets/images/icons/flags/GB.png";
 import BR from "assets/images/icons/flags/BR.png";
 
-// Data
-import salesTableData from "layouts/dashboards/analytics/components/SalesByCountry/data/salesTableData";
-
-// Sisense
-import { ExecuteQuery } from "@sisense/sdk-ui";
-import * as DM from "sisense/Schemas/ecommerce-master";
-import { Data, measures, filters } from "@sisense/sdk-data";
-
 function SalesByCountry(): JSX.Element {
+  const handleCountryClick = (countryName: string) => {
+    const encodedCountryName = encodeURIComponent(countryName);
+    // Simulate navigation by updating the window location
+    window.location.href = `/sisense/table/basic/${encodedCountryName}`;
+  };
+
   return (
     <Card sx={{ width: "100%" }}>
       <MDBox display="flex">
@@ -161,9 +154,7 @@ function SalesByCountry(): JSX.Element {
 interface Row {
   [key: string]: any;
 }
-interface Column {
-  [key: string]: any;
-}
+
 interface TableRow {
   [key: string]: string | number | (string | number)[];
 }
@@ -181,7 +172,7 @@ function TranslateSisenseDataToTable(data: Data) {
     } else if (row[0].text === "United States") {
       countryWithFlag = [US, "united states"];
     } else {
-      console.log("Error: Data not retrieved or flag values werent changed");
+      console.log("Error: Data not retrieved or flag values weren't changed");
     }
     const tableRow: TableRow = {
       country: countryWithFlag,
