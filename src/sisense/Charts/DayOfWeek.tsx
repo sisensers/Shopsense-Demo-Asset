@@ -11,7 +11,7 @@ export default function DayOfWeek(): JSX.Element {
     <ExecuteQuery
       dataSource={DM.DataSource}
       dimensions={[DM.Commerce.DayOfWeek]}
-      measures={[measures.sum(DM.Commerce.Revenue, "Revenue")]}
+      measures={[measures.average(DM.Commerce.Revenue, "Revenue")]}
       filters={[]}
     >
       {(data: Data) => {
@@ -20,9 +20,9 @@ export default function DayOfWeek(): JSX.Element {
         return (
           <ReportsBarChart
             color="info"
-            title="website views"
-            description="Last Campaign Performance"
-            date="campaign sent 2 days ago"
+            title="Weekly Sales"
+            description="Last Week's Performance"
+            date="Updated Monday"
             chart={transformedData}
           />
         );

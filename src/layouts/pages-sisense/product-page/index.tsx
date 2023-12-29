@@ -46,32 +46,16 @@ import BasicPopOver from "components/SisensePopover/BasicPopover";
 import TransitionModal from "components/SisenseModal/TransitionModal";
 import FollowCursorTooltips from "components/SisenseTooltip/FollowCursorTooltips";
 import ComplexStatisticsCard from "examples/Cards/StatisticsCards/ComplexStatisticsCard";
-
+import HoverTooltip from "components/SisenseTooltip/HoverTooltip";
+import TooltipContent from "components/SisenseTooltip/TooltipContent";
 import MapChart from "components/Maps/Map";
 import HighChartsDrill from "components/Maps/HighChartsDrill";
+import BasicPopover from "components/SisensePopover/BasicPopover";
+import tooltipcontent from "components/SisenseTooltip/TooltipContent";
+import MyComponent from "components/SisenseTooltip/TooltipContent";
+import TitlebarImageList from "components/imagelist";
 
 function SisenseProductPage(): JSX.Element {
-  const [infoSB, setInfoSB] = useState<boolean>(false);
-
-  const openInfoSB = () => setInfoSB(true);
-  const closeInfoSB = () => setInfoSB(false);
-
-  const renderInfoSB = (
-    <MDSnackbar
-      icon="notifications"
-      title="Material Dashboard"
-      content="This analysis measures Revenue by days in transaction_date.
-      Total Revenue was 830.31 across all four days in transaction_date.
-      Values ranged from 100.15 (2/6/21) to 405.84 (4/2/21).
-      Revenue rose by 114% over the course of the series and ended on a good note,
-       increasing significantly in the final days in transaction_date.
-      The largest single increase occurred in 4/2/21 (+305%)."
-      dateTime="11 mins ago"
-      open={infoSB}
-      onClose={closeInfoSB}
-      close={closeInfoSB}
-    />
-  );
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -79,58 +63,11 @@ function SisenseProductPage(): JSX.Element {
         <Card sx={{ overflow: "visible" }}>
           <MDBox p={3}>
             <MDBox mb={3}>
-              <MDTypography variant="h5" fontWeight="medium">
-                Product Details
-              </MDTypography>
+              <TitlebarImageList />
             </MDBox>
-            <MDBox mb={3}>
-              <Grid container spacing={3}>
-                <Grid item xs={12} lg={6} xl={5}>
-                  <ProductImages />
-                </Grid>
-                <Grid item xs={12} lg={5} sx={{ mx: "auto" }}>
-                  <ProductInfo />
-                </Grid>
-              </Grid>
-            </MDBox>
-            <MDBox mb={3}>
-              <MDTypography variant="h5" fontWeight="medium">
-                Microlytics
-              </MDTypography>
-            </MDBox>
-            <MDBox mt={1.5}>
-              <Grid container spacing={3}>
-                <Grid item xs={12} md={6} lg={3}>
-                  <MDBox mb={1.5}>
-                    <MDButton variant="gradient" color="info" onClick={openInfoSB} fullWidth>
-                      Tell me more with a SandBar
-                    </MDButton>
-                    {renderInfoSB}
-                  </MDBox>
-                </Grid>
-                <Grid item xs={12} md={6} lg={3}>
-                  <MDBox mb={1.5}>
-                    <BasicPopOver />
-                  </MDBox>
-                </Grid>
-                <Grid item xs={12} md={6} lg={3}>
-                  <MDBox mb={1.5}>
-                    <TransitionModal />
-                  </MDBox>
-                </Grid>
-                <Grid item xs={12} md={6} lg={3}>
-                  <MDBox mb={1.5}>
-                    <FollowCursorTooltips />
-                  </MDBox>
-                </Grid>
-              </Grid>
-            </MDBox>
-
             <MDBox mt={4} mb={2}>
               <MDBox mb={1} ml={2}>
-                <MDTypography variant="h5" fontWeight="medium">
-                  Other Products
-                </MDTypography>
+                <MDTypography variant="h5" fontWeight="medium"></MDTypography>
               </MDBox>
               <DataTable
                 table={dataTableData}

@@ -1,221 +1,386 @@
-/**
-=========================================================
-* Material Dashboard 2 PRO React TS - v1.0.2
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-2-pro-react-ts
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
-import { useState } from "react";
-
-// @mui material components
-import Grid from "@mui/material/Grid";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import Tooltip from "@mui/material/Tooltip";
-import Icon from "@mui/material/Icon";
-import Card from "@mui/material/Card";
-
-// Material Dashboard 2 PRO React TS components
-import MDBox from "components/MDBox";
-import MDBadgeDot from "components/MDBadgeDot";
-import MDButton from "components/MDButton";
-import MDTypography from "components/MDTypography";
-
-// Material Dashboard 2 PRO React TS examples components
+import React, { useMemo, useState } from "react";
+import CodeHighlight from "components/CodeHighlight";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
-import Footer from "examples/Footer";
-import DefaultStatisticsCard from "examples/Cards/StatisticsCards/DefaultStatisticsCard";
-import DefaultLineChart from "examples/Charts/LineCharts/DefaultLineChart";
-import HorizontalBarChart from "examples/Charts/BarCharts/HorizontalBarChart";
-import SalesTable from "examples/Tables/SalesTable";
-import DataTable from "examples/Tables/DataTable";
+import { ExecuteQuery, MemberFilterTile, ThemeProvider, DashboardWidget } from "@sisense/sdk-ui";
+import { Data, measures, Filter } from "@sisense/sdk-data";
+import * as DM from "sisense/Schemas/ecommerce-master";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import Typography from "@mui/material/Typography";
+import Grid from "@mui/material/Grid";
+import CodeBlock from "components/CodeBlock";
+import { dashboardCodeExample } from "./dashboardCodeExample";
 
-// Sales dashboard components
-import ChannelsChart from "layouts/dashboards/sales/components/ChannelsChart";
+const theme = {
+  chart: {
+    textColor: "#3C3C44",
+  },
+  general: {
+    brandColor: "#2196f3",
+    primaryButtonTextColor: "white",
+  },
+  palette: {
+    variantColors: ["#2196f3", "#0d47a1", "#050A30", "#7EC8E3"],
+  },
+  typography: {
+    fontFamily: "roboto",
+  },
+};
 
-// Data
-import defaultLineChartData from "layouts/dashboards/sales/data/defaultLineChartData";
-import horizontalBarChartData from "layouts/dashboards/sales/data/horizontalBarChartData";
-import salesTableData from "layouts/dashboards/sales/data/salesTableData";
-import dataTableData from "layouts/dashboards/sales/data/dataTableData";
+/* THIS SECTION DEFINES THE DASHBOARD AND WIDGETS BEING PULLED FROM SISENSE PLATFORM */
 
-function Sales(): JSX.Element {
-  // DefaultStatisticsCard state for the dropdown value
-  const [salesDropdownValue, setSalesDropdownValue] = useState<string>("6 May - 7 May");
-  const [customersDropdownValue, setCustomersDropdownValue] = useState<string>("6 May - 7 May");
-  const [revenueDropdownValue, setRevenueDropdownValue] = useState<string>("6 May - 7 May");
+const DASHBOARD_ID = "656f7a6a19622d0033e7d69d";
+const WIDGET_IDS = {
+  WIDGET_1: "656f7d0219622d0033e7d6b7",
+  WIDGET_2: "656f974b19622d0033e7d6d3",
+  WIDGET_3: "656f7c6d19622d0033e7d6b5",
+  WIDGET_4: "65737c3019622d0033e7d705",
+  WIDGET_5: "656f87eb19622d0033e7d6c1",
+};
 
-  // DefaultStatisticsCard state for the dropdown action
-  const [salesDropdown, setSalesDropdown] = useState<string | null>(null);
-  const [customersDropdown, setCustomersDropdown] = useState<string | null>(null);
-  const [revenueDropdown, setRevenueDropdown] = useState<string | null>(null);
+type DataPointEventHandler = (point: { category: any; breakBy: any[] }) => void;
 
-  // DefaultStatisticsCard handler for the dropdown action
-  const openSalesDropdown = ({ currentTarget }: any) => setSalesDropdown(currentTarget);
-  const closeSalesDropdown = ({ currentTarget }: any) => {
-    setSalesDropdown(null);
-    setSalesDropdownValue(currentTarget.innerText || salesDropdownValue);
+export default function Dashboard() {
+  const [view, setView] = useState("Preview");
+  const [categoryFilter, setCategoryFilter] = useState<Filter | null>(null);
+  const [brandFilter, setBrandFilter] = useState<Filter | null>(null);
+  const [sentimentFilter, setSentimentFilter] = useState<Filter | null>(null);
+  const [countryFilter, setCountryFilter] = useState<Filter | null>(null);
+  const [agerangeFilter, setAgerangeFilter] = useState<Filter | null>(null);
+  const [dayofweekFilter, setDayofweekFilter] = useState<Filter | null>(null);
+  const [productnameFilter, setProductnameFilter] = useState<Filter | null>(null);
+
+  const filters = useMemo(() => {
+    const appliedFilters: Filter[] = [];
+
+    if (categoryFilter) {
+      appliedFilters.push(categoryFilter);
+    }
+
+    if (brandFilter) {
+      appliedFilters.push(brandFilter);
+    }
+
+    if (sentimentFilter) {
+      appliedFilters.push(sentimentFilter);
+    }
+
+    if (countryFilter) {
+      appliedFilters.push(countryFilter);
+    }
+
+    if (agerangeFilter) {
+      appliedFilters.push(agerangeFilter);
+    }
+
+    if (dayofweekFilter) {
+      appliedFilters.push(dayofweekFilter);
+    }
+
+    if (productnameFilter) {
+      appliedFilters.push(productnameFilter);
+    }
+    return appliedFilters;
+  }, [
+    categoryFilter,
+    brandFilter,
+    sentimentFilter,
+    countryFilter,
+    agerangeFilter,
+    dayofweekFilter,
+    productnameFilter,
+  ]);
+
+  const [isFilterColumnVisible, setFilterColumnVisibility] = useState(true);
+
+  const toggleFilterColumn = () => {
+    setFilterColumnVisibility(!isFilterColumnVisible);
   };
-  const openCustomersDropdown = ({ currentTarget }: any) => setCustomersDropdown(currentTarget);
-  const closeCustomersDropdown = ({ currentTarget }: any) => {
-    setCustomersDropdown(null);
-    setCustomersDropdownValue(currentTarget.innerText || salesDropdownValue);
-  };
-  const openRevenueDropdown = ({ currentTarget }: any) => setRevenueDropdown(currentTarget);
-  const closeRevenueDropdown = ({ currentTarget }: any) => {
-    setRevenueDropdown(null);
-    setRevenueDropdownValue(currentTarget.innerText || salesDropdownValue);
-  };
 
-  // Dropdown menu template for the DefaultStatisticsCard
-  const renderMenu = (state: any, close: any) => (
-    <Menu
-      anchorEl={state}
-      transformOrigin={{ vertical: "top", horizontal: "center" }}
-      open={Boolean(state)}
-      onClose={close}
-      keepMounted
-      disableAutoFocusItem
-    >
-      <MenuItem onClick={close}>Last 7 days</MenuItem>
-      <MenuItem onClick={close}>Last week</MenuItem>
-      <MenuItem onClick={close}>Last 30 days</MenuItem>
-    </Menu>
-  );
+  const handleButtonClick = (action: string) => {
+    if (action === "Preview") {
+      setView("Preview");
+    } else if (action === "React") {
+      setView("React");
+    } else if (action === "ToggleFilterColumn") {
+      toggleFilterColumn();
+    }
+  };
 
   return (
     <DashboardLayout>
       <DashboardNavbar />
-      <MDBox py={3}>
-        <MDBox mb={3}>
-          <Grid container spacing={3}>
-            <Grid item xs={12} sm={4}>
-              <DefaultStatisticsCard
-                title="sales"
-                count="$230,220"
-                percentage={{
-                  color: "success",
-                  value: "+55%",
-                  label: "since last month",
+      <CodeHighlight uniqueKey={view}>
+        <article className="my-8" id="Render-dashboard-widgets">
+          <div className="flex" style={{ marginBottom: "20px" }}>
+            <button
+              style={{
+                padding: "6px 12px",
+                borderRadius: "12px",
+                backgroundColor: isFilterColumnVisible ? "#2196f3" : "#ecf0f1",
+                color: isFilterColumnVisible ? "#ffffff" : "#333",
+                border: "none",
+                cursor: "pointer",
+              }}
+              onClick={() => handleButtonClick("ToggleFilterColumn")}
+            >
+              {isFilterColumnVisible ? "Hide Filters" : "Show Filters"}
+            </button>
+            <button
+              style={{
+                padding: "6px 12px",
+                borderRadius: "10px",
+                marginRight: "8px",
+                backgroundColor: view === "Preview" ? "#2196f3" : "#ecf0f1",
+                color: view === "Preview" ? "#ffffff" : "#333",
+                border: "none",
+                cursor: "pointer",
+              }}
+              onClick={() => handleButtonClick("Preview")}
+            >
+              Dashboard
+            </button>
+            <button
+              style={{
+                padding: "6px 12px",
+                borderRadius: "12px",
+                backgroundColor: view === "React" ? "#2196f3" : "#ecf0f1",
+                color: view === "React" ? "#ffffff" : "#333",
+                border: "none",
+                cursor: "pointer",
+              }}
+              onClick={() => handleButtonClick("React")}
+            >
+              Code
+            </button>
+          </div>
+          {view === "React" && <CodeBlock language="tsx">{dashboardCodeExample}</CodeBlock>}
+        </article>
+      </CodeHighlight>
+      <ExecuteQuery
+        dataSource={DM.DataSource}
+        dimensions={[
+          DM.Commerce.Transaction_Date.Years,
+          DM.Commerce.Transaction_Date.Months,
+          DM.Category.CategoryName,
+          DM.Commerce.AgeRange,
+          DM.Commerce.Country,
+          DM.CustomerReviews.Sentiment,
+          DM.Commerce.DayOfWeek,
+          DM.Product.ProductName,
+        ]}
+        measures={[
+          measures.sum(DM.Commerce.Quantity, "Total Quantity"),
+          measures.sum(DM.Commerce.Revenue, "Total Revenue"),
+          measures.sum(DM.Commerce.Cost, "Total Cost"),
+        ]}
+      >
+        {(data: Data) => (
+          <Grid container spacing={-1}>
+            {/* add filters as needed to this column */}
+            <Grid item xs={12} md={2} style={{ display: isFilterColumnVisible ? "block" : "none" }}>
+              <Card
+                style={{
+                  height: "auto",
+                  width: "auto",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  marginRight: "10px",
                 }}
-                dropdown={{
-                  action: openSalesDropdown,
-                  menu: renderMenu(salesDropdown, closeSalesDropdown),
-                  value: salesDropdownValue,
-                }}
-              />
+              >
+                <CardContent style={{ flex: "auto", padding: 25, textAlign: "center" }}>
+                  <Typography
+                    variant="h6"
+                    style={{ fontWeight: "bold", fontFamily: "Roboto", marginBottom: 15 }}
+                  >
+                    Dashboard Filters
+                  </Typography>
+                  <ThemeProvider theme={theme}>
+                    <MemberFilterTile
+                      title={"Category"}
+                      dataSource={DM.DataSource}
+                      attribute={DM.Category.CategoryName}
+                      filter={categoryFilter}
+                      onChange={setCategoryFilter}
+                    />
+                  </ThemeProvider>
+                  <ThemeProvider theme={theme}>
+                    <MemberFilterTile
+                      title={"Brand"}
+                      dataSource={DM.DataSource}
+                      attribute={DM.Brand.BrandName}
+                      filter={brandFilter}
+                      onChange={setBrandFilter}
+                    />
+                  </ThemeProvider>
+                </CardContent>
+                <CardContent style={{ flex: "auto", padding: 0 }}>
+                  <ThemeProvider theme={theme}>
+                    <MemberFilterTile
+                      title={"Customer Sentiment"}
+                      dataSource={DM.DataSource}
+                      attribute={DM.CustomerReviews.Sentiment}
+                      filter={sentimentFilter}
+                      onChange={setSentimentFilter}
+                    />
+                  </ThemeProvider>
+                </CardContent>
+                <CardContent style={{ flex: "auto", padding: 0 }}>
+                  <ThemeProvider theme={theme}>
+                    <MemberFilterTile
+                      title={"Country"}
+                      dataSource={DM.DataSource}
+                      attribute={DM.Commerce.Country}
+                      filter={countryFilter}
+                      onChange={setCountryFilter}
+                    />
+                  </ThemeProvider>
+                </CardContent>
+                <CardContent style={{ flex: "auto", padding: 0 }}>
+                  <ThemeProvider theme={theme}>
+                    <MemberFilterTile
+                      title={"Demographic"}
+                      dataSource={DM.DataSource}
+                      attribute={DM.Commerce.AgeRange}
+                      filter={agerangeFilter}
+                      onChange={setAgerangeFilter}
+                    />
+                  </ThemeProvider>
+                </CardContent>
+                <CardContent style={{ flex: "auto", padding: 0 }}>
+                  <ThemeProvider theme={theme}>
+                    <MemberFilterTile
+                      title={"Day Of Week"}
+                      dataSource={DM.DataSource}
+                      attribute={DM.Commerce.DayOfWeek}
+                      filter={dayofweekFilter}
+                      onChange={setDayofweekFilter}
+                    />
+                  </ThemeProvider>
+                </CardContent>
+                <CardContent style={{ flex: "auto", padding: 0 }}>
+                  <ThemeProvider theme={theme}>
+                    <MemberFilterTile
+                      title={"Product"}
+                      dataSource={DM.DataSource}
+                      attribute={DM.Product.ProductName}
+                      filter={productnameFilter}
+                      onChange={setProductnameFilter}
+                    />
+                  </ThemeProvider>
+                </CardContent>
+              </Card>
             </Grid>
-            <Grid item xs={12} sm={4}>
-              <DefaultStatisticsCard
-                title="customers"
-                count="3.200"
-                percentage={{
-                  color: "success",
-                  value: "+12%",
-                  label: "since last month",
-                }}
-                dropdown={{
-                  action: openCustomersDropdown,
-                  menu: renderMenu(customersDropdown, closeCustomersDropdown),
-                  value: customersDropdownValue,
-                }}
-              />
-            </Grid>
-            <Grid item xs={12} sm={4}>
-              <DefaultStatisticsCard
-                title="avg. revenue"
-                count="$1.200"
-                percentage={{
-                  color: "secondary",
-                  value: "+$213",
-                  label: "since last month",
-                }}
-                dropdown={{
-                  action: openRevenueDropdown,
-                  menu: renderMenu(revenueDropdown, closeRevenueDropdown),
-                  value: revenueDropdownValue,
-                }}
-              />
+
+            {/* Charts */}
+            <Grid item xs={12} md={10}>
+              {/* add more charts as needed here */}
+
+              <Grid container spacing={1}>
+                <Grid item xs={12} md={6}>
+                  <Card>
+                    <CardContent>
+                      <ThemeProvider theme={theme}>
+                        <DashboardWidget
+                          widgetOid={WIDGET_IDS.WIDGET_1}
+                          dashboardOid={DASHBOARD_ID}
+                          filters={filters}
+                          drilldownOptions={{
+                            drilldownDimensions: [
+                              DM.Brand.BrandName,
+                              DM.Product.ProductName,
+                              DM.Commerce.Transaction_Date.Months,
+                              DM.Commerce.Transaction_Date.Days,
+                            ],
+                          }}
+                        />
+                      </ThemeProvider>
+                    </CardContent>
+                  </Card>
+                </Grid>
+
+                <Grid item xs={12} md={6}>
+                  <Card>
+                    <CardContent>
+                      <ThemeProvider theme={theme}>
+                        <DashboardWidget
+                          widgetOid={WIDGET_IDS.WIDGET_2}
+                          dashboardOid={DASHBOARD_ID}
+                          filters={filters}
+                          drilldownOptions={{
+                            drilldownDimensions: [
+                              DM.Commerce.Country,
+                              DM.CustomerReviews.Sentiment,
+                            ],
+                          }}
+                        />
+                      </ThemeProvider>
+                    </CardContent>
+                  </Card>
+                </Grid>
+
+                <Grid item xs={12} md={6}>
+                  <Card>
+                    <CardContent>
+                      <ThemeProvider theme={theme}>
+                        <DashboardWidget
+                          widgetOid={WIDGET_IDS.WIDGET_3}
+                          dashboardOid={DASHBOARD_ID}
+                          filters={filters}
+                          drilldownOptions={{
+                            drilldownDimensions: [DM.Brand.BrandName, DM.Product.ProductName],
+                          }}
+                        />
+                      </ThemeProvider>
+                    </CardContent>
+                  </Card>
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <Card>
+                    <CardContent>
+                      <ThemeProvider theme={theme}>
+                        <DashboardWidget
+                          widgetOid={WIDGET_IDS.WIDGET_4}
+                          dashboardOid={DASHBOARD_ID}
+                          filters={filters}
+                          drilldownOptions={{
+                            drilldownDimensions: [
+                              DM.Category.CategoryName,
+                              DM.Product.ProductName,
+                              DM.Commerce.Transaction_Date.Days,
+                              DM.Commerce.AgeRange,
+                            ],
+                          }}
+                        />
+                      </ThemeProvider>
+                    </CardContent>
+                  </Card>
+                </Grid>
+
+                <Grid item xs={12} md={12}>
+                  <Card>
+                    <CardContent>
+                      <ThemeProvider theme={theme}>
+                        <DashboardWidget
+                          widgetOid={WIDGET_IDS.WIDGET_5}
+                          dashboardOid={DASHBOARD_ID}
+                          filters={filters}
+                          drilldownOptions={{
+                            drilldownDimensions: [DM.Brand.BrandName, DM.Product.ProductName],
+                          }}
+                        />
+                      </ThemeProvider>
+                    </CardContent>
+                  </Card>
+                </Grid>
+              </Grid>
             </Grid>
           </Grid>
-        </MDBox>
-        <MDBox mb={3}>
-          <Grid container spacing={3}>
-            <Grid item xs={12} sm={6} lg={4}>
-              <ChannelsChart />
-            </Grid>
-            <Grid item xs={12} sm={6} lg={8}>
-              <DefaultLineChart
-                title="Revenue"
-                description={
-                  <MDBox display="flex" justifyContent="space-between">
-                    <MDBox display="flex" ml={-1}>
-                      <MDBadgeDot color="info" size="sm" badgeContent="Facebook Ads" />
-                      <MDBadgeDot color="dark" size="sm" badgeContent="Google Ads" />
-                    </MDBox>
-                    <MDBox mt={-4} mr={-1} position="absolute" right="1.5rem">
-                      <Tooltip title="See which ads perform better" placement="left" arrow>
-                        <MDButton
-                          variant="outlined"
-                          color="secondary"
-                          size="small"
-                          circular
-                          iconOnly
-                        >
-                          <Icon>priority_high</Icon>
-                        </MDButton>
-                      </Tooltip>
-                    </MDBox>
-                  </MDBox>
-                }
-                chart={defaultLineChartData}
-              />
-            </Grid>
-          </Grid>
-        </MDBox>
-        <MDBox mb={3}>
-          <Grid container spacing={3}>
-            <Grid item xs={12} lg={8}>
-              <HorizontalBarChart title="Sales by age" chart={horizontalBarChartData} />
-            </Grid>
-            <Grid item xs={12} lg={4}>
-              <SalesTable title="Sales by Country" rows={salesTableData} />
-            </Grid>
-          </Grid>
-        </MDBox>
-        <Grid container spacing={3}>
-          <Grid item xs={12}>
-            <Card>
-              <MDBox pt={3} px={3}>
-                <MDTypography variant="h6" fontWeight="medium">
-                  Top Selling Products
-                </MDTypography>
-              </MDBox>
-              <MDBox py={1}>
-                <DataTable
-                  table={dataTableData}
-                  entriesPerPage={false}
-                  showTotalEntries={false}
-                  isSorted={false}
-                  noEndBorder
-                />
-              </MDBox>
-            </Card>
-          </Grid>
-        </Grid>
-      </MDBox>
-      <Footer />
+        )}
+      </ExecuteQuery>
     </DashboardLayout>
   );
 }
-
-export default Sales;

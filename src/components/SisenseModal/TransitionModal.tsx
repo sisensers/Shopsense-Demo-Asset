@@ -14,8 +14,6 @@ import DayOfWeek from "sisense/Charts/DayOfWeek";
 import { ButtonGroup } from "components/ButtonGroup";
 import DailySales from "sisense/Charts/DailySales";
 
-import ProductCell from "layouts/ecommerce/products/product-page/components/ProductCell";
-
 import blackChair from "assets/images/ecommerce/AdidasUltraboostRunningShoes.png";
 import CampaignPerformance from "sisense/Charts/CampaignPerformance";
 import Sentiment from "sisense/Charts/Sentiment";
@@ -69,9 +67,7 @@ export default function TransitionsModal() {
         <Fade in={open}>
           <Box sx={style}>
             <MDBox>
-              <MDBox mb={5}>
-                <ProductCell image={blackChair} name="Columbia Shoes" />
-              </MDBox>
+              <MDBox mb={5}></MDBox>
               <MDBox mb={5}>
                 {view === "Campaign" && <CampaignPerformance />}
                 {view === "Sales" && <DailySales />}

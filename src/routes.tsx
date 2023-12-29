@@ -38,6 +38,7 @@ Coded by www.creative-tim.com
 // Material Dashboard 2 PRO React layouts
 import Analytics from "layouts/dashboards/analytics";
 import Sales from "layouts/dashboards/sales";
+import SelfService from "layouts/dashboards/selfservice";
 import ProfileOverview from "layouts/pages/profile/profile-overview";
 import AllProjects from "layouts/pages/profile/all-projects";
 import NewUser from "layouts/pages/users/new-user";
@@ -65,10 +66,12 @@ import SignInIllustration from "layouts/authentication/sign-in/illustration";
 import SignUpCover from "layouts/authentication/sign-up/cover";
 import ResetCover from "layouts/authentication/reset-password/cover";
 
+//Sisense
 import SisenseCharts from "layouts/pages-sisense/charts";
 import NivoCharts from "layouts/pages-sisense/nivo-charts";
 import SisenseOrderList from "layouts/pages-sisense/order-list";
 import SisenseProductPage from "layouts/pages-sisense/product-page";
+import SisenseMicroAnalyticsPage from "layouts/pages-sisense/micro-analytics";
 
 // Material Dashboard 2 PRO React TS components
 import MDAvatar from "components/MDAvatar";
@@ -124,6 +127,12 @@ const routes = [
         key: "sales",
         route: "/dashboards/sales",
         component: <Sales />,
+      },
+      {
+        name: "Self Service",
+        key: "Self Service",
+        route: "/dashboards/selfservice",
+        component: <SelfService />,
       },
     ],
   },
@@ -410,16 +419,28 @@ const routes = [
         ],
       },
       {
-        name: "Order List",
-        key: "order-list",
-        route: "/sisense/order-list",
-        component: <SisenseOrderList />,
-      },
-      {
-        name: "Product Page",
-        key: "product-page",
-        route: "/sisense/product-page",
-        component: <SisenseProductPage />,
+        name: "Examples",
+        key: "examples",
+        collapse: [
+          {
+            name: "Micro Analytics",
+            key: "micro-analytics",
+            route: "/sisense/micro-analytics",
+            component: <SisenseMicroAnalyticsPage />,
+          },
+          {
+            name: "Order List",
+            key: "order-list",
+            route: "/sisense/order-list",
+            component: <SisenseOrderList />,
+          },
+          {
+            name: "Product Page",
+            key: "product-page",
+            route: "/sisense/product-page",
+            component: <SisenseProductPage />,
+          },
+        ],
       },
     ],
   },

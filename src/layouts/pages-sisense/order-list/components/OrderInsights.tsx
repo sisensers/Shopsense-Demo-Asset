@@ -14,8 +14,6 @@ import DayOfWeek from "sisense/Charts/DayOfWeek";
 import { ButtonGroup } from "components/ButtonGroup";
 import DailySales from "sisense/Charts/DailySales";
 
-import ProductCell from "layouts/ecommerce/products/product-page/components/ProductCell";
-
 import blackChair from "assets/images/ecommerce/AdidasUltraboostRunningShoes.png";
 import CampaignPerformance from "sisense/Charts/CampaignPerformance";
 import Sentiment from "sisense/Charts/Sentiment";
@@ -34,7 +32,7 @@ const style = {
   p: 4,
 };
 
-export default function TransitionsModal() {
+export default function OrderInsights() {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -51,7 +49,7 @@ export default function TransitionsModal() {
         aria-describedby={id}
         onClick={handleOpen}
       >
-        Open modal
+        Order Insights
       </MDButton>
       <Modal
         aria-labelledby="transition-modal-title"
@@ -69,9 +67,7 @@ export default function TransitionsModal() {
         <Fade in={open}>
           <Box sx={style}>
             <MDBox>
-              <MDBox mb={5}>
-                <ProductCell image={blackChair} name="Columbia Shoes" />
-              </MDBox>
+              <MDBox mb={5}></MDBox>
               <MDBox mb={5}>
                 {view === "Campaign" && <CampaignPerformance />}
                 {view === "Sales" && <DailySales />}

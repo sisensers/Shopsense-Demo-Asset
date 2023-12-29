@@ -15,6 +15,8 @@ Coded by www.creative-tim.com
 
 // @mui material components
 import Icon from "@mui/material/Icon";
+import Tooltip, { TooltipProps, tooltipClasses } from "@mui/material/Tooltip";
+import { styled } from "@mui/material/styles";
 
 // Material Dashboard 2 PRO React TS components
 import MDTypography from "components/MDTypography";
@@ -93,10 +95,33 @@ function ReviewCell({ rating }: { rating: number }): JSX.Element {
     ],
   };
 
+  const id = open ? "simple-popover" : undefined;
+
+  const CustomWidthTooltip = styled(({ className, ...props }: TooltipProps) => (
+    <Tooltip {...props} classes={{ popper: className }} />
+  ))({
+    [`& .${tooltipClasses.tooltip}`]: {
+      maxWidth: 500,
+    },
+  });
+
   return (
-    <MDTypography variant="h4" color="text">
-      {ratings[rating]}
-    </MDTypography>
+    <CustomWidthTooltip
+      title={
+        <MDTypography color="white" variant="h5" fontWeight="medium">
+          This analysis measures Revenue by transaction dates. Total Revenue was 830.31 across all
+          four transaction dates. Values ranged from 100.15 (2/6/21) to 405.84 (4/2/21). Revenue
+          improved by 114% over the course of the series and ended on a good note, increasing
+          significantly in the final transaction dates. The largest single increase occurred in
+          4/2/21 (+305%).
+        </MDTypography>
+      }
+      followCursor
+    >
+      <MDTypography variant="h4" color="text">
+        {ratings[rating]}
+      </MDTypography>
+    </CustomWidthTooltip>
   );
 }
 

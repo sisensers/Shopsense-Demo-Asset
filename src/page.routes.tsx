@@ -56,6 +56,10 @@ const pageRoutes = [
             name: "sales",
             route: "/dashboards/sales",
           },
+          {
+            name: "Self Service",
+            route: "/dashboards/selfservice",
+          },
         ],
       },
       {

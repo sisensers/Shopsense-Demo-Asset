@@ -31,6 +31,9 @@ import channelChartData from "layouts/dashboards/sales/components/ChannelsChart/
 
 // Material Dashboard 2 PRO React TS contexts
 import { useMaterialUIController } from "context";
+import SisensePieChart from "sisense/Charts/sisensePirChart";
+import RerouteButton from "components/Reroute";
+import SalesLineChart from "../SalesLineChart";
 
 function ChannelsChart(): JSX.Element {
   const [controller] = useMaterialUIController();
@@ -39,8 +42,21 @@ function ChannelsChart(): JSX.Element {
   return (
     <Card sx={{ height: "100%" }}>
       <MDBox display="flex" justifyContent="space-between" alignItems="center" pt={2} px={2}>
-        <MDTypography variant="h6">Channels</MDTypography>
-        <Tooltip title="See traffic channels" placement="bottom" arrow>
+        <MDTypography variant="h6">Age Demographic</MDTypography>
+        <Tooltip
+          title="Total Revenue
+Total Revenue for these five Age Ranges is $9M. Percentage contributions to the total lie between 16.2% and 31.9% for the different Age Ranges.
+
+The Age Range values, in order of importance, are as follows:
+
+41-50, $2.9M (31.9% of the total)
+30-35, $1.7M (19.1%)
+36-40, $1.5M (16.5%)
+20-24, $1.5M (16.3%)
+25-29, $1.5M (16.2%)"
+          placement="bottom"
+          arrow
+        >
           <MDButton variant="outlined" color="secondary" size="small" circular iconOnly>
             <Icon>priority_high</Icon>
           </MDButton>
@@ -48,24 +64,8 @@ function ChannelsChart(): JSX.Element {
       </MDBox>
       <MDBox mt={3}>
         <Grid container alignItems="center">
-          <Grid item xs={7}>
-            <PieChart chart={channelChartData} height="12.5rem" />
-          </Grid>
-          <Grid item xs={5}>
-            <MDBox pr={1}>
-              <MDBox mb={1}>
-                <MDBadgeDot color="info" size="sm" badgeContent="Facebook" />
-              </MDBox>
-              <MDBox mb={1}>
-                <MDBadgeDot color="primary" size="sm" badgeContent="Direct" />
-              </MDBox>
-              <MDBox mb={1}>
-                <MDBadgeDot color="dark" size="sm" badgeContent="Organic" />
-              </MDBox>
-              <MDBox mb={1}>
-                <MDBadgeDot color="secondary" size="sm" badgeContent="Referral" />
-              </MDBox>
-            </MDBox>
+          <Grid item xs={20}>
+            <SisensePieChart />
           </Grid>
         </Grid>
       </MDBox>
@@ -76,17 +76,7 @@ function ChannelsChart(): JSX.Element {
         display="flex"
         flexDirection={{ xs: "column", sm: "row" }}
         mt="auto"
-      >
-        <MDBox width={{ xs: "100%", sm: "60%" }} lineHeight={1}>
-          <MDTypography variant="button" color="text" fontWeight="light">
-            More than <strong>1,200,000</strong> sales are made using referral marketing, and{" "}
-            <strong>700,000</strong> are from social media.
-          </MDTypography>
-        </MDBox>
-        <MDBox width={{ xs: "100%", sm: "40%" }} textAlign="right" mt={{ xs: 2, sm: "auto" }}>
-          <MDButton color={darkMode ? "white" : "light"}>read more</MDButton>
-        </MDBox>
-      </MDBox>
+      ></MDBox>
     </Card>
   );
 }
