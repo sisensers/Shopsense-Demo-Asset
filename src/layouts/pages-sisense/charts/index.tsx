@@ -49,7 +49,7 @@ import polarChartData from "sisense/ChartData/polarChartData";
 
 // Sisense
 import { ExecuteQuery } from "@sisense/sdk-ui";
-import * as DM from "../../../sisense/Schemas/old-ecommerce";
+import * as DM from "sisense/Schemas/ecommerce-master";
 import { Data, measures } from "@sisense/sdk-data";
 
 function SisenseCharts(): JSX.Element {
@@ -74,7 +74,7 @@ function SisenseCharts(): JSX.Element {
             <Grid item xs={12} md={6}>
               <ExecuteQuery
                 dataSource={DM.DataSource}
-                dimensions={[DM.Commerce.Date.Months, DM.Commerce.Gender]}
+                dimensions={[DM.Commerce.Transaction_Date.Months, DM.CustomerReviews.Sentiment]}
                 measures={[
                   measures.sum(DM.Commerce.Revenue, "Total Revenue"),
                   measures.sum(DM.Commerce.Cost, "Total Cost"),
@@ -98,7 +98,7 @@ function SisenseCharts(): JSX.Element {
             <Grid item xs={12} md={6}>
               <ExecuteQuery
                 dataSource={DM.DataSource}
-                dimensions={[DM.Commerce.Date.Months, DM.Commerce.Gender]}
+                dimensions={[DM.Commerce.Transaction_Date.Months, DM.CustomerReviews.Sentiment]}
                 measures={[
                   measures.sum(DM.Commerce.Revenue, "Total Revenue"),
                   measures.sum(DM.Commerce.Cost, "Total Cost"),

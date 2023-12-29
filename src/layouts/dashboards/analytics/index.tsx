@@ -14,6 +14,7 @@ import Footer from "examples/Footer";
 import ReportsBarChart from "examples/Charts/BarCharts/ReportsBarChart";
 import ReportsLineChart from "examples/Charts/LineCharts/ReportsLineChart";
 import ComplexStatisticsCard from "examples/Cards/StatisticsCards/ComplexStatisticsCard";
+import RevenueStatisticsCard from "examples/Cards/StatisticsCards/RevenueStatisticsCard";
 import BookingCard from "examples/Cards/BookingCard";
 
 // Anaytics dashboard components
@@ -29,9 +30,20 @@ import booking2 from "assets/images/ecommerce/ColumbiaShoes.png";
 import booking3 from "assets/images/products/VersaceMedusaHeadHighTopSneakers.png";
 
 import DayOfWeek from "sisense/Charts/DayOfWeek";
+import SalesByAgeLine from "sisense/Charts/SalesByAgeLine";
+import { DateRangeFilterTile } from "@sisense/sdk-ui";
+import { Data, filters, measures } from "@sisense/sdk-data";
+import * as DM from "sisense/Schemas/ecommerce-master";
+import { useState } from "react";
+import CustomerStatisticsCard from "examples/Cards/StatisticsCards/CustomerStatisticsCard";
+import CostStatisticsCard from "examples/Cards/StatisticsCards/CostStatisticsCard";
+import OrderStatisticsCard from "examples/Cards/StatisticsCards/OrdersStatisticsCard";
 
 function Analytics(): JSX.Element {
   const { sales, tasks } = reportsLineChartData;
+  const [dateRangeFilter, setDateRangeFilter] = useState(
+    filters.dateRange(DM.Commerce.Transaction_Date.Days)
+  );
 
   // Action buttons for the BookingCard
   const actionButtons = (
@@ -57,10 +69,66 @@ function Analytics(): JSX.Element {
   return (
     <DashboardLayout>
       <DashboardNavbar />
+      <Grid container spacing={5}>
+        <Grid item xs={12} md={6}>
+          <div>
+            <DateRangeFilterTile
+              title="Date Range"
+              dataSource={DM.DataSource}
+              attribute={DM.Commerce.Transaction_Date.Days}
+              filter={dateRangeFilter}
+              onChange={(filter) => {
+                setDateRangeFilter(filter);
+              }}
+            />
+          </div>
+        </Grid>
+        <Grid item xs={12} md={6}></Grid>
+      </Grid>
       <MDBox py={3}>
         <Grid container>
-          <SalesByCountry />
+          <SalesByCountry filters={dateRangeFilter} />
         </Grid>
+        <MDBox mt={3}>
+          <Grid container spacing={3}>
+            <Grid item xs={12} md={6} lg={3}>
+              <MDBox mb={1.5}>
+                <RevenueStatisticsCard
+                  title={"Total Revenue"}
+                  icon={"store"}
+                  filters={dateRangeFilter}
+                />
+              </MDBox>
+            </Grid>
+            <Grid item xs={12} md={6} lg={3}>
+              <MDBox mb={1.5}>
+                <CustomerStatisticsCard
+                  title={"Total Customers"}
+                  icon={"leaderboard"}
+                  filters={dateRangeFilter}
+                />
+              </MDBox>
+            </Grid>
+            <Grid item xs={12} md={6} lg={3}>
+              <MDBox mb={1.5}>
+                <CostStatisticsCard
+                  title={"Total Cost"}
+                  icon={"warning"}
+                  filters={dateRangeFilter}
+                />
+              </MDBox>
+            </Grid>
+            <Grid item xs={12} md={6} lg={3}>
+              <MDBox mb={1.5}>
+                <OrderStatisticsCard
+                  title={"Orders Filled"}
+                  filters={dateRangeFilter}
+                  icon={"timeline"}
+                />
+              </MDBox>
+            </Grid>
+          </Grid>
+        </MDBox>
         <MDBox mt={6}>
           <Grid container spacing={3}>
             <Grid item xs={12} md={6} lg={4}>
@@ -68,93 +136,9 @@ function Analytics(): JSX.Element {
                 <DayOfWeek />
               </MDBox>
             </Grid>
-            <Grid item xs={12} md={6} lg={4}>
+            <Grid item xs={12} md={6} lg={8}>
               <MDBox mb={3}>
-                <ReportsLineChart
-                  color="success"
-                  title="Monthly Sales"
-                  description={
-                    <>
-                      (<strong>+15%</strong>) increase in today sales.
-                    </>
-                  }
-                  date="updated 4 min ago"
-                  chart={sales}
-                />
-              </MDBox>
-            </Grid>
-            <Grid item xs={12} md={6} lg={4}>
-              <MDBox mb={3}>
-                <ReportsLineChart
-                  color="dark"
-                  title="AD Impressions"
-                  description="Last Campaign Performance"
-                  date="just updated"
-                  chart={tasks}
-                />
-              </MDBox>
-            </Grid>
-          </Grid>
-        </MDBox>
-        <MDBox mt={1.5}>
-          <Grid container spacing={3}>
-            <Grid item xs={12} md={6} lg={3}>
-              <MDBox mb={1.5}>
-                <ComplexStatisticsCard
-                  color="dark"
-                  icon="weekend"
-                  title="Items on Order"
-                  count={281}
-                  percentage={{
-                    color: "success",
-                    amount: "+55%",
-                    label: "than lask week",
-                  }}
-                />
-              </MDBox>
-            </Grid>
-            <Grid item xs={12} md={6} lg={3}>
-              <MDBox mb={1.5}>
-                <ComplexStatisticsCard
-                  icon="leaderboard"
-                  title="New Customers"
-                  count="2,300"
-                  percentage={{
-                    color: "success",
-                    amount: "+3%",
-                    label: "than last month",
-                  }}
-                />
-              </MDBox>
-            </Grid>
-            <Grid item xs={12} md={6} lg={3}>
-              <MDBox mb={1.5}>
-                <ComplexStatisticsCard
-                  color="success"
-                  icon="store"
-                  title="Revenue"
-                  count="$3M"
-                  percentage={{
-                    color: "success",
-                    amount: "+1%",
-                    label: "than yesterday",
-                  }}
-                />
-              </MDBox>
-            </Grid>
-            <Grid item xs={12} md={6} lg={3}>
-              <MDBox mb={1.5}>
-                <ComplexStatisticsCard
-                  color="info"
-                  icon="leaderboard"
-                  title="Return Customers"
-                  count="+91"
-                  percentage={{
-                    color: "success",
-                    amount: "",
-                    label: "Just updated",
-                  }}
-                />
+                <SalesByAgeLine filters={dateRangeFilter} />
               </MDBox>
             </Grid>
           </Grid>

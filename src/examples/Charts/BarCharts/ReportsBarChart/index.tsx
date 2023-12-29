@@ -1,41 +1,17 @@
-/**
-=========================================================
-* Material Dashboard 2 PRO React TS - v1.0.2
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-2-pro-react-ts
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
-import { useMemo, ReactNode } from "react";
-
-// react-chartjs-2 components
+import React, { useMemo } from "react";
 import "chart.js/auto";
 import { Bar } from "react-chartjs-2";
-
-// @mui material components
 import Card from "@mui/material/Card";
 import Divider from "@mui/material/Divider";
 import Icon from "@mui/material/Icon";
-
-// Material Dashboard 2 PRO React TS components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
-
-// ReportsBarChart configurations
 import configs from "examples/Charts/BarCharts/ReportsBarChart/configs";
 
-// Declaring props types for ReportsBarChart
 interface Props {
   color?: "primary" | "secondary" | "info" | "success" | "warning" | "error" | "dark";
   title: string;
-  description?: string | ReactNode;
+  description?: string | React.ReactNode;
   date: string;
   chart: {
     labels: string[];
@@ -51,7 +27,7 @@ function ReportsBarChart({ color, title, description, date, chart }: Props): JSX
   const { data, options } = configs(chart.labels || [], chart.datasets || {});
 
   return (
-    <Card sx={{ height: "100%" }}>
+    <Card sx={{ height: "400px" }}>
       <MDBox padding="1rem">
         {useMemo(
           () => (
@@ -63,7 +39,7 @@ function ReportsBarChart({ color, title, description, date, chart }: Props): JSX
               py={2}
               pr={0.5}
               mt={-5}
-              height="12.5rem"
+              height="auto"
             >
               <Bar data={data} options={options} />
             </MDBox>
@@ -92,7 +68,6 @@ function ReportsBarChart({ color, title, description, date, chart }: Props): JSX
   );
 }
 
-// Setting default values for the props of ReportsBarChart
 ReportsBarChart.defaultProps = {
   color: "dark",
   description: "",

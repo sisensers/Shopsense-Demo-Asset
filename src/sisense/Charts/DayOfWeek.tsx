@@ -12,14 +12,7 @@ export default function DayOfWeek(): JSX.Element {
       dataSource={DM.DataSource}
       dimensions={[DM.Commerce.DayOfWeek]}
       measures={[measures.average(DM.Commerce.Revenue, "Revenue")]}
-      filters={[
-        filters.members(DM.Commerce.Country, [
-          "United States",
-          "Germany",
-          "United Kingdom",
-          "Brazil",
-        ]),
-      ]}
+      filters={[]}
     >
       {(data: Data) => {
         console.log(data);
