@@ -111,7 +111,7 @@ function BubbleChart({ icon, title, description, height, chart }: Props): JSX.El
       {useMemo(
         () => (
           <MDBox height={height}>
-            <Bubble data={data} options={options} />
+            <Bubble data={data} options={options} placeholder={undefined} />
           </MDBox>
         ),
         [chart, height]

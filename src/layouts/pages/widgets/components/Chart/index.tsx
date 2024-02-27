@@ -93,7 +93,7 @@ function Chart({ title, count, percentage, chart }: Props): JSX.Element {
       {useMemo(
         () => (
           <MDBox ref={chartRef} sx={{ height: "5.375rem" }}>
-            <Line data={data} options={options} />
+            <Line data={data} options={options} placeholder={undefined} />
           </MDBox>
         ),
         [chartData]

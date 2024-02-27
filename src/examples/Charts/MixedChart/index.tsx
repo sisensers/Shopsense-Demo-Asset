@@ -177,7 +177,7 @@ function MixedChart({ icon, title, description, height, chart }: Props): JSX.Ele
       {useMemo(
         () => (
           <MDBox ref={chartRef} sx={{ height }}>
-            <Line data={data} options={options} />
+            <Line data={data} options={options} placeholder={undefined} />
           </MDBox>
         ),
         [chartData, height]

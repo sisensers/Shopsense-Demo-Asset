@@ -105,7 +105,7 @@ function HorizontalBarChart({ icon, title, description, height, chart }: Props):
       {useMemo(
         () => (
           <MDBox height={height}>
-            <Bar data={data} options={options} />
+            <Bar data={data} options={options} placeholder={undefined} />
           </MDBox>
         ),
         [chart, height]

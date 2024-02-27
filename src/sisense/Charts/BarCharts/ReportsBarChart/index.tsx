@@ -65,7 +65,7 @@ function ReportsBarChart({ color, title, description, date, chart }: Props): JSX
               mt={-5}
               height="12.5rem"
             >
-              <Bar data={data} options={options} />
+              <Bar data={data} options={options} placeholder={undefined} />
             </MDBox>
           ),
           [chart, color]

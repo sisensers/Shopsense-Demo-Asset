@@ -17,7 +17,7 @@ Coded by www.creative-tim.com
 import kal from "assets/images/kal-visuals-square.jpg";
 import marie from "assets/images/marie.jpg";
 import ivana from "assets/images/ivana-square.jpg";
-import team3 from "assets/images/team-3.jpg";
+import team5 from "assets/images/team-5.jpg";
 import team4 from "assets/images/team-4.jpg";
 
 // types
@@ -37,7 +37,7 @@ const profileListData: Types = [
   },
   {
     image: marie,
-    name: "Anne Marie",
+    name: "Mary Terrell",
     description: "Awesome work, can you..",
     action: {
       type: "internal",
@@ -69,8 +69,8 @@ const profileListData: Types = [
     },
   },
   {
-    image: team3,
-    name: "Nick Daniel",
+    image: team5,
+    name: "Jeannette Rankin",
     description: "Hi! I need more information..",
     action: {
       type: "internal",

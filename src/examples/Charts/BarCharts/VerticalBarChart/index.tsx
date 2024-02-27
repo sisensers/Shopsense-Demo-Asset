@@ -105,7 +105,7 @@ function VerticalBarChart({ icon, title, description, height, chart }: Props): J
       {useMemo(
         () => (
           <MDBox height={height}>
-            <Bar data={data} options={options} />
+            <Bar data={data} options={options} placeholder={undefined} />
           </MDBox>
         ),
         [chart, height]

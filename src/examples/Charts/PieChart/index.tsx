@@ -88,7 +88,7 @@ function PieChart({ icon, title, description, height, chart }: Props): JSX.Eleme
       {useMemo(
         () => (
           <MDBox height={height}>
-            <Pie data={data} options={options} />
+            <Pie data={data} options={options} placeholder={undefined} />
           </MDBox>
         ),
         [chart, height]

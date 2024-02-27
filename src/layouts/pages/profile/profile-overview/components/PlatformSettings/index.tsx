@@ -1,18 +1,3 @@
-/**
-=========================================================
-* Material Dashboard 2 PRO React TS - v1.0.2
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-2-pro-react-ts
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
 import { useState } from "react";
 
 // @mui material components
@@ -35,7 +20,7 @@ function PlatformSettings(): JSX.Element {
     <Card sx={{ boxShadow: "none" }}>
       <MDBox p={2}>
         <MDTypography variant="h6" fontWeight="medium" textTransform="capitalize">
-          platform settings
+          Store Settings
         </MDTypography>
       </MDBox>
       <MDBox pt={1} pb={2} px={2} lineHeight={1.25}>
@@ -48,7 +33,7 @@ function PlatformSettings(): JSX.Element {
           </MDBox>
           <MDBox width="80%" ml={0.5}>
             <MDTypography variant="button" fontWeight="regular" color="text">
-              Email me when someone follows me
+              Update me when paymants post
             </MDTypography>
           </MDBox>
         </MDBox>
@@ -58,7 +43,7 @@ function PlatformSettings(): JSX.Element {
           </MDBox>
           <MDBox width="80%" ml={0.5}>
             <MDTypography variant="button" fontWeight="regular" color="text">
-              Email me when someone answers on my post
+              Email me when bulk orders are placed
             </MDTypography>
           </MDBox>
         </MDBox>
@@ -68,7 +53,7 @@ function PlatformSettings(): JSX.Element {
           </MDBox>
           <MDBox width="80%" ml={0.5}>
             <MDTypography variant="button" fontWeight="regular" color="text">
-              Email me when someone mentions me
+              Email me when someone mentions my store
             </MDTypography>
           </MDBox>
         </MDBox>
@@ -103,7 +88,7 @@ function PlatformSettings(): JSX.Element {
           </MDBox>
           <MDBox width="80%" ml={0.5}>
             <MDTypography variant="button" fontWeight="regular" color="text">
-              Subscribe to newsletter
+              Subscribe to Shopsense newsletter
             </MDTypography>
           </MDBox>
         </MDBox>

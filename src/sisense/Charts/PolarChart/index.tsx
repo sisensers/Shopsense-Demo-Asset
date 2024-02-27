@@ -87,7 +87,7 @@ function PolarChart({ icon, title, description, chart }: Props): JSX.Element {
       {useMemo(
         () => (
           <MDBox p={4}>
-            <PolarArea data={data} options={options} />
+            <PolarArea data={data} options={options} placeholder={undefined} />
           </MDBox>
         ),
         [chart]

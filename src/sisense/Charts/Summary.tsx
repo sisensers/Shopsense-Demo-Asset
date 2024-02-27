@@ -2,9 +2,6 @@ import ReportsLineChart from "examples/Charts/LineCharts/ReportsLineChart";
 import reportsLineChartData from "layouts/dashboards/analytics/data/reportsLineChartData";
 
 // Sisense
-import { ExecuteQuery } from "@sisense/sdk-ui";
-import * as DM from "sisense/Schemas/ecommerce-master";
-import { Data, measures, filters } from "@sisense/sdk-data";
 import MDBox from "components/MDBox";
 import MDProgress from "components/MDProgress";
 import Card from "@mui/material/Card";

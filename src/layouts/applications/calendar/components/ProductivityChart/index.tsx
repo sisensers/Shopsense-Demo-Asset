@@ -92,7 +92,7 @@ function ProductivityChart(): JSX.Element {
         {useMemo(
           () => (
             <MDBox ref={chartRef} sx={{ height: "6.25rem" }}>
-              <Line data={data} options={options} />
+              <Line data={data} options={options} placeholder={undefined} />
             </MDBox>
           ),
           [chart]

@@ -7,7 +7,7 @@ import {
   createDimension,
 } from "@sisense/sdk-data";
 
-export const DataSource = "Ecommerce Demo [MASTER]";
+export const DataSource = "Shopsense [DEV V2]";
 
 interface ActualVPotentialDimension extends Dimension {
   Actual_Revenue: Attribute;
@@ -38,6 +38,136 @@ export const ActualVPotential = createDimension({
     expression: "[Actual V Potential.Product_ID]",
   }),
 }) as ActualVPotentialDimension;
+
+interface AdReportDimension extends Dimension {
+  AdName: Attribute;
+  AdSetName: Attribute;
+  Ad_ID: Attribute;
+  Ad_Set_ID: Attribute;
+  Age: Attribute;
+  AmountSpent: Attribute;
+  CampaignDuration: Attribute;
+  CostPerPurchase: Attribute;
+  CostPerResult: Attribute;
+  Day: Attribute;
+  Frequency: Attribute;
+  Gender: Attribute;
+  Impressions: Attribute;
+  Network: Attribute;
+  Objective: Attribute;
+  Purchases: Attribute;
+  Reach: Attribute;
+  Results: Attribute;
+  UniquePurchases: Attribute;
+  Ends: DateDimension;
+  Starts: DateDimension;
+}
+export const AdReport = createDimension({
+  name: "Ad Report",
+  AdName: createAttribute({
+    name: "AdName",
+    type: "text-attribute",
+    expression: "[Ad Report.Ad Name]",
+  }),
+  AdSetName: createAttribute({
+    name: "AdSetName",
+    type: "text-attribute",
+    expression: "[Ad Report.Ad Set Name]",
+  }),
+  Ad_ID: createAttribute({
+    name: "Ad_ID",
+    type: "numeric-attribute",
+    expression: "[Ad Report.Ad_ID]",
+  }),
+  Ad_Set_ID: createAttribute({
+    name: "Ad_Set_ID",
+    type: "numeric-attribute",
+    expression: "[Ad Report.Ad_Set_ID]",
+  }),
+  Age: createAttribute({
+    name: "Age",
+    type: "text-attribute",
+    expression: "[Ad Report.Age]",
+  }),
+  AmountSpent: createAttribute({
+    name: "AmountSpent",
+    type: "numeric-attribute",
+    expression: "[Ad Report.Amount Spent]",
+  }),
+  CampaignDuration: createAttribute({
+    name: "CampaignDuration",
+    type: "numeric-attribute",
+    expression: "[Ad Report.Campaign Duration]",
+  }),
+  CostPerPurchase: createAttribute({
+    name: "CostPerPurchase",
+    type: "numeric-attribute",
+    expression: "[Ad Report.Cost Per Purchase]",
+  }),
+  CostPerResult: createAttribute({
+    name: "CostPerResult",
+    type: "numeric-attribute",
+    expression: "[Ad Report.Cost Per Result]",
+  }),
+  Day: createAttribute({
+    name: "Day",
+    type: "numeric-attribute",
+    expression: "[Ad Report.Day]",
+  }),
+  Frequency: createAttribute({
+    name: "Frequency",
+    type: "numeric-attribute",
+    expression: "[Ad Report.Frequency]",
+  }),
+  Gender: createAttribute({
+    name: "Gender",
+    type: "text-attribute",
+    expression: "[Ad Report.Gender]",
+  }),
+  Impressions: createAttribute({
+    name: "Impressions",
+    type: "numeric-attribute",
+    expression: "[Ad Report.Impressions]",
+  }),
+  Network: createAttribute({
+    name: "Network",
+    type: "text-attribute",
+    expression: "[Ad Report.Network]",
+  }),
+  Objective: createAttribute({
+    name: "Objective",
+    type: "text-attribute",
+    expression: "[Ad Report.Objective]",
+  }),
+  Purchases: createAttribute({
+    name: "Purchases",
+    type: "numeric-attribute",
+    expression: "[Ad Report.Purchases]",
+  }),
+  Reach: createAttribute({
+    name: "Reach",
+    type: "numeric-attribute",
+    expression: "[Ad Report.Reach]",
+  }),
+  Results: createAttribute({
+    name: "Results",
+    type: "numeric-attribute",
+    expression: "[Ad Report.Results]",
+  }),
+  UniquePurchases: createAttribute({
+    name: "UniquePurchases",
+    type: "numeric-attribute",
+    expression: "[Ad Report.Unique Purchases]",
+  }),
+  Ends: createDateDimension({
+    name: "Ends",
+    expression: "[Ad Report.Ends (Calendar)]",
+  }),
+  Starts: createDateDimension({
+    name: "Starts",
+    expression: "[Ad Report.Starts (Calendar)]",
+  }),
+}) as AdReportDimension;
 
 interface BrandDimension extends Dimension {
   BrandName: Attribute;
@@ -76,6 +206,7 @@ export const Category = createDimension({
 }) as CategoryDimension;
 
 interface CommerceDimension extends Dimension {
+  AD_ID: Attribute;
   Age: Attribute;
   AgeRange: Attribute;
   Brand_ID: Attribute;
@@ -91,11 +222,15 @@ interface CommerceDimension extends Dimension {
   Revenue: Attribute;
   Status: Attribute;
   Transaction_ID: Attribute;
-  Birthdate: DateDimension;
   Transaction_Date: DateDimension;
 }
 export const Commerce = createDimension({
   name: "Commerce",
+  AD_ID: createAttribute({
+    name: "AD_ID",
+    type: "numeric-attribute",
+    expression: "[Commerce.AD_ID]",
+  }),
   Age: createAttribute({
     name: "Age",
     type: "numeric-attribute",
@@ -170,10 +305,6 @@ export const Commerce = createDimension({
     name: "Transaction_ID",
     type: "numeric-attribute",
     expression: "[Commerce.Transaction_ID]",
-  }),
-  Birthdate: createDateDimension({
-    name: "Birthdate",
-    expression: "[Commerce.Birthdate (Calendar)]",
   }),
   Transaction_Date: createDateDimension({
     name: "Transaction_Date",

@@ -89,7 +89,7 @@ function DefaultDoughnutChart({ icon, title, description, height, chart }: Props
       {useMemo(
         () => (
           <MDBox height={height}>
-            <Doughnut data={data} options={options} />
+            <Doughnut data={data} options={options} placeholder={undefined} />
           </MDBox>
         ),
         [chart, height]

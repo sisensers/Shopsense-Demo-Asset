@@ -109,7 +109,7 @@ function DefaultLineChart({ icon, title, description, height, chart }: Props): J
       {useMemo(
         () => (
           <MDBox height={height}>
-            <Line data={data} options={options} />
+            <Line data={data} options={options} placeholder={undefined} />
           </MDBox>
         ),
         [chart, height]

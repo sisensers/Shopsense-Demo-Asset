@@ -111,7 +111,7 @@ function NewUser(): JSX.Element {
               onSubmit={handleSubmit}
             >
               {({ values, errors, touched, isSubmitting }) => (
-                <Form id={formId} autoComplete="off">
+                <Form id={formId} autoComplete="off" placeholder={undefined}>
                   <Card sx={{ height: "100%" }}>
                     <MDBox mx={2} mt={-3}>
                       <Stepper activeStep={activeStep} alternativeLabel>
