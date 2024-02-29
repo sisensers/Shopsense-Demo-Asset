@@ -7,7 +7,7 @@ import CodeHighlight from "../../../components/CodeHighlight";
 import CodeBlock from "../../../components/CodeBlock";
 import SubTitle from "../../../components/SubTitle";
 import Paragraph from "../../../components/Paragraph";
-import { Data, Filter, measures } from "@sisense/sdk-data";
+import { Data, Filter, measureFactory } from "@sisense/sdk-data";
 
 import {
   ResponsiveBump,
@@ -35,7 +35,7 @@ export default function ExecuteQueryChart(props: Props) {
           <ExecuteQuery
             dataSource={DM.DataSource}
             dimensions={[DM.Commerce.Date.Years, DM.Commerce.AgeRange]}
-            measures={[measures.sum(DM.Commerce.Revenue, "Total Revenue")]}
+            measures={[measureFactory.sum(DM.Commerce.Revenue, "Total Revenue")]}
             filters={[props.filters]}
           >
             {(data: Data) => {

@@ -11,7 +11,7 @@ import MDProgress from "components/MDProgress";
 // Sisense
 import { ExecuteQuery } from "@sisense/sdk-ui";
 import * as DM from "sisense/Schemas/ecommerce-master";
-import { Data, measures, filters } from "@sisense/sdk-data";
+import { Data, measureFactory } from "@sisense/sdk-data";
 
 const label = { inputProps: { "aria-label": "Color switch demo" } };
 
@@ -37,7 +37,7 @@ export default function CampaignPerformance(): JSX.Element {
         <ExecuteQuery
           dataSource={DM.DataSource}
           dimensions={[DM.Commerce.Transaction_Date.Months]}
-          measures={[measures.sum(DM.Commerce.Revenue, "Total Revenue")]}
+          measures={[measureFactory.sum(DM.Commerce.Revenue, "Total Revenue")]}
           filters={[]}
         >
           {(data: Data) => {

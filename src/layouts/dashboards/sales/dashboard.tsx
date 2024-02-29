@@ -21,7 +21,7 @@ import {
   ThemeProvider,
   DrilldownWidget,
 } from "@sisense/sdk-ui";
-import { Data, measures, filters, Filter } from "@sisense/sdk-data";
+import { Data, measureFactory, filterFactory, Filter } from "@sisense/sdk-data";
 import * as DM from "sisense/Schemas/ecommerce-master";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -78,9 +78,9 @@ export default function Dashboard() {
           DM.Commerce.Country,
         ]}
         measures={[
-          measures.sum(DM.Commerce.Quantity, "Total Quantity"),
-          measures.sum(DM.Commerce.Revenue, "Total Revenue"),
-          measures.sum(DM.Commerce.Cost, "Total Cost"),
+          measureFactory.sum(DM.Commerce.Quantity, "Total Quantity"),
+          measureFactory.sum(DM.Commerce.Revenue, "Total Revenue"),
+          measureFactory.sum(DM.Commerce.Cost, "Total Cost"),
         ]}
       >
         {(data: Data) => (
@@ -96,7 +96,7 @@ export default function Dashboard() {
                       dataSet={DM.DataSource}
                       chartType={"indicator"}
                       dataOptions={{
-                        value: [measures.sum(DM.Commerce.Cost, "Total Cost")],
+                        value: [measureFactory.sum(DM.Commerce.Cost, "Total Cost")],
                       }}
                       filters={filters}
                     />
@@ -114,7 +114,7 @@ export default function Dashboard() {
                       dataSet={DM.DataSource}
                       chartType={"indicator"}
                       dataOptions={{
-                        value: [measures.sum(DM.Commerce.Revenue, "Orders Revenue")],
+                        value: [measureFactory.sum(DM.Commerce.Revenue, "Orders Revenue")],
                       }}
                       filters={filters}
                     />
@@ -132,7 +132,7 @@ export default function Dashboard() {
                       dataSet={DM.DataSource}
                       chartType={"indicator"}
                       dataOptions={{
-                        value: [measures.sum(DM.Commerce.Quantity, "Quantty")],
+                        value: [measureFactory.sum(DM.Commerce.Quantity, "Quantty")],
                       }}
                       filters={filters}
                     />
@@ -153,24 +153,28 @@ export default function Dashboard() {
                 }}
               >
                 <CardContent style={{ flex: 1, padding: 0 }}>
-                  <ThemeProvider theme={theme}>
+                <ThemeProvider theme={theme}>
                     <MemberFilterTile
                       title={"Category"}
                       dataSource={DM.DataSource}
                       attribute={DM.Category.CategoryName}
                       filter={categoryFilter}
-                      onChange={setCategoryFilter}
+                      onChange={(newFilter: Partial<Filter> | null) =>
+                        setCategoryFilter(newFilter as Filter | null)
+                      }
                     />
                   </ThemeProvider>
                 </CardContent>
                 <CardContent style={{ flex: 1, padding: 0 }}>
-                  <ThemeProvider theme={theme}>
+                <ThemeProvider theme={theme}>
                     <MemberFilterTile
                       title={"Brand"}
                       dataSource={DM.DataSource}
                       attribute={DM.Brand.BrandName}
                       filter={brandFilter}
-                      onChange={setBrandFilter}
+                      onChange={(newFilter: Partial<Filter> | null) =>
+                        setBrandFilter(newFilter as Filter | null)
+                      }
                     />
                   </ThemeProvider>
                 </CardContent>
@@ -189,7 +193,7 @@ export default function Dashboard() {
                         chartType={"bar"}
                         dataOptions={{
                           category: [DM.Commerce.AgeRange],
-                          value: [measures.sum(DM.Commerce.Revenue, "Revenue")],
+                          value: [measureFactory.sum(DM.Commerce.Revenue, "Revenue")],
                           breakBy: [],
                         }}
                         filters={filters}
@@ -211,7 +215,7 @@ export default function Dashboard() {
                         chartType={"pie"}
                         dataOptions={{
                           category: [DM.Commerce.Transaction_Date.Years],
-                          value: [measures.sum(DM.Commerce.Revenue, "Revenue")],
+                          value: [measureFactory.sum(DM.Commerce.Revenue, "Revenue")],
                           breakBy: [],
                         }}
                         filters={filters}
@@ -233,7 +237,7 @@ export default function Dashboard() {
                         chartType={"column"}
                         dataOptions={{
                           category: [DM.Commerce.Country],
-                          value: [measures.sum(DM.Commerce.Revenue, "Revenue")],
+                          value: [measureFactory.sum(DM.Commerce.Revenue, "Revenue")],
                           breakBy: [],
                         }}
                         filters={filters}
@@ -255,7 +259,7 @@ export default function Dashboard() {
                         chartType={"area"}
                         dataOptions={{
                           category: [DM.Commerce.Transaction_Date.Months],
-                          value: [measures.sum(DM.Commerce.Quantity, "Orders Filled")],
+                          value: [measureFactory.sum(DM.Commerce.Quantity, "Orders Filled")],
                           breakBy: [DM.Commerce.Country],
                         }}
                         filters={filters}
@@ -277,7 +281,7 @@ export default function Dashboard() {
                         chartType={"line"}
                         dataOptions={{
                           category: [DM.Commerce.Transaction_Date.Months],
-                          value: [measures.sum(DM.Commerce.Revenue, "Revenue")],
+                          value: [measureFactory.sum(DM.Commerce.Revenue, "Revenue")],
                           breakBy: [],
                         }}
                         filters={filters}

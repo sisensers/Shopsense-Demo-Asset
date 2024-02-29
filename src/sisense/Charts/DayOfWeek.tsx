@@ -4,15 +4,15 @@ import reportsBarChartData from "layouts/dashboards/analytics/data/reportsBarCha
 // Sisense
 import { ExecuteQuery } from "@sisense/sdk-ui";
 import * as DM from "sisense/Schemas/ecommerce-master";
-import { Data, measures, filters } from "@sisense/sdk-data";
+import { Data, measureFactory, filterFactory } from "@sisense/sdk-data";
 
 export default function DayOfWeek(): JSX.Element {
   return (
     <ExecuteQuery
       dataSource={DM.DataSource}
       dimensions={[DM.Commerce.DayOfWeek]}
-      measures={[measures.average(DM.Commerce.Revenue, "Revenue")]}
-      filters={[]}
+      measures={[measureFactory.sum(DM.AdReport.Purchases, "Unique Purchases From Ad")]}
+      filters={[filterFactory.dateRange(DM.Commerce.Transaction_Date.Months, "2024-01", "2024-02")]}
     >
       {(data: Data) => {
         console.log(data);
@@ -20,8 +20,8 @@ export default function DayOfWeek(): JSX.Element {
         return (
           <ReportsBarChart
             color="info"
-            title="Weekly Sales"
-            description="Last Week's Performance"
+            title="Purchases From Ads"
+            description="Purchases made from online Ad's by day last month"
             date="Updated Monday"
             chart={transformedData}
           />

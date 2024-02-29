@@ -48,7 +48,7 @@ import Checkbox from "@mui/material/Checkbox";
 // Sisense
 import { ExecuteQuery } from "@sisense/sdk-ui";
 import * as DM from "../../../sisense/Schemas/old-ecommerce";
-import { Data, filters, measures } from "@sisense/sdk-data";
+import { Data, filterFactory } from "@sisense/sdk-data";
 import { useState } from "react";
 import { DateRangeFilterTile } from "@sisense/sdk-ui";
 
@@ -59,7 +59,9 @@ import NivoHeapMap from "../../../sisense/Charts/NivoCharts/NivoHeapMapExample";
 import NivoRadialBar from "../../../sisense/Charts/NivoCharts/NivoRadialBarExample";
 
 function SisenseCharts(): JSX.Element {
-  const [dateRangeFilter, setDateRangeFilter] = useState(filters.dateRange(DM.Commerce.Date.Days));
+  const [dateRangeFilter, setDateRangeFilter] = useState(
+    filterFactory.dateRange(DM.Commerce.Date.Days)
+  );
 
   return (
     <DashboardLayout>
@@ -85,7 +87,7 @@ function SisenseCharts(): JSX.Element {
                   attribute={DM.Commerce.Date.Days}
                   filter={dateRangeFilter}
                   onChange={(filter) => {
-                    setDateRangeFilter(filter);
+                    setDateRangeFilter;
                   }}
                 />
               </div>

@@ -7,7 +7,7 @@ import CodeHighlight from "../../components/CodeHighlight";
 import CodeBlock from "../../components/CodeBlock";
 import SubTitle from "../../components/SubTitle";
 import Paragraph from "../../components/Paragraph";
-import { Data, measures } from "@sisense/sdk-data";
+import { Data, measureFactory } from "@sisense/sdk-data";
 
 export default function ExecuteQueryChart(): JSX.Element {
   const [view, setView] = useState("Preview");
@@ -31,7 +31,7 @@ export default function ExecuteQueryChart(): JSX.Element {
           <ExecuteQuery
             dataSource={DM.DataSource}
             dimensions={[DM.Commerce.Transaction_Date.Years]}
-            measures={[measures.sum(DM.Commerce.Revenue, "Revenue")]}
+            measures={[measureFactory.sum(DM.Commerce.Revenue, "Revenue")]}
             filters={[]}
           >
             {(data: Data) => {

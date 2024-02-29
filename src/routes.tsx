@@ -13,7 +13,6 @@ import Widgets from "layouts/pages/widgets";
 import RTL from "layouts/pages/rtl";
 import Charts from "layouts/pages/charts";
 import Notifications from "layouts/pages/notifications";
-import Kanban from "layouts/applications/kanban";
 import Wizard from "layouts/applications/wizard";
 import DataTables from "layouts/applications/data-tables";
 import Calendar from "layouts/applications/calendar";
@@ -194,12 +193,6 @@ const routes = [
     key: "applications",
     icon: <Icon fontSize="medium">apps</Icon>,
     collapse: [
-      {
-        name: "Kanban",
-        key: "kanban",
-        route: "/applications/kanban",
-        component: <Kanban />,
-      },
       {
         name: "Wizard",
         key: "wizard",

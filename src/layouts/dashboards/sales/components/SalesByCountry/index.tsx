@@ -19,7 +19,7 @@ import BR from "assets/images/icons/flags/BR.png";
 // Sisense
 import { ExecuteQuery } from "@sisense/sdk-ui";
 import * as DM from "sisense/Schemas/ecommerce-master";
-import { Data, measures, filters } from "@sisense/sdk-data";
+import { Data, measureFactory, filterFactory } from "@sisense/sdk-data";
 
 function SalesByCountryTable(): JSX.Element {
   return (
@@ -36,12 +36,12 @@ function SalesByCountryTable(): JSX.Element {
               dataSource={DM.DataSource}
               dimensions={[DM.Commerce.Country]}
               measures={[
-                measures.count(DM.Commerce.Transaction_ID, "Total Quantity"),
-                measures.sum(DM.Commerce.Revenue, "Total Revenue"),
-                measures.sum(DM.Commerce.Cost, "Total Cost"),
+                measureFactory.count(DM.Commerce.Transaction_ID, "Total Quantity"),
+                measureFactory.sum(DM.Commerce.Revenue, "Total Revenue"),
+                measureFactory.sum(DM.Commerce.Cost, "Total Cost"),
               ]}
               filters={[
-                filters.members(DM.Commerce.Country, [
+                filterFactory.members(DM.Commerce.Country, [
                   "United States",
                   "Germany",
                   "United Kingdom",

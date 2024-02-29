@@ -1,6 +1,6 @@
 import React from "react";
 import { ExecuteQuery, Chart } from "@sisense/sdk-ui";
-import { Data, measures } from "@sisense/sdk-data";
+import { Data, measureFactory } from "@sisense/sdk-data";
 import * as DM from "sisense/Schemas/ecommerce-master";
 
 interface ExecuteQueryComponentProps {
@@ -18,7 +18,7 @@ const ExecuteQueryComponent: React.FC<ExecuteQueryComponentProps> = ({
     <ExecuteQuery
       dataSource={DM.DataSource}
       dimensions={[DM.Commerce[dimension]]}
-      measures={[measures.sum(DM.Commerce[measure], measure)]}
+      measures={[measureFactory.sum(DM.Commerce[measure], measure)]}
       filters={[]}
     >
       {(data: Data) => {

@@ -1,7 +1,7 @@
 import { ReactNode, useEffect, useState } from "react";
 import { ExecuteQuery } from "@sisense/sdk-ui";
 import * as DM from "sisense/Schemas/ecommerce-master";
-import { Data, measures, Filter, Cell } from "@sisense/sdk-data";
+import { Data, measureFactory, Filter, Cell } from "@sisense/sdk-data";
 import Card from "@mui/material/Card";
 import Divider from "@mui/material/Divider";
 import Icon from "@mui/material/Icon";
@@ -55,7 +55,7 @@ function RevenueStatisticsCard({ color, title, icon, percentage, filters }: Prop
           <ExecuteQuery
             dataSource={DM.DataSource}
             dimensions={[] /* Add your dimensions */}
-            measures={[measures.sum(DM.Commerce.Revenue, "Total")]}
+            measures={[measureFactory.sum(DM.Commerce.Revenue, "Total")]}
             filters={[filters]}
           >
             {(data: Data) => {

@@ -4,7 +4,6 @@
   "private": true,
   "description": "ECommerce platform to showcase COmpose SDK by Sisense",
   "dependencies": {
-    "@asseinfo/react-kanban": "2.2.0",
     "@emotion/cache": "11.11.0",
     "@emotion/react": "11.11.0",
     "@emotion/styled": "11.11.0",
@@ -26,7 +25,7 @@
     "@nivo/radial-bar": "^0.83.0",
     "@react-jvectormap/core": "1.0.4",
     "@react-jvectormap/world": "1.1.2",
-    "@sisense/sdk-data": "^0.11.3",
+    "@sisense/sdk-data": "^1.4.1",
     "@sisense/sdk-ui": "^0.11.3",
     "@testing-library/jest-dom": "5.16.5",
     "@testing-library/react": "14.0.0",

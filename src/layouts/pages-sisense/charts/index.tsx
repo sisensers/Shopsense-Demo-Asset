@@ -50,7 +50,7 @@ import polarChartData from "sisense/ChartData/polarChartData";
 // Sisense
 import { ExecuteQuery } from "@sisense/sdk-ui";
 import * as DM from "sisense/Schemas/ecommerce-master";
-import { Data, measures } from "@sisense/sdk-data";
+import { Data, measureFactory } from "@sisense/sdk-data";
 
 function SisenseCharts(): JSX.Element {
   console.log(defaultLineChartData);
@@ -76,8 +76,8 @@ function SisenseCharts(): JSX.Element {
                 dataSource={DM.DataSource}
                 dimensions={[DM.Commerce.Transaction_Date.Months, DM.CustomerReviews.Sentiment]}
                 measures={[
-                  measures.sum(DM.Commerce.Revenue, "Total Revenue"),
-                  measures.sum(DM.Commerce.Cost, "Total Cost"),
+                  measureFactory.sum(DM.Commerce.Revenue, "Total Revenue"),
+                  measureFactory.sum(DM.Commerce.Cost, "Total Cost"),
                 ]}
                 filters={[]}
               >
@@ -100,8 +100,8 @@ function SisenseCharts(): JSX.Element {
                 dataSource={DM.DataSource}
                 dimensions={[DM.Commerce.Transaction_Date.Months, DM.CustomerReviews.Sentiment]}
                 measures={[
-                  measures.sum(DM.Commerce.Revenue, "Total Revenue"),
-                  measures.sum(DM.Commerce.Cost, "Total Cost"),
+                  measureFactory.sum(DM.Commerce.Revenue, "Total Revenue"),
+                  measureFactory.sum(DM.Commerce.Cost, "Total Cost"),
                 ]}
                 filters={[]}
               >

@@ -1,6 +1,6 @@
 import React from "react";
 import { PieChart, ExecuteQuery, PieStyleOptions, ThemeProvider } from "@sisense/sdk-ui";
-import { Data, measures } from "@sisense/sdk-data";
+import { Data, measureFactory } from "@sisense/sdk-data";
 import * as DM from "sisense/Schemas/ecommerce-master";
 
 export default function SisensePieChart() {
@@ -21,7 +21,7 @@ export default function SisensePieChart() {
       <ExecuteQuery
         dataSource={DM.DataSource}
         dimensions={[DM.Commerce.AgeRange]}
-        measures={[measures.sum(DM.Commerce.Revenue, "Total Revenue")]}
+        measures={[measureFactory.sum(DM.Commerce.Revenue, "Total Revenue")]}
         filters={[]}
       >
         {(data: Data) => {
@@ -42,7 +42,7 @@ export default function SisensePieChart() {
                 dataSet={DM.DataSource}
                 dataOptions={{
                   category: [DM.Commerce.AgeRange],
-                  value: [measures.sum(DM.Commerce.Revenue)],
+                  value: [measureFactory.sum(DM.Commerce.Revenue)],
                 }}
                 styleOptions={pieStyleOptions} // Pass the style options to the PieChart component
               />

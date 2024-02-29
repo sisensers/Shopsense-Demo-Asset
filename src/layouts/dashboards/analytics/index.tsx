@@ -21,25 +21,21 @@ import SalesByCountry from "layouts/dashboards/analytics/components/SalesByCount
 import reportsBarChartData from "layouts/dashboards/analytics/data/reportsBarChartData";
 import reportsLineChartData from "layouts/dashboards/analytics/data/reportsLineChartData";
 
-// Images
-import booking1 from "assets/images/ecommerce/Adidas.png";
-import booking2 from "assets/images/ecommerce/ColumbiaShoes.png";
-import booking3 from "assets/images/products/VersaceMedusaHeadHighTopSneakers.png";
-
 import DayOfWeek from "sisense/Charts/DayOfWeek";
 import SalesByAgeLine from "sisense/Charts/SalesByAgeLine";
-import { DateRangeFilterTile } from "@sisense/sdk-ui";
-import { Data, filters, measures } from "@sisense/sdk-data";
+import { BarChart, DateRangeFilterTile, DateFilter } from "@sisense/sdk-ui";
+import { Data, filterFactory, measureFactory, Filter } from "@sisense/sdk-data";
 import * as DM from "sisense/Schemas/ecommerce-master";
 import { useState } from "react";
 import CustomerStatisticsCard from "examples/Cards/StatisticsCards/CustomerStatisticsCard";
 import CostStatisticsCard from "examples/Cards/StatisticsCards/CostStatisticsCard";
 import OrderStatisticsCard from "examples/Cards/StatisticsCards/OrdersStatisticsCard";
+import { Card } from "@mui/material";
 
 function Analytics(): JSX.Element {
   const { sales, tasks } = reportsLineChartData;
   const [dateRangeFilter, setDateRangeFilter] = useState(
-    filters.dateRange(DM.Commerce.Transaction_Date.Days)
+    filterFactory.dateRange(DM.Commerce.Transaction_Date.Days, "2024-01-01", "2024-12-31")
   );
 
   // Action buttons for the BookingCard
@@ -74,58 +70,50 @@ function Analytics(): JSX.Element {
               dataSource={DM.DataSource}
               attribute={DM.Commerce.Transaction_Date.Days}
               filter={dateRangeFilter}
-              onChange={(filter) => {
-                setDateRangeFilter(filter);
-              }}
+              onChange={(newFilter: Partial<Filter> | null) =>
+                setDateRangeFilter(newFilter as Filter | null)
+              }
             />
           </div>
         </Grid>
         <Grid item xs={12} md={6}></Grid>
       </Grid>
+      <MDBox mt={3}>
+        <Grid container spacing={3}>
+          <Grid item xs={12} md={6} lg={3}>
+            <MDBox mb={1.5}>
+              <RevenueStatisticsCard
+                title={"Total Revenue"}
+                icon={"store"}
+                filters={dateRangeFilter}
+              />
+            </MDBox>
+          </Grid>
+          <Grid item xs={12} md={6} lg={3}>
+            <MDBox mb={1.5}>
+              <CostStatisticsCard title={"Total Cost"} icon={"warning"} filters={dateRangeFilter} />
+            </MDBox>
+          </Grid>
+          <Grid item xs={12} md={6} lg={3}>
+            <MDBox mb={1.5}>
+              <CustomerStatisticsCard title={"To Be Paid"} icon={"leaderboard"} />
+            </MDBox>
+          </Grid>
+          <Grid item xs={12} md={6} lg={3}>
+            <MDBox mb={1.5}>
+              <OrderStatisticsCard
+                title={"Orders Filled"}
+                filters={dateRangeFilter}
+                icon={"timeline"}
+              />
+            </MDBox>
+          </Grid>
+        </Grid>
+      </MDBox>
       <MDBox py={3}>
         <Grid container>
           <SalesByCountry filters={dateRangeFilter} />
         </Grid>
-        <MDBox mt={3}>
-          <Grid container spacing={3}>
-            <Grid item xs={12} md={6} lg={3}>
-              <MDBox mb={1.5}>
-                <RevenueStatisticsCard
-                  title={"Total Revenue"}
-                  icon={"store"}
-                  filters={dateRangeFilter}
-                />
-              </MDBox>
-            </Grid>
-            <Grid item xs={12} md={6} lg={3}>
-              <MDBox mb={1.5}>
-                <CustomerStatisticsCard
-                  title={"Total Customers"}
-                  icon={"leaderboard"}
-                  filters={dateRangeFilter}
-                />
-              </MDBox>
-            </Grid>
-            <Grid item xs={12} md={6} lg={3}>
-              <MDBox mb={1.5}>
-                <CostStatisticsCard
-                  title={"Total Cost"}
-                  icon={"warning"}
-                  filters={dateRangeFilter}
-                />
-              </MDBox>
-            </Grid>
-            <Grid item xs={12} md={6} lg={3}>
-              <MDBox mb={1.5}>
-                <OrderStatisticsCard
-                  title={"Orders Filled"}
-                  filters={dateRangeFilter}
-                  icon={"timeline"}
-                />
-              </MDBox>
-            </Grid>
-          </Grid>
-        </MDBox>
         <MDBox mt={6}>
           <Grid container spacing={3}>
             <Grid item xs={12} md={6} lg={4}>
@@ -136,46 +124,6 @@ function Analytics(): JSX.Element {
             <Grid item xs={12} md={6} lg={8}>
               <MDBox mb={3}>
                 <SalesByAgeLine filters={dateRangeFilter} />
-              </MDBox>
-            </Grid>
-          </Grid>
-        </MDBox>
-        <MDBox mt={2}>
-          <Grid container spacing={3}>
-            <Grid item xs={12} md={6} lg={4}>
-              <MDBox mt={3}>
-                <BookingCard
-                  image={booking1}
-                  title="Adidas Superstars!"
-                  description="Adidas Superstar shoes effortlessly marry elegance with comfort, boasting a timeless design that effortlessly elevates any look, while their cushioned insoles and supportive structure make each step a luxurious and comfortable experience. Whether you are strolling down the street or making a fashion statement, these iconic sneakers provide a perfect blend of style and coziness."
-                  price="$99/Pair"
-                  location="Barcelona, Spain"
-                  action={actionButtons}
-                />
-              </MDBox>
-            </Grid>
-            <Grid item xs={12} md={6} lg={4}>
-              <MDBox mt={3}>
-                <BookingCard
-                  image={booking2}
-                  title="Columbia Running"
-                  description="Columbia running shoes redefine the essence of comfort and versatility, enveloping each step with a harmonious blend of cushioned support that caters to the unique demands of both the track and daily activities, and their adaptable design seamlessly fuses performance with style, making them not just athletic essentials but also a statement of enduring comfort in any dynamic lifestyle."
-                  price="$79/Pair"
-                  location="London, UK"
-                  action={actionButtons}
-                />
-              </MDBox>
-            </Grid>
-            <Grid item xs={12} md={6} lg={4}>
-              <MDBox mt={3}>
-                <BookingCard
-                  image={booking3}
-                  title="Versace"
-                  description="Versace shoes redefine the pinnacle of opulence and comfort, as sumptuous cushioning wraps each step in a cocoon of luxury that transcends mere functionality, and their versatile designs seamlessly transition from upscale events to everyday settings, ensuring an enduring symbol of lavish comfort that becomes an integral part of one's distinctive lifestyle, where every stride is a statement of sophistication and ease."
-                  price="$129/Pair"
-                  location="Milan, Italy"
-                  action={actionButtons}
-                />
               </MDBox>
             </Grid>
           </Grid>

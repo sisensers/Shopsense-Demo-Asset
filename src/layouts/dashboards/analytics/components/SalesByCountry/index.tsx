@@ -9,7 +9,7 @@ import MDTypography from "components/MDTypography";
 import SalesTable from "examples/Tables/SalesTable";
 import { ExecuteQuery } from "@sisense/sdk-ui";
 import * as DM from "sisense/Schemas/ecommerce-master";
-import { Data, measures, filters, Filter } from "@sisense/sdk-data";
+import { Data, measureFactory, filterFactory, Filter } from "@sisense/sdk-data";
 import US from "assets/images/icons/flags/US.png";
 import DE from "assets/images/icons/flags/DE.png";
 import GB from "assets/images/icons/flags/GB.png";
@@ -48,7 +48,7 @@ function SalesByCountry(props: Props): JSX.Element {
           </Icon>
         </MDBox>
         <MDTypography variant="h6" sx={{ ml: 2 }}>
-          Sales by Country
+          Sales By Region Last Month
         </MDTypography>
       </MDBox>
       <MDBox p={2}>
@@ -58,11 +58,14 @@ function SalesByCountry(props: Props): JSX.Element {
               dataSource={DM.DataSource}
               dimensions={[DM.Commerce.Country]}
               measures={[
-                measures.count(DM.Commerce.Transaction_ID, "Total Quantity"),
-                measures.sum(DM.Commerce.Revenue, "Total Revenue"),
-                measures.sum(DM.Commerce.Cost, "Total Cost"),
+                measureFactory.count(DM.Commerce.Transaction_ID, "Total Quantity"),
+                measureFactory.sum(DM.Commerce.Revenue, "Total Revenue"),
+                measureFactory.sum(DM.Commerce.Cost, "Total Cost"),
               ]}
-              filters={[props.filters]}
+              filters={[
+                props.filters,
+                filterFactory.contains(DM.Commerce.Transaction_Date.Months, "2024-01"),
+              ]}
             >
               {(data: Data) => {
                 console.log(data);

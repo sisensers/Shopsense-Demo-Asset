@@ -2,7 +2,7 @@ import React from "react";
 import GradientLineChart from "sisense/Charts/LineCharts/GradientLineChart";
 import { ExecuteQuery } from "@sisense/sdk-ui";
 import * as DM from "sisense/Schemas/ecommerce-master";
-import { Data, measures, Filter } from "@sisense/sdk-data";
+import { Data, measureFactory, Filter } from "@sisense/sdk-data";
 
 const colorList = ["info", "dark", "primary", "secondary", "success", "error", "light"];
 
@@ -29,11 +29,8 @@ export default function SalesByAgeLine(props: Props): JSX.Element {
   return (
     <ExecuteQuery
       dataSource={DM.DataSource}
-      dimensions={[DM.Commerce.Transaction_Date.Months, DM.Commerce.Status]}
-      measures={[
-        measures.count(DM.Commerce.Status, "Total Revenue"),
-        measures.sum(DM.Commerce.Cost, "Total Cost"),
-      ]}
+      dimensions={[DM.Commerce.Transaction_Date.Months, DM.Commerce.Gender]}
+      measures={[measureFactory.sum(DM.AdReport.Impressions, "Total Impressions")]}
       filters={[props.filters]}
     >
       {(data: Data) => {
@@ -42,8 +39,8 @@ export default function SalesByAgeLine(props: Props): JSX.Element {
         return (
           <GradientLineChart
             icon={{ component: "show_chart" }}
-            title="Orders By Status"
-            description="Number of rrders marked Paid, Refunded, or Cancelled over time"
+            title="Impressions by Demographic"
+            description="A breakdown of Ad Impressions across all platforms by demographic over time"
             chart={translatedGradientData}
           />
         );

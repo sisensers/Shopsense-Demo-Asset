@@ -2,7 +2,7 @@
 
 import React from "react";
 import { ExecuteQuery, Chart, ThemeProvider, Table, DashboardWidget } from "@sisense/sdk-ui";
-import { Data, measures, Filter } from "@sisense/sdk-data";
+import { Data, measureFactory, Filter } from "@sisense/sdk-data";
 import * as DM from "sisense/Schemas/ecommerce-master";
 
 const theme = {
@@ -34,7 +34,7 @@ export const BarChart: React.FC<BarChartProps> = ({ title, date, filters }) => {
     <ExecuteQuery
       dataSource={DM.DataSource}
       dimensions={[DM.Commerce.Transaction_Date.Years, DM.Commerce.Transaction_Date.Months]}
-      measures={[measures.sum(DM.Commerce.Quantity, "Total Quantity")]}
+      measures={[measureFactory.sum(DM.Commerce.Quantity, "Total Quantity")]}
     >
       {(data: Data) => (
         <ThemeProvider theme={theme}>
@@ -63,7 +63,7 @@ export const LineChart: React.FC<LineChartProps> = ({ title, date, filters }) =>
     <ExecuteQuery
       dataSource={DM.DataSource}
       dimensions={[DM.Commerce.Transaction_Date.Years, DM.Commerce.Transaction_Date.Months]}
-      measures={[measures.sum(DM.Commerce.Revenue, "Total Revenue")]}
+      measures={[measureFactory.sum(DM.Commerce.Revenue, "Total Revenue")]}
     >
       {(data: Data) => (
         <ThemeProvider theme={theme}>
@@ -92,7 +92,7 @@ export const PieChart: React.FC<PieChartProps> = ({ title, date, filters }) => {
     <ExecuteQuery
       dataSource={DM.DataSource}
       dimensions={[DM.Category.CategoryName]}
-      measures={[measures.sum(DM.Commerce.Quantity, "Total Quantity")]}
+      measures={[measureFactory.sum(DM.Commerce.Quantity, "Total Quantity")]}
     >
       {(data: Data) => (
         <ThemeProvider theme={theme}>
@@ -126,7 +126,7 @@ export const ColumnChart: React.FC<ColumnChartProps> = ({ title, date, filters }
     <ExecuteQuery
       dataSource={DM.DataSource}
       dimensions={[DM.Category.CategoryName]}
-      measures={[measures.sum(DM.Commerce.Revenue, "Total Quantity")]}
+      measures={[measureFactory.sum(DM.Commerce.Revenue, "Total Quantity")]}
     >
       {(data: Data) => (
         <ThemeProvider theme={theme}>
@@ -161,7 +161,7 @@ export const PolarChart: React.FC<PolarChartProps> = ({ title, date, filters }) 
     <ExecuteQuery
       dataSource={DM.DataSource}
       dimensions={[DM.Category.CategoryName]}
-      measures={[measures.sum(DM.Commerce.Quantity, "Total Quantity")]}
+      measures={[measureFactory.sum(DM.Commerce.Quantity, "Total Quantity")]}
     >
       {(data: Data) => (
         <ThemeProvider theme={theme}>
@@ -195,7 +195,7 @@ export const TableChart: React.FC<TableChartProps> = ({ title, date, filters }) 
     <ExecuteQuery
       dataSource={DM.DataSource}
       dimensions={[DM.Category.CategoryName]}
-      measures={[measures.sum(DM.Commerce.Quantity, "Total Quantity")]}
+      measures={[measureFactory.sum(DM.Commerce.Quantity, "Total Quantity")]}
     >
       {(data: Data) => (
         <ThemeProvider theme={theme}>

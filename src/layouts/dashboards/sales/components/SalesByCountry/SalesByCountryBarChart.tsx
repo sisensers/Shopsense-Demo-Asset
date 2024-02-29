@@ -1,6 +1,6 @@
 import React from "react";
 import { BarChart, ExecuteQuery } from "@sisense/sdk-ui";
-import { Data, measures, filters } from "@sisense/sdk-data";
+import { Data, measureFactory, filterFactory } from "@sisense/sdk-data";
 import * as DM from "sisense/Schemas/ecommerce-master";
 
 export default function SalesBarChart() {
@@ -9,7 +9,7 @@ export default function SalesBarChart() {
       <ExecuteQuery
         dataSource={DM.DataSource}
         dimensions={[DM.Commerce.DayOfWeek]}
-        measures={[measures.sum(DM.Commerce.Quantity)]}
+        measures={[measureFactory.sum(DM.Commerce.Quantity)]}
         filters={[]}
       >
         {(data: Data) => {
@@ -18,7 +18,7 @@ export default function SalesBarChart() {
               dataSet={data}
               dataOptions={{
                 category: [DM.Commerce.DayOfWeek],
-                value: [measures.sum(DM.Commerce.Quantity)],
+                value: [measureFactory.sum(DM.Commerce.Quantity)],
                 breakBy: [],
               }}
             />

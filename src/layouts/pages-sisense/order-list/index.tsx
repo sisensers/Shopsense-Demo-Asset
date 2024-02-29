@@ -39,7 +39,7 @@ import dataTableData from "layouts/ecommerce/orders/order-list/data/dataTableDat
 // Sisense
 import { ExecuteQuery } from "@sisense/sdk-ui";
 import * as DM from "sisense/Schemas/ecommerce-master";
-import { Data, measures, filters } from "@sisense/sdk-data";
+import { Data, measureFactory, filterFactory } from "@sisense/sdk-data";
 import TransitionsModal from "components/SisenseModal/TransitionModal";
 import OrderInsights from "./components/OrderInsights";
 
@@ -108,9 +108,9 @@ function SisenseOrderList(): JSX.Element {
               DM.Commerce.CustomerName,
               DM.Product.ProductName,
             ]}
-            measures={[measures.sum(DM.Commerce.Revenue, "Total Revenue")]}
+            measures={[measureFactory.sum(DM.Commerce.Revenue, "Total Revenue")]}
             filters={[
-              filters.members(DM.Commerce.Country, [
+              filterFactory.members(DM.Commerce.Country, [
                 "United States",
                 "Germany",
                 "United Kingdom",

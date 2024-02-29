@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { ExecuteQuery, MemberFilterTile, ThemeProvider } from "@sisense/sdk-ui";
-import { Data, Filter } from "@sisense/sdk-data";
+import { Data, Filter, DimensionalDataModel } from "@sisense/sdk-data";
 import * as DM from "sisense/Schemas/ecommerce-master";
 
 const theme = {
@@ -37,9 +37,9 @@ const CommonFilter: React.FC<CommonFilterProps> = ({ title, onChange, attribute 
             dataSource={DM.DataSource}
             attribute={attribute}
             filter={filter}
-            onChange={(newFilter) => {
-              setFilter(newFilter);
-              onChange(newFilter);
+            onChange={(newFilter: Partial<Filter> | null) => {
+              setFilter(newFilter as Filter | null);
+              onChange(newFilter as Filter | null);
             }}
           />
         </ThemeProvider>

@@ -15,7 +15,7 @@ import {
 } from "@mui/material";
 import { ResizableBox } from "react-resizable";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { measures, Attribute } from "@sisense/sdk-data";
+import { measureFactory, Attribute } from "@sisense/sdk-data";
 
 // Define ChartType
 type ChartType = "bar" | "column" | "line" | "pie";
@@ -28,7 +28,7 @@ const chartOptions: ChartType[] = ["bar", "column", "line", "pie"];
 
 const ChartBuilderComponent: React.FC<ChartBuilderProps> = ({ chartType }) => {
   const [dimension, setDimension] = useState<Attribute>(DM.Category.CategoryName);
-  const [measure, setMeasure] = useState(measures.sum(DM.Commerce.Quantity, "Total Quantity"));
+  const [measure, setMeasure] = useState(measureFactory.sum(DM.Commerce.Quantity, "Total Quantity"));
   const [size, setSize] = useState({ width: 400, height: 300 });
   const [isDialogOpen, setDialogOpen] = useState(false);
   const [localChartType, setLocalChartType] = useState<ChartType>(chartType);

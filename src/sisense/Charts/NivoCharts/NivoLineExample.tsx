@@ -7,7 +7,7 @@ import CodeHighlight from "../../../components/CodeHighlight";
 import CodeBlock from "../../../components/CodeBlock";
 import SubTitle from "../../../components/SubTitle";
 import Paragraph from "../../../components/Paragraph";
-import { Data, Filter, measures } from "@sisense/sdk-data";
+import { Data, Filter, measureFactory } from "@sisense/sdk-data";
 
 import { ResponsiveLine } from "@nivo/line";
 
@@ -30,8 +30,8 @@ export default function ExecuteQueryChart(props: Props) {
             dataSource={DM.DataSource}
             dimensions={[DM.Commerce.Date.Months, DM.Commerce.AgeRange]}
             measures={[
-              measures.sum(DM.Commerce.Revenue, "Total Revenue"),
-              measures.sum(DM.Commerce.Cost, "Total Cost"),
+              measureFactory.sum(DM.Commerce.Revenue, "Total Revenue"),
+              measureFactory.sum(DM.Commerce.Cost, "Total Cost"),
             ]}
             filters={[props.filters]}
           >

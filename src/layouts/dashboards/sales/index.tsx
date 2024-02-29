@@ -3,7 +3,7 @@ import CodeHighlight from "components/CodeHighlight";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import { ExecuteQuery, MemberFilterTile, ThemeProvider, DashboardWidget } from "@sisense/sdk-ui";
-import { Data, measures, Filter } from "@sisense/sdk-data";
+import { Data, measureFactory, Filter } from "@sisense/sdk-data";
 import * as DM from "sisense/Schemas/ecommerce-master";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -171,9 +171,9 @@ export default function Dashboard() {
           DM.Product.ProductName,
         ]}
         measures={[
-          measures.sum(DM.Commerce.Quantity, "Total Quantity"),
-          measures.sum(DM.Commerce.Revenue, "Total Revenue"),
-          measures.sum(DM.Commerce.Cost, "Total Cost"),
+          measureFactory.sum(DM.Commerce.Quantity, "Total Quantity"),
+          measureFactory.sum(DM.Commerce.Revenue, "Total Revenue"),
+          measureFactory.sum(DM.Commerce.Cost, "Total Cost"),
         ]}
       >
         {(data: Data) => (
@@ -204,16 +204,21 @@ export default function Dashboard() {
                       dataSource={DM.DataSource}
                       attribute={DM.Category.CategoryName}
                       filter={categoryFilter}
-                      onChange={setCategoryFilter}
+                      onChange={(newFilter: Partial<Filter> | null) =>
+                        setCategoryFilter(newFilter as Filter | null)
+                      }
                     />
                   </ThemeProvider>
+
                   <ThemeProvider theme={theme}>
                     <MemberFilterTile
                       title={"Brand"}
                       dataSource={DM.DataSource}
                       attribute={DM.Brand.BrandName}
                       filter={brandFilter}
-                      onChange={setBrandFilter}
+                      onChange={(newFilter: Partial<Filter> | null) =>
+                        setBrandFilter(newFilter as Filter | null)
+                      }
                     />
                   </ThemeProvider>
                 </CardContent>
@@ -224,7 +229,9 @@ export default function Dashboard() {
                       dataSource={DM.DataSource}
                       attribute={DM.CustomerReviews.Sentiment}
                       filter={sentimentFilter}
-                      onChange={setSentimentFilter}
+                      onChange={(newFilter: Partial<Filter> | null) =>
+                        setSentimentFilter(newFilter as Filter | null)
+                      }
                     />
                   </ThemeProvider>
                 </CardContent>
@@ -235,7 +242,9 @@ export default function Dashboard() {
                       dataSource={DM.DataSource}
                       attribute={DM.Commerce.Country}
                       filter={countryFilter}
-                      onChange={setCountryFilter}
+                      onChange={(newFilter: Partial<Filter> | null) =>
+                        setCountryFilter(newFilter as Filter | null)
+                      }
                     />
                   </ThemeProvider>
                 </CardContent>
@@ -246,7 +255,9 @@ export default function Dashboard() {
                       dataSource={DM.DataSource}
                       attribute={DM.Commerce.AgeRange}
                       filter={agerangeFilter}
-                      onChange={setAgerangeFilter}
+                      onChange={(newFilter: Partial<Filter> | null) =>
+                        setAgerangeFilter(newFilter as Filter | null)
+                      }
                     />
                   </ThemeProvider>
                 </CardContent>
@@ -257,7 +268,9 @@ export default function Dashboard() {
                       dataSource={DM.DataSource}
                       attribute={DM.Commerce.DayOfWeek}
                       filter={dayofweekFilter}
-                      onChange={setDayofweekFilter}
+                      onChange={(newFilter: Partial<Filter> | null) =>
+                        setDayofweekFilter(newFilter as Filter | null)
+                      }
                     />
                   </ThemeProvider>
                 </CardContent>
@@ -268,7 +281,9 @@ export default function Dashboard() {
                       dataSource={DM.DataSource}
                       attribute={DM.Product.ProductName}
                       filter={productnameFilter}
-                      onChange={setProductnameFilter}
+                      onChange={(newFilter: Partial<Filter> | null) =>
+                        setProductnameFilter(newFilter as Filter | null)
+                      }
                     />
                   </ThemeProvider>
                 </CardContent>
