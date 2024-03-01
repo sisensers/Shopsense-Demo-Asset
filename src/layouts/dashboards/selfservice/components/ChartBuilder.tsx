@@ -28,7 +28,9 @@ const chartOptions: ChartType[] = ["bar", "column", "line", "pie"];
 
 const ChartBuilderComponent: React.FC<ChartBuilderProps> = ({ chartType }) => {
   const [dimension, setDimension] = useState<Attribute>(DM.Category.CategoryName);
-  const [measure, setMeasure] = useState(measureFactory.sum(DM.Commerce.Quantity, "Total Quantity"));
+  const [measure, setMeasure] = useState(
+    measureFactory.sum(DM.Commerce.Quantity, "Total Quantity")
+  );
   const [size, setSize] = useState({ width: 400, height: 300 });
   const [isDialogOpen, setDialogOpen] = useState(false);
   const [localChartType, setLocalChartType] = useState<ChartType>(chartType);
@@ -67,26 +69,15 @@ const ChartBuilderComponent: React.FC<ChartBuilderProps> = ({ chartType }) => {
     >
       <Card style={{ width: "auto", height: "auto" }}>
         <CardContent style={{ position: "relative" }}>
-          {/* ExecuteQuery for chart preview */}
-          <ExecuteQuery
-            dataSource={DM.DataSource}
-            dimensions={[dimension]}
-            measures={[measure]}
-            filters={[]}
-          >
-            {(data) => (
-              // Render dynamically selected chart type
-              <Chart
-                dataSet={data}
-                chartType={localChartType}
-                dataOptions={{
-                  category: [{ name: dimension.name, type: "datetime" }],
-                  value: [{ name: measure.name }],
-                  breakBy: [],
-                }}
-              />
-            )}
-          </ExecuteQuery>
+          <Chart
+            dataSet={DM.DataSource}
+            chartType={localChartType}
+            dataOptions={{
+              category: [{ name: dimension.name, type: "datetime" }],
+              value: [{ name: measure.name }],
+              breakBy: [],
+            }}
+          />
 
           {/* UI for selecting chart options */}
           <div>

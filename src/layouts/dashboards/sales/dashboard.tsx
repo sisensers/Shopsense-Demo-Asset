@@ -14,7 +14,6 @@ import {
   ColumnChart,
   MemberFilterTile,
   Chart,
-  StyleOptions,
   IndicatorStyleOptions,
   LineStyleOptions,
   PieStyleOptions,
@@ -68,232 +67,215 @@ export default function Dashboard() {
   return (
     <DashboardLayout>
       <DashboardNavbar />
-      <ExecuteQuery
-        dataSource={DM.DataSource}
-        dimensions={[
-          DM.Commerce.Transaction_Date.Years,
-          DM.Commerce.Transaction_Date.Months,
-          DM.Category.CategoryName,
-          DM.Commerce.AgeRange,
-          DM.Commerce.Country,
-        ]}
-        measures={[
-          measureFactory.sum(DM.Commerce.Quantity, "Total Quantity"),
-          measureFactory.sum(DM.Commerce.Revenue, "Total Revenue"),
-          measureFactory.sum(DM.Commerce.Cost, "Total Cost"),
-        ]}
-      >
-        {(data: Data) => (
-          <Grid container spacing={2}>
-            {/* Indicators */}
+      <Grid container spacing={2}>
+        {/* Indicators */}
 
-            <Grid item xs={12} sm={6} md={3}>
-              <Card>
-                <CardContent>
-                  <Typography variant="h6">Cost</Typography>
-                  <ThemeProvider theme={theme}>
-                    <Chart
-                      dataSet={DM.DataSource}
-                      chartType={"indicator"}
-                      dataOptions={{
-                        value: [measureFactory.sum(DM.Commerce.Cost, "Total Cost")],
-                      }}
-                      filters={filters}
-                    />
-                  </ThemeProvider>
-                </CardContent>
-              </Card>
-            </Grid>
+        <Grid item xs={12} sm={6} md={3}>
+          <Card>
+            <CardContent>
+              <Typography variant="h6">Cost</Typography>
+              <ThemeProvider theme={theme}>
+                <Chart
+                  dataSet={DM.DataSource}
+                  chartType={"indicator"}
+                  dataOptions={{
+                    value: [measureFactory.sum(DM.Commerce.Cost, "Total Cost")],
+                  }}
+                  filters={filters}
+                />
+              </ThemeProvider>
+            </CardContent>
+          </Card>
+        </Grid>
 
-            <Grid item xs={12} sm={6} md={3}>
-              <Card>
-                <CardContent>
-                  <Typography variant="h6">Revenue</Typography>
-                  <ThemeProvider theme={theme}>
-                    <Chart
-                      dataSet={DM.DataSource}
-                      chartType={"indicator"}
-                      dataOptions={{
-                        value: [measureFactory.sum(DM.Commerce.Revenue, "Orders Revenue")],
-                      }}
-                      filters={filters}
-                    />
-                  </ThemeProvider>
-                </CardContent>
-              </Card>
-            </Grid>
+        <Grid item xs={12} sm={6} md={3}>
+          <Card>
+            <CardContent>
+              <Typography variant="h6">Revenue</Typography>
+              <ThemeProvider theme={theme}>
+                <Chart
+                  dataSet={DM.DataSource}
+                  chartType={"indicator"}
+                  dataOptions={{
+                    value: [measureFactory.sum(DM.Commerce.Revenue, "Orders Revenue")],
+                  }}
+                  filters={filters}
+                />
+              </ThemeProvider>
+            </CardContent>
+          </Card>
+        </Grid>
 
-            <Grid item xs={12} sm={6} md={3}>
-              <Card>
-                <CardContent>
-                  <Typography variant="h6">Orders Filled</Typography>
-                  <ThemeProvider theme={theme}>
-                    <Chart
-                      dataSet={DM.DataSource}
-                      chartType={"indicator"}
-                      dataOptions={{
-                        value: [measureFactory.sum(DM.Commerce.Quantity, "Quantty")],
-                      }}
-                      filters={filters}
-                    />
-                  </ThemeProvider>
-                </CardContent>
-              </Card>
-            </Grid>
+        <Grid item xs={12} sm={6} md={3}>
+          <Card>
+            <CardContent>
+              <Typography variant="h6">Orders Filled</Typography>
+              <ThemeProvider theme={theme}>
+                <Chart
+                  dataSet={DM.DataSource}
+                  chartType={"indicator"}
+                  dataOptions={{
+                    value: [measureFactory.sum(DM.Commerce.Quantity, "Quantty")],
+                  }}
+                  filters={filters}
+                />
+              </ThemeProvider>
+            </CardContent>
+          </Card>
+        </Grid>
 
-            <Grid item xs={1} sm={1} md={3}>
-              <Card
-                style={{
-                  height: "100%",
-                  width: "100%",
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "center", // Center content vertically
-                  alignItems: "center", // Center content horizontally
-                }}
-              >
-                <CardContent style={{ flex: 1, padding: 0 }}>
-                <ThemeProvider theme={theme}>
-                    <MemberFilterTile
-                      title={"Category"}
-                      dataSource={DM.DataSource}
-                      attribute={DM.Category.CategoryName}
-                      filter={categoryFilter}
-                      onChange={(newFilter: Partial<Filter> | null) =>
-                        setCategoryFilter(newFilter as Filter | null)
-                      }
-                    />
-                  </ThemeProvider>
-                </CardContent>
-                <CardContent style={{ flex: 1, padding: 0 }}>
-                <ThemeProvider theme={theme}>
-                    <MemberFilterTile
-                      title={"Brand"}
-                      dataSource={DM.DataSource}
-                      attribute={DM.Brand.BrandName}
-                      filter={brandFilter}
-                      onChange={(newFilter: Partial<Filter> | null) =>
-                        setBrandFilter(newFilter as Filter | null)
-                      }
-                    />
-                  </ThemeProvider>
-                </CardContent>
-              </Card>
-            </Grid>
+        <Grid item xs={1} sm={1} md={3}>
+          <Card
+            style={{
+              height: "100%",
+              width: "100%",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center", // Center content vertically
+              alignItems: "center", // Center content horizontally
+            }}
+          >
+            <CardContent style={{ flex: 1, padding: 0 }}>
+              <ThemeProvider theme={theme}>
+                <MemberFilterTile
+                  title={"Category"}
+                  dataSource={DM.DataSource}
+                  attribute={DM.Category.CategoryName}
+                  filter={categoryFilter}
+                  onChange={(newFilter: Partial<Filter> | null) =>
+                    setCategoryFilter(newFilter as Filter | null)
+                  }
+                />
+              </ThemeProvider>
+            </CardContent>
+            <CardContent style={{ flex: 1, padding: 0 }}>
+              <ThemeProvider theme={theme}>
+                <MemberFilterTile
+                  title={"Brand"}
+                  dataSource={DM.DataSource}
+                  attribute={DM.Brand.BrandName}
+                  filter={brandFilter}
+                  onChange={(newFilter: Partial<Filter> | null) =>
+                    setBrandFilter(newFilter as Filter | null)
+                  }
+                />
+              </ThemeProvider>
+            </CardContent>
+          </Card>
+        </Grid>
 
-            {/* Charts */}
-            <Grid item xs={12} md={6}>
-              <Card>
-                <CardContent>
-                  <Typography variant="h6">Sales By Age Demographic</Typography>
-                  <ThemeProvider theme={theme}>
-                    <div style={{ height: "300px" }}>
-                      <Chart
-                        dataSet={DM.DataSource}
-                        chartType={"bar"}
-                        dataOptions={{
-                          category: [DM.Commerce.AgeRange],
-                          value: [measureFactory.sum(DM.Commerce.Revenue, "Revenue")],
-                          breakBy: [],
-                        }}
-                        filters={filters}
-                      />
-                    </div>
-                  </ThemeProvider>
-                </CardContent>
-              </Card>
-            </Grid>
+        {/* Charts */}
+        <Grid item xs={12} md={6}>
+          <Card>
+            <CardContent>
+              <Typography variant="h6">Sales By Age Demographic</Typography>
+              <ThemeProvider theme={theme}>
+                <div style={{ height: "300px" }}>
+                  <Chart
+                    dataSet={DM.DataSource}
+                    chartType={"bar"}
+                    dataOptions={{
+                      category: [DM.Commerce.AgeRange],
+                      value: [measureFactory.sum(DM.Commerce.Revenue, "Revenue")],
+                      breakBy: [],
+                    }}
+                    filters={filters}
+                  />
+                </div>
+              </ThemeProvider>
+            </CardContent>
+          </Card>
+        </Grid>
 
-            <Grid item xs={12} md={6}>
-              <Card>
-                <CardContent>
-                  <Typography variant="h6">Sales By Year</Typography>
-                  <ThemeProvider theme={theme}>
-                    <div style={{ height: "300px" }}>
-                      <Chart
-                        dataSet={DM.DataSource}
-                        chartType={"pie"}
-                        dataOptions={{
-                          category: [DM.Commerce.Transaction_Date.Years],
-                          value: [measureFactory.sum(DM.Commerce.Revenue, "Revenue")],
-                          breakBy: [],
-                        }}
-                        filters={filters}
-                      />
-                    </div>
-                  </ThemeProvider>
-                </CardContent>
-              </Card>
-            </Grid>
+        <Grid item xs={12} md={6}>
+          <Card>
+            <CardContent>
+              <Typography variant="h6">Sales By Year</Typography>
+              <ThemeProvider theme={theme}>
+                <div style={{ height: "300px" }}>
+                  <Chart
+                    dataSet={DM.DataSource}
+                    chartType={"pie"}
+                    dataOptions={{
+                      category: [DM.Commerce.Transaction_Date.Years],
+                      value: [measureFactory.sum(DM.Commerce.Revenue, "Revenue")],
+                      breakBy: [],
+                    }}
+                    filters={filters}
+                  />
+                </div>
+              </ThemeProvider>
+            </CardContent>
+          </Card>
+        </Grid>
 
-            <Grid item xs={12} md={6}>
-              <Card>
-                <CardContent>
-                  <Typography variant="h6">Sales By Country</Typography>
-                  <ThemeProvider theme={theme}>
-                    <div style={{ height: "300px" }}>
-                      <Chart
-                        dataSet={DM.DataSource}
-                        chartType={"column"}
-                        dataOptions={{
-                          category: [DM.Commerce.Country],
-                          value: [measureFactory.sum(DM.Commerce.Revenue, "Revenue")],
-                          breakBy: [],
-                        }}
-                        filters={filters}
-                      />
-                    </div>
-                  </ThemeProvider>
-                </CardContent>
-              </Card>
-            </Grid>
+        <Grid item xs={12} md={6}>
+          <Card>
+            <CardContent>
+              <Typography variant="h6">Sales By Country</Typography>
+              <ThemeProvider theme={theme}>
+                <div style={{ height: "300px" }}>
+                  <Chart
+                    dataSet={DM.DataSource}
+                    chartType={"column"}
+                    dataOptions={{
+                      category: [DM.Commerce.Country],
+                      value: [measureFactory.sum(DM.Commerce.Revenue, "Revenue")],
+                      breakBy: [],
+                    }}
+                    filters={filters}
+                  />
+                </div>
+              </ThemeProvider>
+            </CardContent>
+          </Card>
+        </Grid>
 
-            <Grid item xs={12} md={6}>
-              <Card>
-                <CardContent>
-                  <Typography variant="h6">Sales By Country Over Time</Typography>
-                  <ThemeProvider theme={theme}>
-                    <div style={{ height: "300px" }}>
-                      <Chart
-                        dataSet={DM.DataSource}
-                        chartType={"area"}
-                        dataOptions={{
-                          category: [DM.Commerce.Transaction_Date.Months],
-                          value: [measureFactory.sum(DM.Commerce.Quantity, "Orders Filled")],
-                          breakBy: [DM.Commerce.Country],
-                        }}
-                        filters={filters}
-                      />
-                    </div>
-                  </ThemeProvider>
-                </CardContent>
-              </Card>
-            </Grid>
+        <Grid item xs={12} md={6}>
+          <Card>
+            <CardContent>
+              <Typography variant="h6">Sales By Country Over Time</Typography>
+              <ThemeProvider theme={theme}>
+                <div style={{ height: "300px" }}>
+                  <Chart
+                    dataSet={DM.DataSource}
+                    chartType={"area"}
+                    dataOptions={{
+                      category: [DM.Commerce.Transaction_Date.Months],
+                      value: [measureFactory.sum(DM.Commerce.Quantity, "Orders Filled")],
+                      breakBy: [DM.Commerce.Country],
+                    }}
+                    filters={filters}
+                  />
+                </div>
+              </ThemeProvider>
+            </CardContent>
+          </Card>
+        </Grid>
 
-            <Grid item xs={12}>
-              <Card>
-                <CardContent>
-                  <Typography variant="h6">Sales Over Time</Typography>
-                  <ThemeProvider theme={theme}>
-                    <div style={{ height: "300px" }}>
-                      <Chart
-                        dataSet={DM.DataSource}
-                        chartType={"line"}
-                        dataOptions={{
-                          category: [DM.Commerce.Transaction_Date.Months],
-                          value: [measureFactory.sum(DM.Commerce.Revenue, "Revenue")],
-                          breakBy: [],
-                        }}
-                        filters={filters}
-                      />
-                    </div>
-                  </ThemeProvider>
-                </CardContent>
-              </Card>
-            </Grid>
-          </Grid>
-        )}
-      </ExecuteQuery>
+        <Grid item xs={12}>
+          <Card>
+            <CardContent>
+              <Typography variant="h6">Sales Over Time</Typography>
+              <ThemeProvider theme={theme}>
+                <div style={{ height: "300px" }}>
+                  <Chart
+                    dataSet={DM.DataSource}
+                    chartType={"line"}
+                    dataOptions={{
+                      category: [DM.Commerce.Transaction_Date.Months],
+                      value: [measureFactory.sum(DM.Commerce.Revenue, "Revenue")],
+                      breakBy: [],
+                    }}
+                    filters={filters}
+                  />
+                </div>
+              </ThemeProvider>
+            </CardContent>
+          </Card>
+        </Grid>
+      </Grid>
+      )
     </DashboardLayout>
   );
 }

@@ -28,25 +28,14 @@ export default function ExecuteQueryChart(): JSX.Element {
         </header>
 
         {view === "Preview" && (
-          <ExecuteQuery
-            dataSource={DM.DataSource}
-            dimensions={[DM.Commerce.Transaction_Date.Years]}
-            measures={[measureFactory.sum(DM.Commerce.Revenue, "Revenue")]}
-            filters={[]}
-          >
-            {(data: Data) => {
-              return (
-                <BarChart
-                  dataSet={data}
-                  dataOptions={{
-                    category: [{ name: "Years", type: "datetime" }],
-                    value: [{ name: "Revenue" }],
-                    breakBy: [],
-                  }}
-                />
-              );
+          <BarChart
+            dataSet={DM.DataSource}
+            dataOptions={{
+              category: [{ name: "Years", type: "datetime" }],
+              value: [{ name: "Revenue" }],
+              breakBy: [],
             }}
-          </ExecuteQuery>
+          />
         )}
 
         {view === "React" && (

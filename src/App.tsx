@@ -1,55 +1,28 @@
-/**
-=========================================================
-* Material Dashboard 2 PRO React TS - v1.0.2
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-2-pro-react-ts
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
-import { useState, useEffect, useMemo, JSXElementConstructor, Key, ReactElement } from "react";
-
-// react-router components
+import React, {
+  useState,
+  useEffect,
+  useMemo,
+  JSXElementConstructor,
+  Key,
+  ReactElement,
+} from "react";
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
-
-// @mui material components
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import Icon from "@mui/material/Icon";
-
-// Material Dashboard 2 PRO React TS components
 import MDBox from "components/MDBox";
-
-// Material Dashboard 2 PRO React TS exampless
 import Sidenav from "examples/Sidenav";
 import Configurator from "examples/Configurator";
-
-// Material Dashboard 2 PRO React TS themes
 import theme from "assets/theme";
 import themeRTL from "assets/theme/theme-rtl";
-
-// Material Dashboard 2 PRO React TS Dark Mode themes
 import themeDark from "assets/theme-dark";
 import themeDarkRTL from "assets/theme-dark/theme-rtl";
-
-// RTL plugins
 import rtlPlugin from "stylis-plugin-rtl";
 import { CacheProvider } from "@emotion/react";
 import createCache from "@emotion/cache";
-
-// Material Dashboard 2 PRO React TS routes
 import routes from "routes";
-
-// Material Dashboard 2 PRO React TS contexts
+import Chatbot from "chatbot";
 import { useMaterialUIController, setMiniSidenav, setOpenConfigurator } from "context";
-
-// Images
 import brandWhite from "assets/images/Shopsense-Logo-White.png";
 import brandDark from "assets/images/ShopsenseLogo-Black.png";
 
@@ -66,10 +39,10 @@ export default function App() {
     darkMode,
   } = controller;
   const [onMouseEnter, setOnMouseEnter] = useState(false);
+  const [isChatbotOpen, setIsChatbotOpen] = useState(false); // Added state for chatbot
   const [rtlCache, setRtlCache] = useState(null);
   const { pathname } = useLocation();
 
-  // Cache for the rtl
   useMemo(() => {
     const pluginRtl: any = rtlPlugin;
     const cacheRtl = createCache({
@@ -80,7 +53,6 @@ export default function App() {
     setRtlCache(cacheRtl);
   }, []);
 
-  // Open sidenav when mouse enter on mini sidenav
   const handleOnMouseEnter = () => {
     if (miniSidenav && !onMouseEnter) {
       setMiniSidenav(dispatch, false);
@@ -88,7 +60,6 @@ export default function App() {
     }
   };
 
-  // Close sidenav when mouse leave mini sidenav
   const handleOnMouseLeave = () => {
     if (onMouseEnter) {
       setMiniSidenav(dispatch, true);
@@ -96,15 +67,13 @@ export default function App() {
     }
   };
 
-  // Change the openConfigurator state
   const handleConfiguratorOpen = () => setOpenConfigurator(dispatch, !openConfigurator);
+  const [buttonPosition, setButtonPosition] = useState({ right: "2rem", bottom: "8rem" });
 
-  // Setting the dir attribute for the body element
   useEffect(() => {
     document.body.setAttribute("dir", direction);
   }, [direction]);
 
-  // Setting page scroll to 0 when changing the route
   useEffect(() => {
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
@@ -154,6 +123,49 @@ export default function App() {
     </MDBox>
   );
 
+  const chatbotButton = (
+    <MDBox
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+      width="3.25rem"
+      height="3.25rem"
+      bgColor="white"
+      shadow="sm"
+      borderRadius="50%"
+      position="fixed"
+      right="2rem"
+      bottom="6rem"
+      zIndex={99}
+      color="dark"
+      sx={{ cursor: "pointer" }}
+      onClick={() => {
+        setIsChatbotOpen(!isChatbotOpen);
+        // You can adjust the button position dynamically here if needed
+      }}
+    >
+      <Icon fontSize="small" color="inherit">
+        chat_bubble
+      </Icon>
+    </MDBox>
+  );
+
+  const chatbotContainer = (
+    <div
+      style={{
+        position: "fixed",
+        right: "2rem", // Adjust this value based on your design
+        bottom: isChatbotOpen ? "8rem" : "5rem", // Adjust this value based on your design
+        transition: "bottom 0.3s ease", // Add a transition for smooth movement
+        zIndex: 98,
+      }}
+    >
+      {isChatbotOpen && (
+        <Chatbot width={500} height={600} onClose={() => setIsChatbotOpen(false)} />
+      )}
+    </div>
+  );
+
   return direction === "rtl" ? (
     <CacheProvider value={rtlCache}>
       <ThemeProvider theme={darkMode ? themeDarkRTL : themeRTL}>
@@ -193,7 +205,7 @@ export default function App() {
             onMouseLeave={handleOnMouseLeave}
           />
           <Configurator />
-          {configsButton}
+          {[configsButton, chatbotButton, chatbotContainer]}
         </>
       )}
       {layout === "vr" && <Configurator />}

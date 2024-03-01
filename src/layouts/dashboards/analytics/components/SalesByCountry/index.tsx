@@ -7,7 +7,7 @@ import Icon from "@mui/material/Icon";
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import SalesTable from "examples/Tables/SalesTable";
-import { ExecuteQuery } from "@sisense/sdk-ui";
+import { ExecuteQuery, QueryState } from "@sisense/sdk-ui";
 import * as DM from "sisense/Schemas/ecommerce-master";
 import { Data, measureFactory, filterFactory, Filter } from "@sisense/sdk-data";
 import US from "assets/images/icons/flags/US.png";
@@ -67,9 +67,19 @@ function SalesByCountry(props: Props): JSX.Element {
                 filterFactory.contains(DM.Commerce.Transaction_Date.Months, "2024-01"),
               ]}
             >
-              {(data: Data) => {
+              {(queryState: QueryState) => {
+                if (queryState.isLoading) {
+                  return <div>Loading...</div>;
+                }
+
+                if (queryState.error) {
+                  return <div>Error: {queryState.error.message}</div>;
+                }
+
+                const data: Data = queryState.data;
                 console.log(data);
                 const sisenseTableData = TranslateSisenseDataToTable(data);
+
                 return <SalesTable rows={sisenseTableData} shadow={false} />;
               }}
             </ExecuteQuery>

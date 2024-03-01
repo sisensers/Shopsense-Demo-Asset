@@ -1,6 +1,6 @@
 import React from "react";
 import GradientLineChart from "sisense/Charts/LineCharts/GradientLineChart";
-import { ExecuteQuery } from "@sisense/sdk-ui";
+import { ExecuteQuery, QueryState } from "@sisense/sdk-ui";
 import * as DM from "sisense/Schemas/ecommerce-master";
 import { Data, measureFactory, Filter } from "@sisense/sdk-data";
 
@@ -33,9 +33,21 @@ export default function SalesByAgeLine(props: Props): JSX.Element {
       measures={[measureFactory.sum(DM.AdReport.Impressions, "Total Impressions")]}
       filters={[props.filters]}
     >
-      {(data: Data) => {
+      {(queryState: QueryState) => {
+        if (queryState.isLoading) {
+          return <div>Loading...</div>;
+        }
+
+        if (queryState.error) {
+          return <div>Error: {queryState.error.message}</div>;
+        }
+
+        const data: Data = queryState.data;
+
         console.log(data);
+
         const translatedGradientData = translateSisenseDataToChartJS(data);
+
         return (
           <GradientLineChart
             icon={{ component: "show_chart" }}

@@ -158,244 +158,220 @@ export default function Dashboard() {
           {view === "React" && <CodeBlock language="tsx">{dashboardCodeExample}</CodeBlock>}
         </article>
       </CodeHighlight>
-      <ExecuteQuery
-        dataSource={DM.DataSource}
-        dimensions={[
-          DM.Commerce.Transaction_Date.Years,
-          DM.Commerce.Transaction_Date.Months,
-          DM.Category.CategoryName,
-          DM.Commerce.AgeRange,
-          DM.Commerce.Country,
-          DM.CustomerReviews.Sentiment,
-          DM.Commerce.DayOfWeek,
-          DM.Product.ProductName,
-        ]}
-        measures={[
-          measureFactory.sum(DM.Commerce.Quantity, "Total Quantity"),
-          measureFactory.sum(DM.Commerce.Revenue, "Total Revenue"),
-          measureFactory.sum(DM.Commerce.Cost, "Total Cost"),
-        ]}
-      >
-        {(data: Data) => (
-          <Grid container spacing={-1}>
-            {/* add filters as needed to this column */}
-            <Grid item xs={12} md={2} style={{ display: isFilterColumnVisible ? "block" : "none" }}>
-              <Card
-                style={{
-                  height: "auto",
-                  width: "auto",
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  marginRight: "10px",
-                }}
+      <Grid container spacing={-1}>
+        {/* add filters as needed to this column */}
+        <Grid item xs={12} md={2} style={{ display: isFilterColumnVisible ? "block" : "none" }}>
+          <Card
+            style={{
+              height: "auto",
+              width: "auto",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+              marginRight: "10px",
+            }}
+          >
+            <CardContent style={{ flex: "auto", padding: 25, textAlign: "center" }}>
+              <Typography
+                variant="h6"
+                style={{ fontWeight: "bold", fontFamily: "Roboto", marginBottom: 15 }}
               >
-                <CardContent style={{ flex: "auto", padding: 25, textAlign: "center" }}>
-                  <Typography
-                    variant="h6"
-                    style={{ fontWeight: "bold", fontFamily: "Roboto", marginBottom: 15 }}
-                  >
-                    Dashboard Filters
-                  </Typography>
-                  <ThemeProvider theme={theme}>
-                    <MemberFilterTile
-                      title={"Category"}
-                      dataSource={DM.DataSource}
-                      attribute={DM.Category.CategoryName}
-                      filter={categoryFilter}
-                      onChange={(newFilter: Partial<Filter> | null) =>
-                        setCategoryFilter(newFilter as Filter | null)
-                      }
-                    />
-                  </ThemeProvider>
+                Dashboard Filters
+              </Typography>
+              <ThemeProvider theme={theme}>
+                <MemberFilterTile
+                  title={"Category"}
+                  dataSource={DM.DataSource}
+                  attribute={DM.Category.CategoryName}
+                  filter={categoryFilter}
+                  onChange={(newFilter: Partial<Filter> | null) =>
+                    setCategoryFilter(newFilter as Filter | null)
+                  }
+                />
+              </ThemeProvider>
 
+              <ThemeProvider theme={theme}>
+                <MemberFilterTile
+                  title={"Brand"}
+                  dataSource={DM.DataSource}
+                  attribute={DM.Brand.BrandName}
+                  filter={brandFilter}
+                  onChange={(newFilter: Partial<Filter> | null) =>
+                    setBrandFilter(newFilter as Filter | null)
+                  }
+                />
+              </ThemeProvider>
+            </CardContent>
+            <CardContent style={{ flex: "auto", padding: 0 }}>
+              <ThemeProvider theme={theme}>
+                <MemberFilterTile
+                  title={"Customer Sentiment"}
+                  dataSource={DM.DataSource}
+                  attribute={DM.CustomerReviews.Sentiment}
+                  filter={sentimentFilter}
+                  onChange={(newFilter: Partial<Filter> | null) =>
+                    setSentimentFilter(newFilter as Filter | null)
+                  }
+                />
+              </ThemeProvider>
+            </CardContent>
+            <CardContent style={{ flex: "auto", padding: 0 }}>
+              <ThemeProvider theme={theme}>
+                <MemberFilterTile
+                  title={"Country"}
+                  dataSource={DM.DataSource}
+                  attribute={DM.Commerce.Country}
+                  filter={countryFilter}
+                  onChange={(newFilter: Partial<Filter> | null) =>
+                    setCountryFilter(newFilter as Filter | null)
+                  }
+                />
+              </ThemeProvider>
+            </CardContent>
+            <CardContent style={{ flex: "auto", padding: 0 }}>
+              <ThemeProvider theme={theme}>
+                <MemberFilterTile
+                  title={"Demographic"}
+                  dataSource={DM.DataSource}
+                  attribute={DM.Commerce.AgeRange}
+                  filter={agerangeFilter}
+                  onChange={(newFilter: Partial<Filter> | null) =>
+                    setAgerangeFilter(newFilter as Filter | null)
+                  }
+                />
+              </ThemeProvider>
+            </CardContent>
+            <CardContent style={{ flex: "auto", padding: 0 }}>
+              <ThemeProvider theme={theme}>
+                <MemberFilterTile
+                  title={"Day Of Week"}
+                  dataSource={DM.DataSource}
+                  attribute={DM.Commerce.DayOfWeek}
+                  filter={dayofweekFilter}
+                  onChange={(newFilter: Partial<Filter> | null) =>
+                    setDayofweekFilter(newFilter as Filter | null)
+                  }
+                />
+              </ThemeProvider>
+            </CardContent>
+            <CardContent style={{ flex: "auto", padding: 0 }}>
+              <ThemeProvider theme={theme}>
+                <MemberFilterTile
+                  title={"Product"}
+                  dataSource={DM.DataSource}
+                  attribute={DM.Product.ProductName}
+                  filter={productnameFilter}
+                  onChange={(newFilter: Partial<Filter> | null) =>
+                    setProductnameFilter(newFilter as Filter | null)
+                  }
+                />
+              </ThemeProvider>
+            </CardContent>
+          </Card>
+        </Grid>
+
+        {/* Charts */}
+        <Grid item xs={12} md={10}>
+          {/* add more charts as needed here */}
+
+          <Grid container spacing={1}>
+            <Grid item xs={12} md={6}>
+              <Card>
+                <CardContent>
                   <ThemeProvider theme={theme}>
-                    <MemberFilterTile
-                      title={"Brand"}
-                      dataSource={DM.DataSource}
-                      attribute={DM.Brand.BrandName}
-                      filter={brandFilter}
-                      onChange={(newFilter: Partial<Filter> | null) =>
-                        setBrandFilter(newFilter as Filter | null)
-                      }
-                    />
-                  </ThemeProvider>
-                </CardContent>
-                <CardContent style={{ flex: "auto", padding: 0 }}>
-                  <ThemeProvider theme={theme}>
-                    <MemberFilterTile
-                      title={"Customer Sentiment"}
-                      dataSource={DM.DataSource}
-                      attribute={DM.CustomerReviews.Sentiment}
-                      filter={sentimentFilter}
-                      onChange={(newFilter: Partial<Filter> | null) =>
-                        setSentimentFilter(newFilter as Filter | null)
-                      }
-                    />
-                  </ThemeProvider>
-                </CardContent>
-                <CardContent style={{ flex: "auto", padding: 0 }}>
-                  <ThemeProvider theme={theme}>
-                    <MemberFilterTile
-                      title={"Country"}
-                      dataSource={DM.DataSource}
-                      attribute={DM.Commerce.Country}
-                      filter={countryFilter}
-                      onChange={(newFilter: Partial<Filter> | null) =>
-                        setCountryFilter(newFilter as Filter | null)
-                      }
-                    />
-                  </ThemeProvider>
-                </CardContent>
-                <CardContent style={{ flex: "auto", padding: 0 }}>
-                  <ThemeProvider theme={theme}>
-                    <MemberFilterTile
-                      title={"Demographic"}
-                      dataSource={DM.DataSource}
-                      attribute={DM.Commerce.AgeRange}
-                      filter={agerangeFilter}
-                      onChange={(newFilter: Partial<Filter> | null) =>
-                        setAgerangeFilter(newFilter as Filter | null)
-                      }
-                    />
-                  </ThemeProvider>
-                </CardContent>
-                <CardContent style={{ flex: "auto", padding: 0 }}>
-                  <ThemeProvider theme={theme}>
-                    <MemberFilterTile
-                      title={"Day Of Week"}
-                      dataSource={DM.DataSource}
-                      attribute={DM.Commerce.DayOfWeek}
-                      filter={dayofweekFilter}
-                      onChange={(newFilter: Partial<Filter> | null) =>
-                        setDayofweekFilter(newFilter as Filter | null)
-                      }
-                    />
-                  </ThemeProvider>
-                </CardContent>
-                <CardContent style={{ flex: "auto", padding: 0 }}>
-                  <ThemeProvider theme={theme}>
-                    <MemberFilterTile
-                      title={"Product"}
-                      dataSource={DM.DataSource}
-                      attribute={DM.Product.ProductName}
-                      filter={productnameFilter}
-                      onChange={(newFilter: Partial<Filter> | null) =>
-                        setProductnameFilter(newFilter as Filter | null)
-                      }
+                    <DashboardWidget
+                      widgetOid={WIDGET_IDS.WIDGET_1}
+                      dashboardOid={DASHBOARD_ID}
+                      filters={filters}
+                      drilldownOptions={{
+                        drilldownDimensions: [
+                          DM.Brand.BrandName,
+                          DM.Product.ProductName,
+                          DM.Commerce.Transaction_Date.Months,
+                          DM.Commerce.Transaction_Date.Days,
+                        ],
+                      }}
                     />
                   </ThemeProvider>
                 </CardContent>
               </Card>
             </Grid>
 
-            {/* Charts */}
-            <Grid item xs={12} md={10}>
-              {/* add more charts as needed here */}
+            <Grid item xs={12} md={6}>
+              <Card>
+                <CardContent>
+                  <ThemeProvider theme={theme}>
+                    <DashboardWidget
+                      widgetOid={WIDGET_IDS.WIDGET_2}
+                      dashboardOid={DASHBOARD_ID}
+                      filters={filters}
+                      drilldownOptions={{
+                        drilldownDimensions: [DM.Commerce.Country, DM.CustomerReviews.Sentiment],
+                      }}
+                    />
+                  </ThemeProvider>
+                </CardContent>
+              </Card>
+            </Grid>
 
-              <Grid container spacing={1}>
-                <Grid item xs={12} md={6}>
-                  <Card>
-                    <CardContent>
-                      <ThemeProvider theme={theme}>
-                        <DashboardWidget
-                          widgetOid={WIDGET_IDS.WIDGET_1}
-                          dashboardOid={DASHBOARD_ID}
-                          filters={filters}
-                          drilldownOptions={{
-                            drilldownDimensions: [
-                              DM.Brand.BrandName,
-                              DM.Product.ProductName,
-                              DM.Commerce.Transaction_Date.Months,
-                              DM.Commerce.Transaction_Date.Days,
-                            ],
-                          }}
-                        />
-                      </ThemeProvider>
-                    </CardContent>
-                  </Card>
-                </Grid>
+            <Grid item xs={12} md={6}>
+              <Card>
+                <CardContent>
+                  <ThemeProvider theme={theme}>
+                    <DashboardWidget
+                      widgetOid={WIDGET_IDS.WIDGET_3}
+                      dashboardOid={DASHBOARD_ID}
+                      filters={filters}
+                      drilldownOptions={{
+                        drilldownDimensions: [DM.Brand.BrandName, DM.Product.ProductName],
+                      }}
+                    />
+                  </ThemeProvider>
+                </CardContent>
+              </Card>
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <Card>
+                <CardContent>
+                  <ThemeProvider theme={theme}>
+                    <DashboardWidget
+                      widgetOid={WIDGET_IDS.WIDGET_4}
+                      dashboardOid={DASHBOARD_ID}
+                      filters={filters}
+                      drilldownOptions={{
+                        drilldownDimensions: [
+                          DM.Category.CategoryName,
+                          DM.Product.ProductName,
+                          DM.Commerce.Transaction_Date.Days,
+                          DM.Commerce.AgeRange,
+                        ],
+                      }}
+                    />
+                  </ThemeProvider>
+                </CardContent>
+              </Card>
+            </Grid>
 
-                <Grid item xs={12} md={6}>
-                  <Card>
-                    <CardContent>
-                      <ThemeProvider theme={theme}>
-                        <DashboardWidget
-                          widgetOid={WIDGET_IDS.WIDGET_2}
-                          dashboardOid={DASHBOARD_ID}
-                          filters={filters}
-                          drilldownOptions={{
-                            drilldownDimensions: [
-                              DM.Commerce.Country,
-                              DM.CustomerReviews.Sentiment,
-                            ],
-                          }}
-                        />
-                      </ThemeProvider>
-                    </CardContent>
-                  </Card>
-                </Grid>
-
-                <Grid item xs={12} md={6}>
-                  <Card>
-                    <CardContent>
-                      <ThemeProvider theme={theme}>
-                        <DashboardWidget
-                          widgetOid={WIDGET_IDS.WIDGET_3}
-                          dashboardOid={DASHBOARD_ID}
-                          filters={filters}
-                          drilldownOptions={{
-                            drilldownDimensions: [DM.Brand.BrandName, DM.Product.ProductName],
-                          }}
-                        />
-                      </ThemeProvider>
-                    </CardContent>
-                  </Card>
-                </Grid>
-                <Grid item xs={12} md={6}>
-                  <Card>
-                    <CardContent>
-                      <ThemeProvider theme={theme}>
-                        <DashboardWidget
-                          widgetOid={WIDGET_IDS.WIDGET_4}
-                          dashboardOid={DASHBOARD_ID}
-                          filters={filters}
-                          drilldownOptions={{
-                            drilldownDimensions: [
-                              DM.Category.CategoryName,
-                              DM.Product.ProductName,
-                              DM.Commerce.Transaction_Date.Days,
-                              DM.Commerce.AgeRange,
-                            ],
-                          }}
-                        />
-                      </ThemeProvider>
-                    </CardContent>
-                  </Card>
-                </Grid>
-
-                <Grid item xs={12} md={12}>
-                  <Card>
-                    <CardContent>
-                      <ThemeProvider theme={theme}>
-                        <DashboardWidget
-                          widgetOid={WIDGET_IDS.WIDGET_5}
-                          dashboardOid={DASHBOARD_ID}
-                          filters={filters}
-                          drilldownOptions={{
-                            drilldownDimensions: [DM.Brand.BrandName, DM.Product.ProductName],
-                          }}
-                        />
-                      </ThemeProvider>
-                    </CardContent>
-                  </Card>
-                </Grid>
-              </Grid>
+            <Grid item xs={12} md={12}>
+              <Card>
+                <CardContent>
+                  <ThemeProvider theme={theme}>
+                    <DashboardWidget
+                      widgetOid={WIDGET_IDS.WIDGET_5}
+                      dashboardOid={DASHBOARD_ID}
+                      filters={filters}
+                      drilldownOptions={{
+                        drilldownDimensions: [DM.Brand.BrandName, DM.Product.ProductName],
+                      }}
+                    />
+                  </ThemeProvider>
+                </CardContent>
+              </Card>
             </Grid>
           </Grid>
-        )}
-      </ExecuteQuery>
+        </Grid>
+      </Grid>
     </DashboardLayout>
   );
 }

@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import { ButtonGroup } from "../../../components/ButtonGroup";
-import { LineChart, ExecuteQuery } from "@sisense/sdk-ui";
+import { LineChart, ExecuteQuery, QueryState } from "@sisense/sdk-ui";
 import * as DM from "../../Schemas/old-ecommerce";
 import CodeHighlight from "../../../components/CodeHighlight";
 import CodeBlock from "../../../components/CodeBlock";
@@ -38,9 +38,19 @@ export default function ExecuteQueryChart(props: Props) {
             measures={[measureFactory.sum(DM.Commerce.Revenue, "Total Revenue")]}
             filters={[props.filters]}
           >
-            {(data: Data) => {
+            {(queryState: QueryState) => {
+              if (queryState.isLoading) {
+                return <div>Loading...</div>;
+              }
+
+              if (queryState.error) {
+                return <div>Error: {queryState.error.message}</div>;
+              }
+
+              const data: Data = queryState.data;
               console.log("Nivo Bump Sisense Data Before Transformation");
               console.log(data);
+
               const nivoData = TranslateSisenseDataToD3(data);
 
               return (
@@ -87,17 +97,7 @@ export default function ExecuteQueryChart(props: Props) {
                     axisRight={null}
                   />
                 </div>
-              ); //add to add div for nivo charts
-              // return <LineChart dataSet={data}
-              //                  dataOptions={{
-              //                    category: [{name: 'Months', type: 'datetime'}],
-              //                    value: [{name: 'Total Revenue'}, {name: 'Total Cost'}],
-              //                    breakBy: [{name: 'Gender', type: 'string'}],
-              //                  }}
-              //                  onDataPointClick= {(point, nativeEvent) => {
-              //                   console.log('clicked', point, nativeEvent);
-              //                 }}
-              //         />;
+              );
             }}
           </ExecuteQuery>
         )}

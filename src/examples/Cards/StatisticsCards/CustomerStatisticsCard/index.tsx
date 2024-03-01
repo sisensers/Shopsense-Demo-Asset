@@ -1,5 +1,5 @@
 import { ReactNode, useEffect, useState } from "react";
-import { ExecuteQuery } from "@sisense/sdk-ui";
+import { ExecuteQuery, QueryState } from "@sisense/sdk-ui";
 import * as DM from "sisense/Schemas/ecommerce-master";
 import { Data, measureFactory, Filter, Cell, filterFactory } from "@sisense/sdk-data";
 import Card from "@mui/material/Card";
@@ -89,7 +89,16 @@ function CustomerStatisticsCard({ color, title, icon, percentage }: Props): JSX.
             measures={[measureDifference]}
             filters={[filterFactory.contains(DM.Commerce.Transaction_Date.Months, "2024-02")]}
           >
-            {(data: Data) => {
+            {(queryState: QueryState) => {
+              if (queryState.isLoading) {
+                return <div>Loading...</div>;
+              }
+
+              if (queryState.error) {
+                return <div>Error: {queryState.error.message}</div>;
+              }
+
+              const data: Data = queryState.data;
               const dynamicCount = data.rows.length > 0 ? (data.rows[0][0] as Cell).data : 0;
 
               setCount(Number(dynamicCount));

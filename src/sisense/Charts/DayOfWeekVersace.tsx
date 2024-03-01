@@ -2,7 +2,7 @@ import ReportsBarChart from "examples/Charts/BarCharts/ReportsBarChart";
 import reportsBarChartData from "layouts/dashboards/analytics/data/reportsBarChartData";
 
 // Sisense
-import { ExecuteQuery } from "@sisense/sdk-ui";
+import { ExecuteQuery, QueryState } from "@sisense/sdk-ui";
 import * as DM from "sisense/Schemas/ecommerce-master";
 import { Data, measureFactory, filterFactory } from "@sisense/sdk-data";
 
@@ -14,9 +14,20 @@ export default function DayOfWeekVersace(): JSX.Element {
       measures={[measureFactory.sum(DM.Commerce.Revenue, "Revenue")]}
       filters={[filterFactory.equals(DM.Brand.BrandName, "Versace")]}
     >
-      {(data: Data) => {
+      {(queryState: QueryState) => {
+        if (queryState.isLoading) {
+          return <div>Loading...</div>;
+        }
+
+        if (queryState.error) {
+          return <div>Error: {queryState.error.message}</div>;
+        }
+
+        const data: Data = queryState.data;
         console.log(data);
+
         const transformedData = TranslateSisenseDataToChartJS(data);
+
         return (
           <ReportsBarChart
             color="info"

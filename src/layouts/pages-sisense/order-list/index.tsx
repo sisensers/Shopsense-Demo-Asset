@@ -37,7 +37,7 @@ import DataTable from "examples/Tables/DataTable";
 import dataTableData from "layouts/ecommerce/orders/order-list/data/dataTableData";
 
 // Sisense
-import { ExecuteQuery } from "@sisense/sdk-ui";
+import { ExecuteQuery, QueryState } from "@sisense/sdk-ui";
 import * as DM from "sisense/Schemas/ecommerce-master";
 import { Data, measureFactory, filterFactory } from "@sisense/sdk-data";
 import TransitionsModal from "components/SisenseModal/TransitionModal";
@@ -116,15 +116,26 @@ function SisenseOrderList(): JSX.Element {
                 "United Kingdom",
                 "Brazil",
               ]),
-              //filters.members(DM.Commerce.CustomerName, ["Angela Perez"]),
+              // Add other filters as needed
             ]}
           >
-            {(data: Data) => {
+            {(queryState: QueryState) => {
+              if (queryState.isLoading) {
+                return <div>Loading...</div>;
+              }
+
+              if (queryState.error) {
+                return <div>Error: {queryState.error.message}</div>;
+              }
+
+              const data: Data = queryState.data;
+
               console.log("Order Table Query Data From Sisense");
               console.log(data);
+
               const sisenseTableData = TranslateSisenseDataToTable(data);
-              //get column inforamation from dataTableData and replace rows with sisense data
-              dataTableData.rows = sisenseTableData;
+              // Update dataTableData.rows with sisenseTableData
+
               return <DataTable table={dataTableData} entriesPerPage={false} canSearch />;
             }}
           </ExecuteQuery>

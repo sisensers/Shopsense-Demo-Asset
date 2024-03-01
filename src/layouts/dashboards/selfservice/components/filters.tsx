@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ExecuteQuery, MemberFilterTile, ThemeProvider } from "@sisense/sdk-ui";
+import { ExecuteQuery, MemberFilterTile, QueryState, ThemeProvider } from "@sisense/sdk-ui";
 import { Data, Filter, DimensionalDataModel } from "@sisense/sdk-data";
 import * as DM from "sisense/Schemas/ecommerce-master";
 
@@ -30,20 +30,33 @@ const CommonFilter: React.FC<CommonFilterProps> = ({ title, onChange, attribute 
 
   return (
     <ExecuteQuery dataSource={DM.DataSource} dimensions={[attribute]}>
-      {(data: Data) => (
-        <ThemeProvider theme={theme}>
-          <MemberFilterTile
-            title={title}
-            dataSource={DM.DataSource}
-            attribute={attribute}
-            filter={filter}
-            onChange={(newFilter: Partial<Filter> | null) => {
-              setFilter(newFilter as Filter | null);
-              onChange(newFilter as Filter | null);
-            }}
-          />
-        </ThemeProvider>
-      )}
+      {(queryState: QueryState) => {
+        if (queryState.isLoading) {
+          return <div>Loading...</div>;
+        }
+
+        if (queryState.error) {
+          return <div>Error: {queryState.error.message}</div>;
+        }
+
+        // Access queryState.data for Data
+        const data: Data = queryState.data;
+
+        return (
+          <ThemeProvider theme={theme}>
+            <MemberFilterTile
+              title={title}
+              dataSource={DM.DataSource}
+              attribute={attribute}
+              filter={filter}
+              onChange={(newFilter: Partial<Filter> | null) => {
+                setFilter(newFilter as Filter | null);
+                onChange(newFilter as Filter | null);
+              }}
+            />
+          </ThemeProvider>
+        );
+      }}
     </ExecuteQuery>
   );
 };

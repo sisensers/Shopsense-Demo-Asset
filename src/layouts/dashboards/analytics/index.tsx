@@ -24,6 +24,7 @@ import reportsLineChartData from "layouts/dashboards/analytics/data/reportsLineC
 import DayOfWeek from "sisense/Charts/DayOfWeek";
 import SalesByAgeLine from "sisense/Charts/SalesByAgeLine";
 import { BarChart, DateRangeFilterTile, DateFilter } from "@sisense/sdk-ui";
+import { AiContextProvider, Chatbot } from "@sisense/sdk-ui/ai";
 import { Data, filterFactory, measureFactory, Filter } from "@sisense/sdk-data";
 import * as DM from "sisense/Schemas/ecommerce-master";
 import { useState } from "react";

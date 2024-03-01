@@ -48,7 +48,7 @@ import radarChartData from "sisense/ChartData/radarChartData";
 import polarChartData from "sisense/ChartData/polarChartData";
 
 // Sisense
-import { ExecuteQuery } from "@sisense/sdk-ui";
+import { ExecuteQuery, QueryState } from "@sisense/sdk-ui";
 import * as DM from "sisense/Schemas/ecommerce-master";
 import { Data, measureFactory } from "@sisense/sdk-data";
 
@@ -81,9 +81,21 @@ function SisenseCharts(): JSX.Element {
                 ]}
                 filters={[]}
               >
-                {(data: Data) => {
+                {(queryState: QueryState) => {
+                  if (queryState.isLoading) {
+                    return <div>Loading...</div>;
+                  }
+
+                  if (queryState.error) {
+                    return <div>Error: {queryState.error.message}</div>;
+                  }
+
+                  const data: Data = queryState.data;
+
+                  // Your rendering logic here
                   console.log(data);
                   const translatedData = TranslateSisenseDataToChartJS(data);
+
                   return (
                     <DefaultLineChart
                       icon={{ component: "insights" }}
@@ -105,9 +117,21 @@ function SisenseCharts(): JSX.Element {
                 ]}
                 filters={[]}
               >
-                {(data: Data) => {
+                {(queryState: QueryState) => {
+                  if (queryState.isLoading) {
+                    return <div>Loading...</div>;
+                  }
+
+                  if (queryState.error) {
+                    return <div>Error: {queryState.error.message}</div>;
+                  }
+
+                  const data: Data = queryState.data;
+
+                  // Your rendering logic here
                   console.log(data);
                   const translatedGradientData = TranslateSisenseDataToChartJS(data);
+
                   return (
                     <GradientLineChart
                       icon={{ component: "show_chart" }}
