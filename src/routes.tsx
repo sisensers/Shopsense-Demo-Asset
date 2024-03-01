@@ -1,5 +1,5 @@
 import Analytics from "layouts/dashboards/analytics";
-import Sales from "layouts/dashboards/sales";
+import Marketing from "layouts/dashboards/marketing";
 import SelfService from "layouts/dashboards/selfservice";
 import ProfileOverview from "layouts/pages/profile/profile-overview";
 import AllProjects from "layouts/pages/profile/all-projects";
@@ -84,10 +84,10 @@ const routes = [
         component: <Analytics />,
       },
       {
-        name: "Sales",
-        key: "sales",
-        route: "/dashboards/sales",
-        component: <Sales />,
+        name: "Marketing",
+        key: "marketing",
+        route: "/dashboards/marketing",
+        component: <Marketing />,
       },
       {
         name: "Self Service",

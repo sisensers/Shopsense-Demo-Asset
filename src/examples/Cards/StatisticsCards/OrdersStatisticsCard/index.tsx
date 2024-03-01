@@ -7,6 +7,7 @@ import Divider from "@mui/material/Divider";
 import Icon from "@mui/material/Icon";
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
+import { CircularProgress } from "@mui/material";
 
 interface Props {
   color?: "primary" | "secondary" | "info" | "success" | "warning" | "error" | "light" | "dark";
@@ -65,7 +66,11 @@ function OrderStatisticsCard({ color, title, icon, percentage, filters }: Props)
           >
             {(queryState: QueryState) => {
               if (queryState.isLoading) {
-                return <div>Loading...</div>;
+                return (
+                  <div>
+                    <CircularProgress />
+                  </div>
+                );
               }
 
               if (queryState.error) {

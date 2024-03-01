@@ -11,6 +11,7 @@ import Icon from "@mui/material/Icon";
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import Transactions from "layouts/pages/account/billing/components/Transactions";
+import { CircularProgress } from "@mui/material";
 
 interface Props {
   color?: "primary" | "secondary" | "info" | "success" | "warning" | "error" | "light" | "dark";
@@ -91,7 +92,11 @@ function CustomerStatisticsCard({ color, title, icon, percentage }: Props): JSX.
           >
             {(queryState: QueryState) => {
               if (queryState.isLoading) {
-                return <div>Loading...</div>;
+                return (
+                  <div>
+                    <CircularProgress />
+                  </div>
+                );
               }
 
               if (queryState.error) {

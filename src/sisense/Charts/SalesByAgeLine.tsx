@@ -3,6 +3,7 @@ import GradientLineChart from "sisense/Charts/LineCharts/GradientLineChart";
 import { ExecuteQuery, QueryState } from "@sisense/sdk-ui";
 import * as DM from "sisense/Schemas/ecommerce-master";
 import { Data, measureFactory, Filter } from "@sisense/sdk-data";
+import { CircularProgress } from "@mui/material";
 
 const colorList = ["info", "dark", "primary", "secondary", "success", "error", "light"];
 
@@ -35,7 +36,11 @@ export default function SalesByAgeLine(props: Props): JSX.Element {
     >
       {(queryState: QueryState) => {
         if (queryState.isLoading) {
-          return <div>Loading...</div>;
+          return (
+            <div>
+              <CircularProgress />
+            </div>
+          );
         }
 
         if (queryState.error) {

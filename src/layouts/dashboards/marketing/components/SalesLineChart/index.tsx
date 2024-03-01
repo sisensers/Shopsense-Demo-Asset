@@ -25,17 +25,13 @@ import MDTypography from "components/MDTypography";
 import MDButton from "components/MDButton";
 import MDBadgeDot from "components/MDBadgeDot";
 
-// Data
-import channelChartData from "layouts/dashboards/sales/components/ChannelsChart/data";
-
 // Material Dashboard 2 PRO React TS contexts
 import { useMaterialUIController } from "context";
 import SisensePieChart from "sisense/Charts/sisensePirChart";
 import RerouteButton from "components/Reroute";
 import SisenseLineChart from "sisense/Charts/LineChart";
-import SalesBarChart from "./SalesByCountryBarChart";
 
-function SalesByCountryBar(): JSX.Element {
+function SalesLineChart(): JSX.Element {
   const [controller] = useMaterialUIController();
   const { darkMode } = controller;
 
@@ -52,7 +48,8 @@ function SalesByCountryBar(): JSX.Element {
           For the period between January 2023 and December 2023, Sales rose from 251.7K to 255.5K, reaching a high of 269K in October 2023.
           
           Time Variance Analysis
-          Compared to the previous period, the overall Sales increased by 24.5K (10.6%) from 231K to 255.5K between November 2023 and December 2023 "
+          Compared to the previous period, the overall Sales increased by 24.5K (10.6%) from 231K to 255.5K between November 2023 and December 2023.
+"
           placement="bottom"
           arrow
         >
@@ -64,7 +61,7 @@ function SalesByCountryBar(): JSX.Element {
       <MDBox mt={3}>
         <Grid container alignItems="center">
           <Grid item xs={20}>
-            <SalesBarChart />
+            <SisenseLineChart />
           </Grid>
         </Grid>
       </MDBox>
@@ -80,4 +77,4 @@ function SalesByCountryBar(): JSX.Element {
   );
 }
 
-export default SalesByCountryBar;
+export default SalesLineChart;

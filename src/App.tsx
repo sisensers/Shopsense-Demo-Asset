@@ -26,6 +26,7 @@ import { useMaterialUIController, setMiniSidenav, setOpenConfigurator } from "co
 import brandWhite from "assets/images/Shopsense-Logo-White.png";
 import brandDark from "assets/images/ShopsenseLogo-Black.png";
 
+
 export default function App() {
   const [controller, dispatch] = useMaterialUIController();
   const {

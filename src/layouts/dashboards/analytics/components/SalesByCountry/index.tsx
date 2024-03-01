@@ -14,6 +14,7 @@ import US from "assets/images/icons/flags/US.png";
 import DE from "assets/images/icons/flags/DE.png";
 import GB from "assets/images/icons/flags/GB.png";
 import BR from "assets/images/icons/flags/BR.png";
+import { CircularProgress } from "@mui/material";
 
 type Props = {
   filters: Filter;
@@ -69,7 +70,11 @@ function SalesByCountry(props: Props): JSX.Element {
             >
               {(queryState: QueryState) => {
                 if (queryState.isLoading) {
-                  return <div>Loading...</div>;
+                  return (
+                    <div>
+                      <CircularProgress />
+                    </div>
+                  );
                 }
 
                 if (queryState.error) {

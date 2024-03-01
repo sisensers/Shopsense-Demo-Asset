@@ -5,7 +5,7 @@ import { BrowserRouter } from "react-router-dom";
 import App from "App";
 
 // Sisense
-import { SisenseContextProvider } from "@sisense/sdk-ui";
+import { SisenseContextProvider, ThemeProvider } from "@sisense/sdk-ui";
 const sisenseContextProviderArgs = () => {
   const baseOptions = {
     url: process.env.REACT_APP_SISENSE_URL,
@@ -33,17 +33,35 @@ const sisenseContextProviderArgs = () => {
   }
 };
 
+const theme = {
+  chart: {
+    textColor: "#3C3C44",
+  },
+  general: {
+    brandColor: "#2196f3",
+    primaryButtonTextColor: "white",
+  },
+  palette: {
+    variantColors: ["#2196f3", "#0d47a1", "#050A30", "#7EC8E3"],
+  },
+  typography: {
+    fontFamily: "roboto",
+  },
+};
+
 // Material Dashboard 2 PRO React TS Context Provider
 import { MaterialUIControllerProvider } from "context";
 import { AiContextProvider } from "@sisense/sdk-ui/ai";
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <SisenseContextProvider {...sisenseContextProviderArgs()}>
     <AiContextProvider>
-      <BrowserRouter>
-        <MaterialUIControllerProvider>
-          <App />
-        </MaterialUIControllerProvider>
-      </BrowserRouter>
+      <ThemeProvider theme={theme}>
+        <BrowserRouter>
+          <MaterialUIControllerProvider>
+            <App />
+          </MaterialUIControllerProvider>
+        </BrowserRouter>
+      </ThemeProvider>
     </AiContextProvider>
   </SisenseContextProvider>
 );

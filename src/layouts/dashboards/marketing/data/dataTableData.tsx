@@ -14,9 +14,9 @@ Coded by www.creative-tim.com
 */
 
 // Sales dashboard components
-import ProductCell from "layouts/dashboards/sales/components/ProductCell";
-import RefundsCell from "layouts/dashboards/sales/components/RefundsCell";
-import DefaultCell from "layouts/dashboards/sales/components/DefaultCell";
+import ProductCell from "layouts/dashboards/marketing/components/ProductCell";
+import RefundsCell from "layouts/dashboards/marketing/components/RefundsCell";
+import DefaultCell from "layouts/dashboards/marketing/components/DefaultCell";
 
 // Images
 import nikeV22 from "assets/images/ecommerce/blue-shoe.jpeg";

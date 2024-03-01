@@ -5,6 +5,7 @@ import reportsBarChartData from "layouts/dashboards/analytics/data/reportsBarCha
 import { ExecuteQuery, QueryState } from "@sisense/sdk-ui";
 import * as DM from "sisense/Schemas/ecommerce-master";
 import { Data, measureFactory, filterFactory } from "@sisense/sdk-data";
+import { CircularProgress } from "@mui/material";
 
 export default function DayOfWeek(): JSX.Element {
   return (
@@ -16,7 +17,11 @@ export default function DayOfWeek(): JSX.Element {
     >
       {(queryState: QueryState) => {
         if (queryState.isLoading) {
-          return <div>Loading...</div>;
+          return (
+            <div>
+              <CircularProgress />
+            </div>
+          );
         }
 
         if (queryState.error) {

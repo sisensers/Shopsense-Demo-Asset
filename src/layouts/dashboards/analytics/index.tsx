@@ -1,7 +1,7 @@
 import Grid from "@mui/material/Grid";
 import Tooltip from "@mui/material/Tooltip";
 import Icon from "@mui/material/Icon";
-import IconButton from "@mui/material/IconButton";
+import { useState } from "react";
 
 // Material Dashboard 2 PRO React TS components
 import MDBox from "components/MDBox";
@@ -12,26 +12,24 @@ import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 import RevenueStatisticsCard from "examples/Cards/StatisticsCards/RevenueStatisticsCard";
-import BookingCard from "examples/Cards/BookingCard";
 
 // Anaytics dashboard components
 import SalesByCountry from "layouts/dashboards/analytics/components/SalesByCountry";
 
 // Data
-import reportsBarChartData from "layouts/dashboards/analytics/data/reportsBarChartData";
 import reportsLineChartData from "layouts/dashboards/analytics/data/reportsLineChartData";
 
+//Sisense Powered Components
 import DayOfWeek from "sisense/Charts/DayOfWeek";
 import SalesByAgeLine from "sisense/Charts/SalesByAgeLine";
-import { BarChart, DateRangeFilterTile, DateFilter } from "@sisense/sdk-ui";
-import { AiContextProvider, Chatbot } from "@sisense/sdk-ui/ai";
-import { Data, filterFactory, measureFactory, Filter } from "@sisense/sdk-data";
-import * as DM from "sisense/Schemas/ecommerce-master";
-import { useState } from "react";
+import { DateRangeFilterTile } from "@sisense/sdk-ui";
+import { filterFactory, Filter } from "@sisense/sdk-data";
 import CustomerStatisticsCard from "examples/Cards/StatisticsCards/CustomerStatisticsCard";
 import CostStatisticsCard from "examples/Cards/StatisticsCards/CostStatisticsCard";
 import OrderStatisticsCard from "examples/Cards/StatisticsCards/OrdersStatisticsCard";
-import { Card } from "@mui/material";
+
+//Data Model
+import * as DM from "sisense/Schemas/ecommerce-master";
 
 function Analytics(): JSX.Element {
   const { sales, tasks } = reportsLineChartData;
