@@ -69,6 +69,7 @@ import ResetCover from "layouts/authentication/reset-password/cover";
 import SisenseCharts from "layouts/pages-sisense/charts";
 import NivoCharts from "layouts/pages-sisense/nivo-charts";
 import SisenseOrderList from "layouts/pages-sisense/order-list";
+import SisenseSelfServeTable from "layouts/pages-sisense/self-serve";
 import SisenseProductPage from "layouts/pages-sisense/product-page";
 import SisenseMicroAnalyticsPage from "layouts/pages-sisense/micro-analytics";
 
@@ -392,16 +393,16 @@ const routes = [
         key: "tables",
         collapse: [
           {
-            name: "Basic",
-            key: "basic",
-            route: "/sisense/tables/basic",
+            name: "MaterialUI",
+            key: "materialui",
+            route: "/sisense/tables/materialui",
             component: <SisenseOrderList />,
           },
           {
-            name: "ChartsJS",
-            key: "chartjs",
-            route: "/sisense/tables/chartjs",
-            component: <SisenseOrderList />,
+            name: "SelfServe",
+            key: "selfserve",
+            route: "/sisense/tables/selfserve",
+            component: <SisenseSelfServeTable />,
           },
           {
             name: "Advanced",
